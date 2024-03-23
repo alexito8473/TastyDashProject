@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100055662692",
+    "project_id": "tfgtastydash",
+    "storage_bucket": "tfgtastydash.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100055662692:android:0de256a3f0db261a335f71",
+        "android_client_info": {
+          "package_name": "com.example.tfgsaladillo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkdXwd0Gs6wzO385rfddXryZCdJqeTBjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
