@@ -1,13 +1,42 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tfgsaladillo/services/AuthServices.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class InicioSesion extends StatefulWidget {
+  const InicioSesion({super.key});
   @override
-  State<StatefulWidget> createState() => _InicioSesion();
+  State<InicioSesion> createState() => _InicioSesion();
 }
 
 class _InicioSesion extends State<InicioSesion> {
+  TextEditingController _gmailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final AuthService authService= AuthService();
+  @override
+  void dispose() {
+    _gmailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void login(BuildContext context) async {
+    String gmail = _gmailController.text;
+    String password = _passwordController.text;
+    bool user = await authService.sigIn(gmail, password);
+    if(user){
+      Navigator.pushNamed(context, "/HomePage");
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar( const
+      SnackBar(
+        elevation: 1,
+        content: Text("Mostrar mensaje",style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.white70,
+      )
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,9 +68,10 @@ class _InicioSesion extends State<InicioSesion> {
                         decoration: BoxDecoration(
                             color: Colors.white70,
                             borderRadius: BorderRadius.circular(30)),
-                        child: const TextField(
+                        child: TextField(
+                          controller: _gmailController,
                           cursorColor: Colors.black,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             prefixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: Icon(
@@ -69,9 +99,10 @@ class _InicioSesion extends State<InicioSesion> {
                         decoration: BoxDecoration(
                             color: Colors.white70,
                             borderRadius: BorderRadius.circular(30)),
-                        child: const TextField(
+                        child: TextField(
+                          controller: _passwordController,
                           cursorColor: Colors.black,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             prefixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: Icon(
@@ -98,9 +129,9 @@ class _InicioSesion extends State<InicioSesion> {
                         backgroundColor: Colors.orange,
                         foregroundColor: Colors.black,
                         onPressed: () {
-                          Navigator.pushNamed(context, "/HomePage");
+                          login(context);
                         },
-                        child: Text(
+                        child: const Text(
                           "Iniciar sesión",
                           style: TextStyle(fontSize: 20),
                         ),
@@ -119,7 +150,7 @@ class _InicioSesion extends State<InicioSesion> {
                         onPressed: () {
                           Navigator.pushNamed(context, "/register");
                         },
-                        child: Text(
+                        child: const Text(
                           "Crear una cuenta",
                           style: TextStyle(
                               fontStyle: FontStyle.normal,

@@ -1,18 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
-class AuthService{
-  final _auth= FirebaseAuth.instance;
+import 'package:firebase_core/firebase_core.dart';
+class AuthService {
+  final _auth = FirebaseAuth.instance;
 
-  Future<User?> sigIn(String email,String password) async{
-    User? user;
-    try{
-      user=(await _auth.signInWithEmailAndPassword(email: email.trim(), password: password)).user;
-    }catch(e){
-      print(e.toString());
+  Future<bool> sigIn(String email, String password) async {
+    bool exit=false;
+    try {
+      (await _auth.signInWithEmailAndPassword(
+              email: email.trim(), password: password))
+          .user;
+      exit=true;
+    } catch (e) {
+      print("Error en el logeo");
+      return exit;
     }
-    return user;
+    return exit;
   }
 
-  Future<Future<UserCredential>> register(String email, String password) async{
-    return _auth.createUserWithEmailAndPassword(email: email, password: password);
+    Future<UserCredential?> register(String email, String password) async {
+    UserCredential? user;
+    try {
+      user = (await _auth.createUserWithEmailAndPassword(
+          email: email.trim(), password: password));
+    } catch (e) {
+      print("Error en el logeo");
+    }
+    return user;
   }
 }
