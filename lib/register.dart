@@ -1,126 +1,95 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/services/AuthServices.dart';
 
-class Registrarse extends StatelessWidget {
+class Registrarse extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _Registrarse();
+}
+
+class _Registrarse extends State<Registrarse> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _gmailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final AuthService authService = AuthService();
+
+  @override
+  void dispose() {
+    _gmailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void register(BuildContext context) async {
+    String gmail = _gmailController.text;
+    String password = _passwordController.text;
+    bool user = await authService.register(gmail, password);
+    if (user) {
+      Navigator.pushNamed(context, "/HomePage");
+    } else {
+      MensajeAlCliente(context,"No existe el usuario",20);
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    Size size= MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Background(),
+        const Background(asset: "assets/images/register.png"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(
-            padding: EdgeInsets.symmetric(
-                vertical:
-                MediaQuery.of(context).orientation == Orientation.portrait
-                    ? 200
-                    : 30),
+            padding: EdgeInsets.only(
+                top:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? size.height*0.3
+                        : 30),
             children: [
-              Titular(),
+              const Titular(title: "Registrarse"),
               SizedBox(
                 width: size.width * 0.8,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                            ? size.height * 0.06
-                            : size.height * 0.11,
-                        width: size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.person,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                            border: InputBorder.none,
-                            hintText: "Nombre",
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                        ),
-                      ),
+                    TextFieldMio(
+                      hint: "Nombre",
+                      sizeContext: size,
+                      textType:  TextInputType.name,
+                      icono:  Icons.person,
+                      controller: _nameController,
+                      action: TextInputAction.next,
+                      obscureText: false,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                            ? size.height * 0.06
-                            : size.height * 0.11,
-                        width: size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.email,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                            border: InputBorder.none,
-                            hintText: "Gmail",
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                        ),
-                      ),
+                    TextFieldMio(
+                      hint: "Gmail",
+                      sizeContext: size,
+                      textType:  TextInputType.emailAddress,
+                      icono:  Icons.email,
+                      controller: _gmailController,
+                      action: TextInputAction.next,
+                      obscureText: false,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                            ? size.height * 0.06
-                            : size.height * 0.11,
-                        width: size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.lock,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                            border: InputBorder.none,
-                            hintText: "Contraseña",
-                          ),
-                          obscureText: true,
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.none,
-                        ),
-                      ),
+                    TextFieldMio(
+                      controller: _passwordController,
+                      sizeContext: size,
+                      hint: "Contraseña",
+                      icono:  Icons.lock,
+                      textType: TextInputType.name,
+                      action: TextInputAction.none,
+                      obscureText: true,
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      height: 60,
-                      width: 240,
+                      margin: const EdgeInsets.only(top: 20,bottom: 10),
+                      height: 55,
+                      width: 200,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
                       child: FloatingActionButton(
                         backgroundColor: Colors.orange,
                         foregroundColor: Colors.black,
                         onPressed: () {
-                          print("Funciona");
+                          register(context);
                         },
-                        child: Text(
+                        child: const Text(
                           "Registrarse",
                           style: TextStyle(fontSize: 20),
                         ),
@@ -132,44 +101,15 @@ class Registrarse extends StatelessWidget {
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.orange,
-            onPressed: (){
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.keyboard_backspace)
-          ),
+              backgroundColor: Colors.orange,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(Icons.keyboard_backspace)),
         )
       ],
     );
   }
 }
 
-class Titular extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Flexible(
-        child: Center(
-          child: Text("Registrarse",
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)),
-        ));
-  }
-}
-class Background extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.centerRight,
-            colors: [Colors.black87, Colors.transparent]).createShader(bounds),
-        blendMode: BlendMode.darken,
-        child: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/register.png"),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                        Colors.black38, BlendMode.darken)))));
-  }
-}
+

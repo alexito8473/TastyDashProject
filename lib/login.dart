@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class InicioSesion extends StatefulWidget {
   const InicioSesion({super.key});
+
   @override
   State<InicioSesion> createState() => _InicioSesion();
 }
@@ -12,7 +13,8 @@ class InicioSesion extends StatefulWidget {
 class _InicioSesion extends State<InicioSesion> {
   TextEditingController _gmailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  final AuthService authService= AuthService();
+  final AuthService authService = AuthService();
+
   @override
   void dispose() {
     _gmailController.dispose();
@@ -24,16 +26,10 @@ class _InicioSesion extends State<InicioSesion> {
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
-    if(user){
+    if (user) {
       Navigator.pushNamed(context, "/HomePage");
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar( const
-      SnackBar(
-        elevation: 1,
-        content: Text("Mostrar mensaje",style: TextStyle(color: Colors.black),),
-        backgroundColor: Colors.white70,
-      )
-      );
+    } else {
+      MensajeAlCliente(context,"Gmail y/o contraseña no son correctos",15);
     }
   }
 
@@ -42,87 +38,44 @@ class _InicioSesion extends State<InicioSesion> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Background(),
+        const Background(asset: "assets/images/start.jpg"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(
-            padding: EdgeInsets.symmetric(
-                vertical:
+            padding: EdgeInsets.only(
+                top:
+                    //200
                     MediaQuery.of(context).orientation == Orientation.portrait
-                        ? 200
+                        ? size.height*0.3
                         : 30),
             children: [
-              Titular(),
+              const Titular(title: "Tasty Dash"),
               SizedBox(
                 width: size.width * 0.8,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? size.height * 0.06
-                            : size.height * 0.11,
-                        width: size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: TextField(
-                          controller: _gmailController,
-                          cursorColor: Colors.black,
-                          decoration: const InputDecoration(
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.email,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                            border: InputBorder.none,
-                            hintText: "Gmail",
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                        ),
-                      ),
+                    TextFieldMio(
+                      controller: _gmailController,
+                      sizeContext: size,
+                      hint: "Gmail",
+                      icono:  Icons.email,
+                      textType: TextInputType.emailAddress,
+                      action: TextInputAction.next,
+                      obscureText: false,
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Container(
-                        // Horizontal =size.height*0.1
-                        height: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? size.height * 0.06
-                            : size.height * 0.11,
-                        width: size.width * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white70,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: TextField(
-                          controller: _passwordController,
-                          cursorColor: Colors.black,
-                          decoration: const InputDecoration(
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Icon(
-                                  Icons.lock,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                            border: InputBorder.none,
-                            hintText: "Contraseña",
-                          ),
-                          obscureText: true,
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.none,
-                        ),
-                      ),
+                    TextFieldMio(
+                      controller: _passwordController,
+                      sizeContext: size,
+                      hint: "Contraseña",
+                      icono:  Icons.lock,
+                      textType: TextInputType.name,
+                      action: TextInputAction.none,
+                      obscureText: true,
                     ),
                     Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      height: 60,
-                      width: 240,
+                      margin: const EdgeInsets.only(bottom: 20,top: 20),
+                      height: 55,
+                      width: 200,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
                       child: FloatingActionButton(
@@ -140,7 +93,7 @@ class _InicioSesion extends State<InicioSesion> {
                     Container(
                       height: 25,
                       width: 165,
-                      margin: EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 10),
                       decoration: const BoxDecoration(
                           border: Border(
                               bottom:
@@ -172,33 +125,4 @@ class _InicioSesion extends State<InicioSesion> {
   }
 }
 
-class Titular extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Flexible(
-        child: Center(
-      child: Text("Tasty Dash",
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40)),
-    ));
-  }
-}
 
-class Background extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.center,
-            colors: [Colors.black, Colors.transparent]).createShader(bounds),
-        blendMode: BlendMode.darken,
-        child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/start.jpg"),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.5), BlendMode.darken)))));
-  }
-}
