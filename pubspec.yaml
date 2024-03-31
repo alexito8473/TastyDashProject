@@ -42,9 +42,11 @@ dependencies:
   firebase_auth: ^4.17.9
   firebase_core: ^2.27.1
   firebase_storage: ^11.6.10
+  firebase_database: ^10.4.11
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -52,7 +54,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logoFinalConFondo.png"
+  adaptative_icon_foreground: "assets/images/ic_FORE.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -69,6 +75,8 @@ flutter:
     - assets/images/start.jpg
     - assets/images/mio.png
     - assets/images/register.png
+    - assets/images/ic_FORE.png
+    - assets/images/logoFinalConFondo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

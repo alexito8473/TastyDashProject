@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:tfgsaladillo/MapView.dart';
-import 'package:tfgsaladillo/Perfil.dart';
-import 'package:tfgsaladillo/SettingView.dart';
-import 'package:tfgsaladillo/carta.dart';
+import 'package:tfgsaladillo/pages/MapView.dart';
+import 'package:tfgsaladillo/pages/Perfil.dart';
+import 'package:tfgsaladillo/pages/SettingView.dart';
+import 'package:tfgsaladillo/pages/carta.dart';
+import 'package:tfgsaladillo/model/Person.dart';
 
 class HomePage extends StatefulWidget {
+  final Person person;
+  const HomePage({super.key, required this.person});
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
 
 class _HomePage extends State<HomePage> {
   int posicion = 0;
-  List<Widget> listaVisual = [Person(), Carta(), MapViewFood(), SettingView()];
+  late List<Widget> listaVisual;
   @override
   Widget build(BuildContext context) {
+    listaVisual = [Perfil(person: widget.person,), Carta(), MapViewFood(), SettingView()];
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [

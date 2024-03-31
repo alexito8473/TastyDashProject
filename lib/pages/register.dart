@@ -1,18 +1,21 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/pages/home.dart';
+import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
-
 class Registrarse extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _Registrarse();
 }
 
 class _Registrarse extends State<Registrarse> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _gmailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _gmailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-
+  DatabaseReference date=FirebaseDatabase.instance.ref();
+  int valueNumeric=0;
   @override
   void dispose() {
     _gmailController.dispose();
@@ -21,11 +24,17 @@ class _Registrarse extends State<Registrarse> {
   }
 
   void register(BuildContext context) async {
+    String nombre = _nameController.text;
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.register(gmail, password);
     if (user) {
-      Navigator.pushNamed(context, "/HomePage");
+      await date.child("Person/${gmail.trim().split("@")[0].toLowerCase()}").set({
+        "Nombre":nombre,
+        "Gmail":gmail,
+        "Password":password
+      });
+      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person: Person(nombre: nombre,gmail: gmail,pasword: password),)),(route) => false,);
     } else {
       MensajeAlCliente(context,"No existe el usuario",20);
     }

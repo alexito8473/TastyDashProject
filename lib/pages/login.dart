@@ -1,6 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/pages/home.dart';
+import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
 class InicioSesion extends StatefulWidget {
@@ -14,7 +17,7 @@ class _InicioSesion extends State<InicioSesion> {
   TextEditingController _gmailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-
+  DatabaseReference date=FirebaseDatabase.instance.ref();
   @override
   void dispose() {
     _gmailController.dispose();
@@ -27,7 +30,8 @@ class _InicioSesion extends State<InicioSesion> {
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
     if (user) {
-      Navigator.pushNamed(context, "/HomePage");
+      final snapshot= await date.child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre").get();
+      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person: Person(nombre: snapshot.value.toString(),gmail: gmail,pasword: password))),(route) => false,);
     } else {
       MensajeAlCliente(context,"Gmail y/o contraseña no son correctos",15);
     }
