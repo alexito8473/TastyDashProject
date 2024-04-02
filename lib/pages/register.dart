@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
@@ -14,6 +15,8 @@ class _Registrarse extends State<Registrarse> {
   final TextEditingController _gmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
+  late final SharedPreferences prefs;
+  late Person person;
   DatabaseReference date=FirebaseDatabase.instance.ref();
   int valueNumeric=0;
   @override
@@ -34,7 +37,12 @@ class _Registrarse extends State<Registrarse> {
         "Gmail":gmail,
         "Password":password
       });
-      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person: Person(nombre: nombre,gmail: gmail,pasword: password),)),(route) => false,);
+      person= Person(nombre: nombre,gmail: gmail,pasword: password);
+      prefs = await SharedPreferences.getInstance();
+      await prefs.setString("Name", person.nombre);
+      await prefs.setString("Gmail", person.gmail);
+      await prefs.setString("Password", person.pasword);
+      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person:person,)),(route) => false,);
     } else {
       MensajeAlCliente(context,"No existe el usuario",20);
     }

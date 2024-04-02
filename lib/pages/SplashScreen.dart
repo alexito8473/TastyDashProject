@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/pages/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,15 +14,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreen extends State<SplashScreen> {
+  late final SharedPreferences prefs;
   @override
   void initState() {
     super.initState();
     var d = const Duration(seconds: 2);
-    Future.delayed(d, () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => InicioSesion()),
-          (route) => false);
+    Future.delayed(d, () async {
+      prefs = await SharedPreferences.getInstance();
+      String? nombre= prefs.getString("Name");
+      String? gmail= prefs.getString("Gmail");
+      String? password= prefs.getString("Password");
+      if(nombre==null||gmail==null||password==null){
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => InicioSesion()),
+                (route) => false);
+      }else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre, pasword: password, gmail: gmail))),
+                (route) => false);
+      }
     });
   }
 

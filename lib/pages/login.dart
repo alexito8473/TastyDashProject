@@ -1,9 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
-import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
 class InicioSesion extends StatefulWidget {
@@ -17,7 +17,10 @@ class _InicioSesion extends State<InicioSesion> {
   TextEditingController _gmailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-  DatabaseReference date=FirebaseDatabase.instance.ref();
+  late final SharedPreferences prefs;
+  DatabaseReference date = FirebaseDatabase.instance.ref();
+  late Person person;
+
   @override
   void dispose() {
     _gmailController.dispose();
@@ -26,14 +29,26 @@ class _InicioSesion extends State<InicioSesion> {
   }
 
   void login(BuildContext context) async {
+    prefs = await SharedPreferences.getInstance();
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
     if (user) {
-      final snapshot= await date.child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre").get();
-      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person: Person(nombre: snapshot.value.toString(),gmail: gmail,pasword: password))),(route) => false,);
+      final snapshot = await date
+          .child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre")
+          .get();
+      person = Person(
+          nombre: snapshot.value.toString(), gmail: gmail, pasword: password);
+      await prefs.setString("Name", person.nombre);
+      await prefs.setString("Gmail", person.gmail);
+      await prefs.setString("Password", person.pasword);
+      await Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(person: person)),
+        (route) => false,
+      );
     } else {
-      MensajeAlCliente(context,"Gmail y/o contraseña no son correctos",15);
+      MensajeAlCliente(context, "Gmail y/o contraseña no son correctos", 15);
     }
   }
 
@@ -50,7 +65,7 @@ class _InicioSesion extends State<InicioSesion> {
                 top:
                     //200
                     MediaQuery.of(context).orientation == Orientation.portrait
-                        ? size.height*0.3
+                        ? size.height * 0.3
                         : 30),
             children: [
               const Titular(title: "Tasty Dash"),
@@ -62,7 +77,7 @@ class _InicioSesion extends State<InicioSesion> {
                       controller: _gmailController,
                       sizeContext: size,
                       hint: "Gmail",
-                      icono:  Icons.email,
+                      icono: Icons.email,
                       textType: TextInputType.emailAddress,
                       action: TextInputAction.next,
                       obscureText: false,
@@ -71,13 +86,13 @@ class _InicioSesion extends State<InicioSesion> {
                       controller: _passwordController,
                       sizeContext: size,
                       hint: "Contraseña",
-                      icono:  Icons.lock,
+                      icono: Icons.lock,
                       textType: TextInputType.name,
                       action: TextInputAction.none,
                       obscureText: true,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(bottom: 20,top: 20),
+                      margin: const EdgeInsets.only(bottom: 20, top: 20),
                       height: 55,
                       width: 200,
                       decoration: BoxDecoration(
@@ -128,5 +143,3 @@ class _InicioSesion extends State<InicioSesion> {
     );
   }
 }
-
-
