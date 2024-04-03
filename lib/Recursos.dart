@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
 class Background extends StatefulWidget {
   final String asset;
   const Background({super.key, required this.asset});
   @override
-  State<StatefulWidget> createState() =>_Background();
+  State<StatefulWidget> createState() => _Background();
 }
-class _Background extends State<Background>{
+
+class _Background extends State<Background> {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
@@ -15,12 +19,12 @@ class _Background extends State<Background>{
             colors: [Colors.black87, Colors.transparent]).createShader(bounds),
         blendMode: BlendMode.darken,
         child: Container(
-            decoration:  BoxDecoration(
+            decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(widget.asset),
                     fit: BoxFit.cover,
-                    colorFilter:
-                    const ColorFilter.mode(Colors.black38, BlendMode.darken)))));
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black38, BlendMode.darken)))));
   }
 }
 
@@ -37,7 +41,10 @@ class _Titular extends State<Titular> {
     return Flexible(
         child: Center(
             child: Text(widget.title,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40))));
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40))));
   }
 }
 
@@ -51,13 +58,13 @@ class TextFieldMio extends StatefulWidget {
   final bool obscureText;
   const TextFieldMio(
       {super.key,
-        required this.hint,
-        required this.controller,
-        required this.sizeContext,
-        required this.icono,
-        required this.textType,
-        required this.action,
-        required this.obscureText});
+      required this.hint,
+      required this.controller,
+      required this.sizeContext,
+      required this.icono,
+      required this.textType,
+      required this.action,
+      required this.obscureText});
   @override
   State<StatefulWidget> createState() => _TextFielMio();
 }
@@ -96,7 +103,8 @@ class _TextFielMio extends State<TextFieldMio> {
     );
   }
 }
-void MensajeAlCliente(BuildContext context,String mensage, double font) {
+
+void MensajeAlCliente(BuildContext context, String mensage, double font) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     elevation: 1,
     width: 300.0,
@@ -107,15 +115,18 @@ void MensajeAlCliente(BuildContext context,String mensage, double font) {
     ),
     backgroundColor: Colors.white70,
     duration: const Duration(milliseconds: 1100),
-    content:  Padding(
+    content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2),
         child: Text(
           mensage,
           style: TextStyle(
-              fontSize: font,
-              fontWeight: FontWeight.bold,
-              color: Colors.black),
+              fontSize: font, fontWeight: FontWeight.bold, color: Colors.black),
           textAlign: TextAlign.center,
         )),
   ));
+}
+
+Future<List <dynamic>> leerListaJson(String json) async {
+  final listaMap = jsonDecode(json);
+  return listaMap;
 }

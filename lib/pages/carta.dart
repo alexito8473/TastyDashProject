@@ -11,6 +11,9 @@ class _Carta extends State<Carta>{
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.white,
         child: Text("Carta",style: TextStyle(color: Colors.black)),
       ),
     );

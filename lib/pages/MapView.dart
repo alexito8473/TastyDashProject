@@ -42,10 +42,15 @@ class _MapViewFood extends State<MapViewFood> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child:control? const CircularProgressIndicator(
-        color: Colors.black38,
-        strokeWidth: 6,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.white,
+      child:control? const Center(
+        child:  CircularProgressIndicator(
+          color: Colors.black38,
+          strokeWidth: 6,
+        ),
       ): GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: _initialCamera,
@@ -53,6 +58,14 @@ class _MapViewFood extends State<MapViewFood> {
           _controller.complete(controller);
         },
         markers: {
+          Marker(
+              markerId: MarkerId("Tasty Dash"),
+              icon:icon,
+              position: LatLng(40.363603060685826, -3.690581293030221)),
+          Marker(
+              markerId: MarkerId("Tasty Dash"),
+              icon:icon,
+              position: LatLng(40.363603060685826, -3.690581293030221)),
           Marker(
               markerId: MarkerId("Tasty Dash"),
               icon:icon,

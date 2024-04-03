@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/pages/login.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override
@@ -15,24 +16,41 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreen extends State<SplashScreen> {
   late final SharedPreferences prefs;
+  late List<dynamic> datosJson;
   @override
   void initState() {
     super.initState();
     var d = const Duration(seconds: 2);
+    Idioma idioma;
+    String? nombre;
+    String? gmail;
+    String? password;
     Future.delayed(d, () async {
+      datosJson = await leerListaJson(await rootBundle.loadString("Data/leng.json"));
+      print(datosJson);
       prefs = await SharedPreferences.getInstance();
-      String? nombre= prefs.getString("Name");
-      String? gmail= prefs.getString("Gmail");
-      String? password= prefs.getString("Password");
+      int? posicionIdioma= prefs.getInt("Idioma");
+      if(posicionIdioma==null){
+        idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
+      }else{
+        if(posicionIdioma>=0&&posicionIdioma<=1){
+          idioma = Idioma(datosJson: datosJson, positionIdioma: posicionIdioma);
+        }else{
+          idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
+        }
+      }
+      nombre= prefs.getString("Name");
+      gmail= prefs.getString("Gmail");
+      password= prefs.getString("Password");
       if(nombre==null||gmail==null||password==null){
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => InicioSesion()),
+            MaterialPageRoute(builder: (context) => InicioSesion(idioma: idioma, prefs: prefs,)),
                 (route) => false);
       }else{
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre, pasword: password, gmail: gmail))),
+            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre!, pasword: password!, gmail: gmail!), idioma: idioma, prefs: prefs,)),
                 (route) => false);
       }
     });
@@ -60,7 +78,7 @@ class _SplashScreen extends State<SplashScreen> {
                     textAlign: TextAlign.end,
                   ),
                   Text(
-                    "by Alejandro Aguilar",
+                    "By Alejandro Aguilar",
                     style: TextStyle(fontSize: 10, color: Colors.white),
                     textAlign: TextAlign.end,
                   )
@@ -73,7 +91,6 @@ class _SplashScreen extends State<SplashScreen> {
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
           child: const Column(
             children:  [
-              Text("Cargando",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
               CircularProgressIndicator(
                 color: Colors.white,
                 strokeWidth: 6,

@@ -45,6 +45,7 @@ dependencies:
   firebase_database: ^10.4.11
   shared_preferences: ^2.2.2
   google_maps_flutter: ^2.6.0
+  flutter_settings_screen_ex: ^0.0.1+5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,6 +81,9 @@ flutter:
     - assets/images/ic_FORE.png
     - assets/images/logoFinalConFondo.png
     - assets/images/ic_map.png
+    - Data/leng.json
+    - assets/images/bannersuperior.jpg
+    - assets/images/fondo2.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

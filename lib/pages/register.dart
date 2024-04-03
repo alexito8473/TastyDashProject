@@ -2,10 +2,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 class Registrarse extends StatefulWidget {
+  final Idioma idioma;
+  final SharedPreferences prefs;
+  const Registrarse({super.key, required this.idioma, required this.prefs});
   @override
   State<StatefulWidget> createState() => _Registrarse();
 }
@@ -15,7 +19,6 @@ class _Registrarse extends State<Registrarse> {
   final TextEditingController _gmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-  late final SharedPreferences prefs;
   late Person person;
   DatabaseReference date=FirebaseDatabase.instance.ref();
   int valueNumeric=0;
@@ -38,11 +41,10 @@ class _Registrarse extends State<Registrarse> {
         "Password":password
       });
       person= Person(nombre: nombre,gmail: gmail,pasword: password);
-      prefs = await SharedPreferences.getInstance();
-      await prefs.setString("Name", person.nombre);
-      await prefs.setString("Gmail", person.gmail);
-      await prefs.setString("Password", person.pasword);
-      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person:person,)),(route) => false,);
+      await widget.prefs.setString("Name", person.nombre);
+      await widget.prefs.setString("Gmail", person.gmail);
+      await widget.prefs.setString("Password", person.pasword);
+      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage(person:person, idioma: widget.idioma, prefs: widget.prefs,)),(route) => false,);
     } else {
       MensajeAlCliente(context,"No existe el usuario",20);
     }

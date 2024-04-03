@@ -2,12 +2,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
+import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/home.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
 class InicioSesion extends StatefulWidget {
-  const InicioSesion({super.key});
+  final Idioma idioma;
+  final SharedPreferences prefs;
+
+  const InicioSesion({super.key, required this.idioma, required this.prefs});
 
   @override
   State<InicioSesion> createState() => _InicioSesion();
@@ -17,7 +21,6 @@ class _InicioSesion extends State<InicioSesion> {
   TextEditingController _gmailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
-  late final SharedPreferences prefs;
   DatabaseReference date = FirebaseDatabase.instance.ref();
   late Person person;
 
@@ -29,7 +32,6 @@ class _InicioSesion extends State<InicioSesion> {
   }
 
   void login(BuildContext context) async {
-    prefs = await SharedPreferences.getInstance();
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
@@ -39,12 +41,12 @@ class _InicioSesion extends State<InicioSesion> {
           .get();
       person = Person(
           nombre: snapshot.value.toString(), gmail: gmail, pasword: password);
-      await prefs.setString("Name", person.nombre);
-      await prefs.setString("Gmail", person.gmail);
-      await prefs.setString("Password", person.pasword);
+      await widget.prefs.setString("Name", person.nombre);
+      await widget.prefs.setString("Gmail", person.gmail);
+      await widget.prefs.setString("Password", person.pasword);
       await Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(person: person)),
+        MaterialPageRoute(builder: (context) => HomePage(person: person, idioma: widget.idioma, prefs: widget.prefs,)),
         (route) => false,
       );
     } else {
