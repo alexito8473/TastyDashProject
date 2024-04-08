@@ -5,14 +5,36 @@
     "Ajustes": "Ajustes",
     "MiCuenta": "Mi cuenta",
     "Nombre": "Nombre",
-    "Idioma": "Idioma"
+    "Idioma": "Idioma",
+    "Cerrar_sesion": "Cerrar sesión",
+    "Iniciar_sesion": "Iniciar sesión",
+    "Contraseña": "Contraseña",
+    "Crear_una_cuenta": "Crear una cuenta",
+    "Registrarse": "Registrarse",
+    "Politica": "Política de trabajo",
+    "Politica_Text1": "Esta Política de Privacidad describe cómo Tasty Dash recopila, utiliza y comparte la información personal de los usuarios de nuestra aplicación móvil. Al utilizar la Aplicación, usted acepta la recopilación y el uso de su información de acuerdo con esta Política de Privacidad.",
+    "Politica_Text2": "Utilizamos la información recopilada para proporcionar y mejorar la funcionalidad de la Aplicación, responder a sus consultas y proporcionarle información relevante sobre nuestros servicios.",
+    "Politica_Text3": "No vendemos, alquilamos ni compartimos su información personal con terceros con fines comerciales, excepto cuando sea necesario para proporcionarle los servicios que solicita",
+    "Politica_Text4": "Implementamos medidas de seguridad razonables para proteger la información personal que recopilamos y almacenamos. Sin embargo, tenga en cuenta que ninguna medida de seguridad es absolutamente infalible.",
+    "Politica_Text5": "Al utilizar nuestra Aplicación, usted acepta esta Política de Privacidad y el procesamiento de su información personal de acuerdo con la misma."
   },
   {
     "Carta": "Menu",
     "Mapa": "Map",
-    "Ajustes": "Setting",
+    "Ajustes": "Settings",
     "MiCuenta": "My account",
     "Nombre": "Name",
-    "Idioma": "Language"
+    "Idioma": "Language",
+    "Cerrar_sesion": "Logout",
+    "Iniciar_sesion": "Log in",
+    "Contraseña": "Password",
+    "Crear_una_cuenta": "Create an account",
+    "Registrarse": "Register",
+    "Politica": "Work policy",
+    "Politica_Text1": "This Privacy Policy describes how Tasty Dash collects, uses and shares the personal information of users of our mobile application. By using the Application, you agree to the collection and use of your information in accordance with this Privacy Policy.",
+    "Politica_Text2": "We use the information collected to provide and improve the functionality of the Application, respond to your queries and provide you with relevant information about our services.",
+    "Politica_Text3": "We do not sell, rent, or share your personal information with third parties for marketing purposes, except as necessary to provide you with the services you request.",
+    "Politica_Text4": "We implement reasonable security measures to protect the personal information we collect and store. However, keep in mind that no security measures are absolutely foolproof.",
+    "Politica_Text5": "By using our Application, you agree to this Privacy Policy and the processing of your personal information in accordance with it."
   }
 ]

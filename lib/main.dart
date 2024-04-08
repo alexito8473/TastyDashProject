@@ -29,13 +29,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: true,
           textTheme:
               GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => const SplashScreen(),
       },
     );
   }

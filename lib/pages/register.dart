@@ -64,13 +64,15 @@ class _Registrarse extends State<Registrarse> {
                         ? size.height*0.3
                         : 30),
             children: [
-              const Titular(title: "Registrarse"),
+               Titular(title: widget.idioma.datosJson[widget.idioma.positionIdioma]
+              ["Registrarse"]),
               SizedBox(
                 width: size.width * 0.8,
                 child: Column(
                   children: [
                     TextFieldMio(
-                      hint: "Nombre",
+                      hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                      ["Nombre"],
                       sizeContext: size,
                       textType:  TextInputType.name,
                       icono:  Icons.person,
@@ -79,7 +81,7 @@ class _Registrarse extends State<Registrarse> {
                       obscureText: false,
                     ),
                     TextFieldMio(
-                      hint: "Gmail",
+                      hint: "Email",
                       sizeContext: size,
                       textType:  TextInputType.emailAddress,
                       icono:  Icons.email,
@@ -90,7 +92,8 @@ class _Registrarse extends State<Registrarse> {
                     TextFieldMio(
                       controller: _passwordController,
                       sizeContext: size,
-                      hint: "Contraseña",
+                      hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                      ["Contraseña"],
                       icono:  Icons.lock,
                       textType: TextInputType.name,
                       action: TextInputAction.none,
@@ -108,9 +111,9 @@ class _Registrarse extends State<Registrarse> {
                         onPressed: () {
                           register(context);
                         },
-                        child: const Text(
-                          "Registrarse",
-                          style: TextStyle(fontSize: 20),
+                        child: Text( widget.idioma.datosJson[widget.idioma.positionIdioma]
+                        ["Registrarse"],
+                          style: const TextStyle(fontSize: 20),
                         ),
                       ),
                     ),

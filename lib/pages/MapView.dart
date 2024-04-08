@@ -65,11 +65,11 @@ class _MapViewFood extends State<MapViewFood> {
           Marker(
               markerId: MarkerId("Tasty Dash"),
               icon:icon,
-              position: LatLng(40.363603060685826, -3.690581293030221)),
+              position: LatLng(37.235278, -5.403717)),
           Marker(
               markerId: MarkerId("Tasty Dash"),
               icon:icon,
-              position: LatLng(40.363603060685826, -3.690581293030221))
+              position: LatLng(37.797792, -6.581940))
         },
       ),
     );

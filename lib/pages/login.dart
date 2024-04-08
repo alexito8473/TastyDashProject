@@ -5,12 +5,12 @@ import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/home.dart';
+import 'package:tfgsaladillo/pages/register.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
 class InicioSesion extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
-
   const InicioSesion({super.key, required this.idioma, required this.prefs});
 
   @override
@@ -46,7 +46,12 @@ class _InicioSesion extends State<InicioSesion> {
       await widget.prefs.setString("Password", person.pasword);
       await Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(person: person, idioma: widget.idioma, prefs: widget.prefs,)),
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  person: person,
+                  idioma: widget.idioma,
+                  prefs: widget.prefs,
+                )),
         (route) => false,
       );
     } else {
@@ -78,7 +83,7 @@ class _InicioSesion extends State<InicioSesion> {
                     TextFieldMio(
                       controller: _gmailController,
                       sizeContext: size,
-                      hint: "Gmail",
+                      hint: "Email",
                       icono: Icons.email,
                       textType: TextInputType.emailAddress,
                       action: TextInputAction.next,
@@ -87,7 +92,8 @@ class _InicioSesion extends State<InicioSesion> {
                     TextFieldMio(
                       controller: _passwordController,
                       sizeContext: size,
-                      hint: "Contraseña",
+                      hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                      ["Contraseña"],
                       icono: Icons.lock,
                       textType: TextInputType.name,
                       action: TextInputAction.none,
@@ -105,8 +111,9 @@ class _InicioSesion extends State<InicioSesion> {
                         onPressed: () {
                           login(context);
                         },
-                        child: const Text(
-                          "Iniciar sesión",
+                        child: Text(
+                          widget.idioma.datosJson[widget.idioma.positionIdioma]
+                              ["Iniciar_sesion"],
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -122,14 +129,19 @@ class _InicioSesion extends State<InicioSesion> {
                       child: FloatingActionButton(
                         backgroundColor: Colors.transparent,
                         onPressed: () {
-                          Navigator.pushNamed(context, "/register");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Registrarse(
+                                      idioma: widget.idioma,
+                                      prefs: widget.prefs)));
                         },
-                        child: const Text(
-                          "Crear una cuenta",
-                          style: TextStyle(
+                        child: Text(widget.idioma.datosJson[widget.idioma.positionIdioma]
+                        ["Crear_una_cuenta"],
+                          style: const TextStyle(
                               fontStyle: FontStyle.normal,
                               height: BorderSide.strokeAlignOutside,
-                              fontSize: 20,
+                              fontSize: 18,
                               color: Colors.white,
                               fontWeight: FontWeight.w100),
                         ),

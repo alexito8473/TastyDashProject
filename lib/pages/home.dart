@@ -1,17 +1,16 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/pages/MapView.dart';
-import 'package:tfgsaladillo/pages/Perfil.dart';
-import 'package:tfgsaladillo/pages/SettingView.dart';
 import 'package:tfgsaladillo/pages/carta.dart';
 import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/pages/login.dart';
 
 class HomePage extends StatefulWidget {
   final Person person;
@@ -78,17 +77,35 @@ class _HomePage extends State<HomePage> {
                                   width:size.width*0.9,
                                   child: const Text("E-mail",style: TextStyle(color: Colors.white,fontSize: 20),textAlign: TextAlign.left)
                               ),
-                              SizedBox(
+                              Container(
+                                  margin:EdgeInsets.only(bottom: size.height*0.02) ,
                                   width:size.width*0.9,
                                   child: Text(widget.person.gmail,style: const TextStyle(color: Colors.white,fontSize: 15),textAlign: TextAlign.left)
                               ),
+                              FloatingActionButton.extended(
+                                extendedIconLabelSpacing: 10,
+                                  elevation: 30,
+                                backgroundColor: Colors.white70,
+                                  icon: const Icon(FontAwesomeIcons.powerOff),
+                                  onPressed: () {
+                                    widget.prefs.remove("Name");
+                                    widget.prefs.remove("Gmail");
+                                    widget.prefs.remove("Password");
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => InicioSesion(idioma: widget.idioma, prefs: widget.prefs)),
+                                          (route) => false,
+                                    );
+                                  },
+                                  label: Text(widget.idioma
+                                      .datosJson[widget.idioma.positionIdioma]["Cerrar_sesion"])
+                              )
                             ],
                           ),
                         ),
-
                     Container(
                         height: size.height*0.9,
-                        margin: EdgeInsets.only(top: size.height*0.03),
+                        margin: EdgeInsets.only(top: size.height*0.02),
                         child: Center(
                           child: Column(
                             children: [
@@ -100,27 +117,23 @@ class _HomePage extends State<HomePage> {
                               ),
                               Container(
                                 width: size.width*0.7,
-                                margin: EdgeInsets.only(top: size.height*0.05),
+                                margin: EdgeInsets.only(top: size.height*0.03,bottom: size.height*0.02),
                                 decoration: BoxDecoration(
                                   color: Colors.white70,
-                                  borderRadius: BorderRadius.circular(40),
-
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(widget.idioma
-                                        .datosJson[widget.idioma.positionIdioma]["Idioma"],style: TextStyle(fontSize: 20)),
+                                        .datosJson[widget.idioma.positionIdioma]["Idioma"],style: const TextStyle(fontSize: 21)),
                                     DropdownButton(
                                       value: preSelectec,
                                       items: const [
-                                        DropdownMenuItem(
-                                          value: 0,
-                                          child: Text("Español"),
+                                        DropdownMenuItem(value: 0, child: Text("Español"),
                                         ),
-                                        DropdownMenuItem(
-                                            value: 1, child: Text("English")),
+                                        DropdownMenuItem(value: 1, child: Text("English")),
                                       ],
                                       onChanged: (value) => {
                                         setState(() {
@@ -132,6 +145,39 @@ class _HomePage extends State<HomePage> {
                                   ],
                                 ),
                               ),
+                              FloatingActionButton.extended(
+                                  extendedIconLabelSpacing: 10,
+                                  backgroundColor: Colors.white70,
+                                  onPressed: () {
+                                    showDialog(context: context, builder: (context) =>
+                                        AlertDialog(
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(bottom: 10),
+                                                    child:  Text(widget.idioma
+                                                        .datosJson[widget.idioma.positionIdioma]["Politica"],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+                                                ),
+                                                Text(widget.idioma
+                                                    .datosJson[widget.idioma.positionIdioma]["Politica_Text1"],style:const TextStyle(fontSize: 12)),
+                                                Text(widget.idioma
+                                                    .datosJson[widget.idioma.positionIdioma]["Politica_Text2"],style:const TextStyle(fontSize: 12)),
+                                                Text(widget.idioma
+                                                    .datosJson[widget.idioma.positionIdioma]["Politica_Text3"],style:const TextStyle(fontSize: 12)),
+                                                Text(widget.idioma
+                                                    .datosJson[widget.idioma.positionIdioma]["Politica_Text4"],style:const TextStyle(fontSize: 12)),
+                                                Text(widget.idioma
+                                                    .datosJson[widget.idioma.positionIdioma]["Politica_Text5"],style:const TextStyle(fontSize: 12)),
+                                              ],
+                                            ),
+                                          )
+                                        ));
+                                  },
+                                  label: Text(widget.idioma
+                                      .datosJson[widget.idioma.positionIdioma]["Politica"],style:const TextStyle(fontSize: 18))
+                              )
+
                             ],
                           ),
                         )
