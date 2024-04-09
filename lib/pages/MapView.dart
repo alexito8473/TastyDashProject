@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapViewFood extends StatefulWidget {
@@ -15,22 +11,15 @@ class MapViewFood extends StatefulWidget {
 class _MapViewFood extends State<MapViewFood> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  Set<Marker> markers = {};
-  List<LatLng> posciones = [];
-  Set<Polyline> polylines = {};
   bool control=true;
-  static const CameraPosition _initialCamera = CameraPosition(
+  final CameraPosition _initialCamera = const CameraPosition(
     target: LatLng(40.363603060685826, -3.690581293030221),
     zoom: 5.8,
   );
-  late BitmapDescriptor icon=BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor icon = BitmapDescriptor.defaultMarker;
   @override
   void initState() {
     super.initState();
-    posciones.addAll([
-      const LatLng(30.363603060685826, -3.690581293030221),
-      const LatLng(34.363603060685826, -3.690581293030221)
-    ]);
     Future.delayed(const Duration(seconds:1), () async {
       icon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.png");
       setState(() {
@@ -42,9 +31,10 @@ class _MapViewFood extends State<MapViewFood> {
 
   @override
   Widget build(BuildContext context) {
+    Size size= MediaQuery.of(context).size;
     return Container(
-      width: double.infinity,
-      height: double.infinity,
+      width: size.width,
+      height: size.height,
       color: Colors.white,
       child:control? const Center(
         child:  CircularProgressIndicator(
@@ -74,6 +64,4 @@ class _MapViewFood extends State<MapViewFood> {
       ),
     );
   }
-
-
 }
