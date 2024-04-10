@@ -22,6 +22,8 @@ dependencies:
   google_maps_flutter: ^2.6.0
   flutter_settings_screen_ex: ^0.0.1+5
   carousel_slider: ^4.2.1
+  cool_dropdown: ^2.1.0
+  flutter_svg: ^2.0.10+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -30,26 +32,26 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  adaptative_icon_foreground: "assets/images/ic_FORE.png"
+  adaptative_icon_foreground: "assets/images/ic_FORE.webp"
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/start.jpg
-    - assets/images/mio.png
-    - assets/images/register.png
-    - assets/images/ic_FORE.png
-    - assets/images/ic_map.png
+    - assets/images/start.webp
+    - assets/images/screen.webp
+    - assets/images/register.webp
+    - assets/images/ic_FORE.webp
+    - assets/images/ic_map.webp
+    - assets/images/bannersuper.webp
+    - assets/images/hamburguesa.webp
+    - assets/images/imagen.webp
     - Data/leng.json
-    - assets/images/bannersuperior.jpg
-    - assets/images/hamburguesa.jpg
-    - assets/images/imagen.jpg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
+    - assets/Icons/Spain.svg
+    - assets/Icons/Burguer.svg
+    - assets/Icons/Salad.svg
+    - assets/Icons/Fish.svg
+    - assets/Icons/Meat.svg
+    - assets/Icons/Drink.svg
+    - assets/Icons/Menu.svg
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

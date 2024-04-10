@@ -20,12 +20,12 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    var d = const Duration(seconds: 2);
     Idioma idioma;
     String? nombre;
     String? gmail;
     String? password;
-    Future.delayed(d, () async {
+    Future.delayed(const Duration(seconds: 1), () async {
+      await precacheImage(const AssetImage('assets/images/bannersuper.webp'), context);
       datosJson = await leerListaJson(await rootBundle.loadString("Data/leng.json"));
       print(datosJson);
       prefs = await SharedPreferences.getInstance();
@@ -60,7 +60,7 @@ class _SplashScreen extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        const Background(asset: "assets/images/mio.png"),
+        const Background(asset: "assets/images/screen.webp"),
         const Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: Padding(

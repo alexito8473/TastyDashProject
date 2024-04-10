@@ -54,7 +54,7 @@ class _Registrarse extends State<Registrarse> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        const Background(asset: "assets/images/register.png"),
+        const Background(asset: "assets/images/register.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(

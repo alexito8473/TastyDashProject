@@ -1,20 +1,22 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 
 class Carta extends StatefulWidget {
-  List<Comida> listaDeComida;
-  Carta( {super.key,required this.listaDeComida});
+  final List<Comida> listaDeComida;
+  const Carta({super.key, required this.listaDeComida});
   @override
-  State<StatefulWidget> createState() => _Carta();
+  State<Carta> createState() => _Carta();
 }
 
 class _Carta extends State<Carta> {
   late String imagenActual;
-@override
+  @override
   void initState() {
-  imagenActual = widget.listaDeComida[0].foto;
+    imagenActual = widget.listaDeComida[0].foto;
   }
   @override
   Widget build(BuildContext context) {
@@ -30,16 +32,19 @@ class _Carta extends State<Carta> {
                 shaderCallback: (bounds) => const LinearGradient(
                         begin: Alignment.center,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.transparent,Colors.transparent,Colors.transparent, Colors.white])
-                    .createShader(bounds),
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.white
+                        ]).createShader(bounds),
                 blendMode: BlendMode.colorDodge,
                 child: Container(
-                  padding: const EdgeInsets.only(top: 140,bottom: 30),
+                    padding: EdgeInsets.only(top: size.height*0.15, bottom: size.height*0.05),
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(imagenActual),
-                            fit: BoxFit.cover)
-                    ),
+                            fit: BoxFit.cover)),
                     child: CarouselSlider(
                       options: CarouselOptions(
                           pageSnapping: true,
@@ -52,53 +57,86 @@ class _Carta extends State<Carta> {
                           autoPlay: true,
                           autoPlayInterval: const Duration(seconds: 8),
                           autoPlayAnimationDuration:
-                          const  Duration(milliseconds: 800),
+                              const Duration(milliseconds: 800),
                           autoPlayCurve: Curves.easeInCubic,
                           enlargeCenterPage: true,
-                          onPageChanged: (index, reason) =>setState(() {
-                            print("hola");
-                            imagenActual = widget.listaDeComida[index].foto;
-                          }),
+                          onPageChanged: (index, reason) => setState(() {
+                                imagenActual = widget.listaDeComida[index].foto;
+                              }),
                           scrollDirection: Axis.horizontal),
                       items: widget.listaDeComida.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
-                            return Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.89),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: Colors.transparent,
-                                          image: DecorationImage(
-                                              image: AssetImage(i.foto),
-                                              fit: BoxFit.fill,
-                                              alignment: Alignment.center,
-                                              isAntiAlias: true)),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 150,
-                                    ),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child:  Text(
-                                        i.nombre,
-                                        style: TextStyle(fontSize: 20),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    )
-
-                                  ],
-                                ));
+                            return ComidaViewCarrusel(comida: i);
                           },
                         );
                       }).toList(),
-                    )))
+                    ))),
+            SizedBox(
+              height: size.height*0.35,
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.orange.shade300,
+                     tooltip: "Hola",
+                      child: SvgPicture.asset(
+                          "assets/Icons/Burguer.svg",width: 60,
+                      ),
+                    ),
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.green.shade300,
+                      tooltip: "Hola",
+                      child: SvgPicture.asset(
+                        "assets/Icons/Salad.svg",width: 60,
+                      ),
+                    ),
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.blue.shade300,
+                      tooltip: "Hola",
+                      child: SvgPicture.asset(
+                        "assets/Icons/Fish.svg",width: 60,
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.lime.shade300,
+                      tooltip: "Hola",
+                      child: SvgPicture.asset(
+                        "assets/Icons/Meat.svg",width: 60,
+                      ),
+                    ),
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.red,
+                      tooltip: "Hola",
+                      child: SvgPicture.asset(
+                        "assets/Icons/Drink.svg",width: 60,
+                      ),
+                    ),
+                    FloatingActionButton.large(
+                      onPressed: () => {},
+                      backgroundColor: Colors.yellow.shade300,
+                      tooltip: "Hola",
+                      child: SvgPicture.asset(
+                        "assets/Icons/Menu.svg",width: 60,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ))
           ],
         ),
       ),

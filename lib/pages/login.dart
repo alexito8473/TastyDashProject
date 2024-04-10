@@ -64,7 +64,7 @@ class _InicioSesion extends State<InicioSesion> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        const Background(asset: "assets/images/start.jpg"),
+        const Background(asset: "assets/images/start.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(
