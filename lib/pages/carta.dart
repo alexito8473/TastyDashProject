@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 
 class Carta extends StatefulWidget {
@@ -26,7 +24,9 @@ class _Carta extends State<Carta> {
         width: size.width,
         height: size.height,
         color: Colors.white,
-        child: Column(
+        child: SingleChildScrollView(
+        child:
+        Column(
           children: [
             ShaderMask(
                 shaderCallback: (bounds) => const LinearGradient(
@@ -81,6 +81,7 @@ class _Carta extends State<Carta> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.orange.shade300,
                      tooltip: "Hola",
@@ -89,6 +90,7 @@ class _Carta extends State<Carta> {
                       ),
                     ),
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.green.shade300,
                       tooltip: "Hola",
@@ -97,6 +99,7 @@ class _Carta extends State<Carta> {
                       ),
                     ),
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.blue.shade300,
                       tooltip: "Hola",
@@ -110,6 +113,7 @@ class _Carta extends State<Carta> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.lime.shade300,
                       tooltip: "Hola",
@@ -118,6 +122,7 @@ class _Carta extends State<Carta> {
                       ),
                     ),
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.red,
                       tooltip: "Hola",
@@ -126,20 +131,14 @@ class _Carta extends State<Carta> {
                       ),
                     ),
                     FloatingActionButton.large(
+                      heroTag: null,
                       onPressed: () => {},
                       backgroundColor: Colors.yellow.shade300,
                       tooltip: "Hola",
                       child: SvgPicture.asset(
                         "assets/Icons/Menu.svg",width: 60,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ))
-          ],
-        ),
-      ),
+                      )
+                    )])]))])))
     );
   }
 }

@@ -87,17 +87,17 @@ class _SplashScreen extends State<SplashScreen> {
             )),
         Center(
             child: Padding(
-          padding:
+              padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
-          child: const Column(
-            children:  [
-              CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 6,
-              )
-            ],
-          ),
-        ))
+              child: const Column(
+                children:  [
+                  CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 6,
+                  )
+                ],
+              ),
+            ))
       ]),
     );
   }

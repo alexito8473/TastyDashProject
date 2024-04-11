@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tfgsaladillo/pages/SplashScreen.dart';
 
@@ -15,23 +14,21 @@ Future<void> main() async {
         messagingSenderId: "1054778682067",
         projectId: "tfgalejandro-fda96",
         databaseURL:
-            "https://tfgalejandro-fda96-default-rtdb.europe-west1.firebasedatabase.app"),
+        "https://tfgalejandro-fda96-default-rtdb.europe-west1.firebasedatabase.app"),
   );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        useMaterial3: true,
+          useMaterial3: true,
           textTheme:
-              GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+          GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       initialRoute: '/',

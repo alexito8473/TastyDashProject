@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:tfgsaladillo/model/Comida.dart';
 
 class Background extends StatefulWidget {
   final String asset;
@@ -27,25 +28,7 @@ class _Background extends State<Background> {
   }
 }
 
-class Titular extends StatefulWidget {
-  final String title;
-  const Titular({super.key, required this.title});
-  @override
-  State<StatefulWidget> createState() => _Titular();
-}
 
-class _Titular extends State<Titular> {
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-        child: Center(
-            child: Text(widget.title,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40))));
-  }
-}
 
 class TextFieldMio extends StatefulWidget {
   final String hint;
@@ -80,7 +63,7 @@ class _TextFielMio extends State<TextFieldMio> {
         width: widget.sizeContext.width * 0.8,
         decoration: BoxDecoration(
             color: Colors.white70, borderRadius: BorderRadius.circular(30)),
-        child: TextField(
+        child: TextFormField(
           controller: widget.controller,
           cursorColor: Colors.black,
           decoration: InputDecoration(
@@ -128,4 +111,50 @@ void MensajeAlCliente(BuildContext context, String mensage, double font) {
 Future<List <dynamic>> leerListaJson(String json) async {
   final listaMap = jsonDecode(json);
   return listaMap;
+}
+
+List<Comida> CrearListaDeComida(){
+   List<Comida> listaDeComida = [
+    Comida(
+        nombre: 'BurguerMax',
+        foto: 'assets/images/hamburguesa.webp',
+        descripcion: 'Nada malo',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false),
+    Comida(
+        nombre: 'BurguerUltra',
+        foto: 'assets/images/imagen.webp',
+        descripcion: 'Nada malo',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false),
+     Comida(
+         nombre: 'Breaded pepper',
+         foto: 'assets/images/piminetoRebo.webp',
+         descripcion: 'Nada malo',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Nada malo',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false),
+  ];
+  return listaDeComida;
 }

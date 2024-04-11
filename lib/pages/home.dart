@@ -1,12 +1,10 @@
-import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/pages/MapView.dart';
@@ -33,28 +31,7 @@ class _HomePage extends State<HomePage> {
   List<CoolDropdownItem<String>> lenguageDropdownItems = [];
   ImageProvider imagenMia = const AssetImage("assets/images/bannersuper.webp");
   late final int preSelectec;
-  static List<Comida> listaDeComida = [
-    Comida(
-        nombre: 'BurguerMax',
-        foto: 'assets/images/hamburguesa.webp',
-        descripcion: 'Nada malo',
-        isCarne: false,
-        isBurguer: false,
-        isEnsalada: false,
-        isPizza: false,
-        isPescado: false,
-        isSuchi: false),
-    Comida(
-        nombre: 'BurguerUltra',
-        foto: 'assets/images/imagen.webp',
-        descripcion: 'Nada malo',
-        isCarne: false,
-        isBurguer: false,
-        isEnsalada: false,
-        isPizza: false,
-        isPescado: false,
-        isSuchi: false)
-  ];
+  static List<Comida> listaDeComida = CrearListaDeComida();
   @override
   void initState() {
     preSelectec = widget.idioma.positionIdioma;
@@ -279,7 +256,7 @@ class _HomePage extends State<HomePage> {
                                                     .idioma
                                                     .positionIdioma]["Politica"],
                                                 style: const TextStyle(
-                                                    fontSize: 21,color: Colors.black)),)
+                                                    fontSize: 21,color: Colors.black)))
                                           )
                                     ],
                                   ),
