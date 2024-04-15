@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -19,8 +18,8 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesion extends State<InicioSesion> {
-  TextEditingController _gmailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _gmailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
   DatabaseReference date = FirebaseDatabase.instance.ref();
   late Person person;
@@ -29,6 +28,7 @@ class _InicioSesion extends State<InicioSesion> {
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
+    BitmapDescriptor icon;
     if (user) {
       final snapshot = await date
           .child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre")
@@ -38,13 +38,14 @@ class _InicioSesion extends State<InicioSesion> {
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
+      icon=await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.png");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
                   idioma: widget.idioma,
-                  prefs: widget.prefs,
+                  prefs: widget.prefs, icon: icon,
                 )),
         (route) => false,
       );
@@ -102,7 +103,7 @@ class _InicioSesion extends State<InicioSesion> {
                   child: Text(
                     widget.idioma.datosJson[widget.idioma.positionIdioma]
                         ["Iniciar_sesion"],
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
               ),

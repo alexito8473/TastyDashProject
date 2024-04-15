@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -35,6 +35,7 @@ class _Registrarse extends State<Registrarse> {
     String nombre = _nameController.text;
     String gmail = _gmailController.text;
     String password = _passwordController.text;
+    BitmapDescriptor icon;
     bool user = await authService.register(gmail, password);
     if (user) {
       await date
@@ -44,13 +45,14 @@ class _Registrarse extends State<Registrarse> {
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
+      icon=await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.png");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
                   idioma: widget.idioma,
-                  prefs: widget.prefs,
+                  prefs: widget.prefs, icon: icon,
                 )),
         (route) => false,
       );

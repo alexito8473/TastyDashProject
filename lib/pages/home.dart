@@ -2,6 +2,7 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
@@ -14,12 +15,14 @@ import 'package:tfgsaladillo/pages/login.dart';
 class HomePage extends StatefulWidget {
   final Person person;
   final Idioma idioma;
+  final BitmapDescriptor icon;
   final SharedPreferences prefs;
   const HomePage(
       {super.key,
       required this.person,
       required this.idioma,
-      required this.prefs});
+      required this.prefs,
+        required this.icon});
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
@@ -39,7 +42,7 @@ class _HomePage extends State<HomePage> {
       lenguageDropdownItems.add(
         CoolDropdownItem<String>(
             label: lenguage[i],
-            icon: Container(
+            icon: SizedBox(
               height: 25,
               width: 25,
               child: SvgPicture.asset(
@@ -58,7 +61,7 @@ class _HomePage extends State<HomePage> {
       body: posicion == 0
           ? Carta(listaDeComida: listaDeComida)
           : posicion == 1
-              ? MapViewFood()
+              ? MapViewFood(icon: widget.icon)
               : Container(
                   width: size.width,
                   height: size.height,
@@ -126,8 +129,7 @@ class _HomePage extends State<HomePage> {
                                           textAlign: TextAlign.left)),
                                   FloatingActionButton.extended(
                                       backgroundColor: Colors.white,
-                                      icon:
-                                          const Icon(Icons.logout),
+                                      icon: const Icon(Icons.logout),
                                       onPressed: () {
                                         widget.prefs.remove("Name");
                                         widget.prefs.remove("Gmail");
@@ -143,7 +145,7 @@ class _HomePage extends State<HomePage> {
                                         );
                                       },
                                       label:Container(
-                                        width: size.width*0.24,
+                                        width: size.width*0.27,
                                         alignment: Alignment.center,
                                         child: Text(widget.idioma.datosJson[widget
                                             .idioma
@@ -295,13 +297,9 @@ class _HomePage extends State<HomePage> {
   }
 }
 
-TextStyle StyleTextNavegator() {
-  return const TextStyle(fontSize: 20);
-}
-
 class PoliticaTexto extends StatelessWidget {
-  Idioma idioma;
-  PoliticaTexto({required this.idioma});
+  final Idioma idioma;
+  const PoliticaTexto({super.key, required this.idioma});
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

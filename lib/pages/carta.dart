@@ -15,6 +15,7 @@ class _Carta extends State<Carta> {
   @override
   void initState() {
     imagenActual = widget.listaDeComida[0].foto;
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {

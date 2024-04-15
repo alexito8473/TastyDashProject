@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -22,12 +23,12 @@ class _SplashScreen extends State<SplashScreen> {
     super.initState();
     Idioma idioma;
     String? nombre;
+    BitmapDescriptor icon;
     String? gmail;
     String? password;
     Future.delayed(const Duration(seconds: 1), () async {
       await precacheImage(const AssetImage('assets/images/bannersuper.webp'), context);
       datosJson = await leerListaJson(await rootBundle.loadString("Data/leng.json"));
-      print(datosJson);
       prefs = await SharedPreferences.getInstance();
       int? posicionIdioma= prefs.getInt("Idioma");
       if(posicionIdioma==null){
@@ -48,9 +49,10 @@ class _SplashScreen extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => InicioSesion(idioma: idioma, prefs: prefs,)),
                 (route) => false);
       }else{
+        icon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.webp");
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre!, pasword: password!, gmail: gmail!), idioma: idioma, prefs: prefs,)),
+            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre!, pasword: password!, gmail: gmail!), idioma: idioma, prefs: prefs, icon: icon,)),
                 (route) => false);
       }
     });

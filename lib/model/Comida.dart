@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Comida{
   final String nombre;
@@ -55,10 +56,23 @@ class ComidaViewCarrusel extends StatelessWidget{
                   width: double.infinity,
                   child:  Text(
                     comida.nombre,
-                    style: TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20),
                     textAlign: TextAlign.left,
                   ),
-                )
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 10,
+                  child:  RatingBar(
+
+                    minRating: 0,
+                    maxRating: 4,
+                    initialRating: 2,
+                    onRatingUpdate: (double value) {  },
+                    ratingWidget: RatingWidget(full: Icon(Icons.star,weight: 0.1,color: Colors.orange), half:Icon(Icons.star,weight: 0.1,), empty: Icon(Icons.star,weight: 0.1,)),
+
+                  )
+                ),
 
               ],
             ))
