@@ -16,7 +16,13 @@
     "Politica_Text2": "Utilizamos la información recopilada para proporcionar y mejorar la funcionalidad de la Aplicación, responder a sus consultas y proporcionarle información relevante sobre nuestros servicios.",
     "Politica_Text3": "No vendemos, alquilamos ni compartimos su información personal con terceros con fines comerciales, excepto cuando sea necesario para proporcionarle los servicios que solicita",
     "Politica_Text4": "Implementamos medidas de seguridad razonables para proteger la información personal que recopilamos y almacenamos. Sin embargo, tenga en cuenta que ninguna medida de seguridad es absolutamente infalible.",
-    "Politica_Text5": "Al utilizar nuestra Aplicación, usted acepta esta Política de Privacidad y el procesamiento de su información personal de acuerdo con la misma."
+    "Politica_Text5": "Al utilizar nuestra Aplicación, usted acepta esta Política de Privacidad y el procesamiento de su información personal de acuerdo con la misma.",
+    "HoverHambur": "Hamburguesa",
+    "HoverEnsa": "Ensalada",
+    "HoverPesca": "Pescado",
+    "HoverCarne": "Carne",
+    "HoverBebida": "Bebida",
+    "HoverCarta": "Carta"
   },
   {
     "Carta": "Menu",
@@ -35,6 +41,11 @@
     "Politica_Text2": "We use the information collected to provide and improve the functionality of the Application, respond to your queries and provide you with relevant information about our services.",
     "Politica_Text3": "We do not sell, rent, or share your personal information with third parties for marketing purposes, except as necessary to provide you with the services you request.",
     "Politica_Text4": "We implement reasonable security measures to protect the personal information we collect and store. However, keep in mind that no security measures are absolutely foolproof.",
-    "Politica_Text5": "By using our Application, you agree to this Privacy Policy and the processing of your personal information in accordance with it."
+    "Politica_Text5": "By using our Application, you agree to this Privacy Policy and the processing of your personal information in accordance with it.",
+    "HoverHambur":  "Burguer",
+    "HoverEnsa": "Salad",
+    "HoverPesca": "Fish",
+    "HoverBebida": "Drink",
+    "HoverCarta": "Menu"
   }
 ]

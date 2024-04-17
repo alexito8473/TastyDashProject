@@ -4,9 +4,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/home.dart';
-import 'package:tfgsaladillo/pages/register.dart';
+import 'package:tfgsaladillo/pages/Home.dart';
+import 'package:tfgsaladillo/pages/Register.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
 class InicioSesion extends StatefulWidget {
@@ -38,14 +39,16 @@ class _InicioSesion extends State<InicioSesion> {
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
-      icon=await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.png");
+      icon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(), "assets/images/ic_map.webp");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
                   idioma: widget.idioma,
-                  prefs: widget.prefs, icon: icon,
+                  prefs: widget.prefs,
+                  icon: icon, monedEnUso: Moneda.DOLAR,
                 )),
         (route) => false,
       );
@@ -53,6 +56,7 @@ class _InicioSesion extends State<InicioSesion> {
       MensajeAlCliente(context, "Gmail y/o contraseña no son correctos", 15);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -91,10 +95,13 @@ class _InicioSesion extends State<InicioSesion> {
                     obscureText: true,
                   )),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: size.width*0.2,vertical: size.height*0.015),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.2,
+                    vertical: size.height * 0.015),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: FloatingActionButton(
-                  heroTag: null,
+                  heroTag: "moverFloating",
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
                   onPressed: () {
@@ -110,32 +117,41 @@ class _InicioSesion extends State<InicioSesion> {
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(bottom: 5),
-                margin: EdgeInsets.symmetric(horizontal: size.width*0.28,vertical: size.width*0.01),
+                margin: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.28, vertical: size.width * 0.01),
                 decoration: const BoxDecoration(
                   color: Colors.transparent,
-                  border: Border(bottom: BorderSide(color: Colors.white,width: 2)),
-                ) ,
-                child:  InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Registrarse(
-                                idioma: widget.idioma, prefs: widget.prefs)));
-                  },
-                  child: Text(
-                    widget.idioma.datosJson[widget.idioma.positionIdioma]
-                    ["Crear_una_cuenta"],
-                    style: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        height: BorderSide.strokeAlignOutside,
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w100),
-                  )
+                  border:
+                      Border(bottom: BorderSide(color: Colors.white, width: 2)),
                 ),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 1100),
+                        reverseTransitionDuration: const Duration(milliseconds: 700),
+                        barrierColor: Colors.black,
+                       opaque: true,
+                        barrierDismissible: true,
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: Registrarse(
+                                idioma: widget.idioma, prefs: widget.prefs),
+                          );
+                        },
+                      ));
+                    },
+                    child: Text(
+                      widget.idioma.datosJson[widget.idioma.positionIdioma]
+                          ["Crear_una_cuenta"],
+                      style: const TextStyle(
+                          fontStyle: FontStyle.normal,
+                          height: BorderSide.strokeAlignOutside,
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w100),
+                    )),
               )
-
             ],
           ),
         )

@@ -6,9 +6,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/home.dart';
-import 'package:tfgsaladillo/pages/login.dart';
+import 'package:tfgsaladillo/pages/Home.dart';
+import 'package:tfgsaladillo/pages/Login.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override
@@ -26,34 +28,52 @@ class _SplashScreen extends State<SplashScreen> {
     BitmapDescriptor icon;
     String? gmail;
     String? password;
+    int? posicionIdioma;
     Future.delayed(const Duration(seconds: 1), () async {
-      await precacheImage(const AssetImage('assets/images/bannersuper.webp'), context);
-      datosJson = await leerListaJson(await rootBundle.loadString("Data/leng.json"));
+      await precacheImage(
+          const AssetImage('assets/images/bannersuper.webp'), context);
+      datosJson =
+          await leerListaJson(await rootBundle.loadString("Data/leng.json"));
       prefs = await SharedPreferences.getInstance();
-      int? posicionIdioma= prefs.getInt("Idioma");
-      if(posicionIdioma==null){
+      posicionIdioma = prefs.getInt("Idioma");
+      if (posicionIdioma == null) {
         idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
-      }else{
-        if(posicionIdioma>=0&&posicionIdioma<=1){
-          idioma = Idioma(datosJson: datosJson, positionIdioma: posicionIdioma);
-        }else{
+      } else {
+        if (posicionIdioma! >= 0 && posicionIdioma! <= 1) {
+          idioma =
+              Idioma(datosJson: datosJson, positionIdioma: posicionIdioma!);
+        } else {
           idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
         }
       }
-      nombre= prefs.getString("Name");
-      gmail= prefs.getString("Gmail");
-      password= prefs.getString("Password");
-      if(nombre==null||gmail==null||password==null){
+      nombre = prefs.getString("Name");
+      gmail = prefs.getString("Gmail");
+      password = prefs.getString("Password");
+
+      if (nombre == null || gmail == null || password == null) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => InicioSesion(idioma: idioma, prefs: prefs,)),
-                (route) => false);
-      }else{
-        icon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.webp");
+            MaterialPageRoute(
+                builder: (context) => InicioSesion(
+                      idioma: idioma,
+                      prefs: prefs,
+                    )),
+            (route) => false);
+      } else {
+        icon = await BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(), "assets/images/ic_map.webp");
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomePage(person: Person(nombre:nombre!, pasword: password!, gmail: gmail!), idioma: idioma, prefs: prefs, icon: icon,)),
-                (route) => false);
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                      person: Person(
+                          nombre: nombre!, pasword: password!, gmail: gmail!),
+                      idioma: idioma,
+                      prefs: prefs,
+                      icon: icon,
+                      monedEnUso: devolverTipoMoneda(prefs.getString("SimboloMoneda")),
+                    )),
+            (route) => false);
       }
     });
   }
@@ -89,17 +109,17 @@ class _SplashScreen extends State<SplashScreen> {
             )),
         Center(
             child: Padding(
-              padding:
+          padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
-              child: const Column(
-                children:  [
-                  CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 6,
-                  )
-                ],
-              ),
-            ))
+          child: const Column(
+            children: [
+              CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 6,
+              )
+            ],
+          ),
+        ))
       ]),
     );
   }

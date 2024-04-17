@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
+import 'package:tfgsaladillo/pages/PageFood.dart';
 
 class Background extends StatefulWidget {
   final String asset;
@@ -112,49 +113,125 @@ Future<List <dynamic>> leerListaJson(String json) async {
   final listaMap = jsonDecode(json);
   return listaMap;
 }
-
+List<String> CrearListaBanderas(){
+  return ["assets/Icons/Spain.svg", "assets/Icons/England.svg"];
+}
+List<String> CrearListaPaises(){
+  return ["Español", "English"];
+}
 List<Comida> CrearListaDeComida(){
    List<Comida> listaDeComida = [
     Comida(
         nombre: 'BurguerMax',
         foto: 'assets/images/hamburguesa.webp',
-        descripcion: 'Nada malo',
+        descripcion: 'Mega burguer max',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false),
+        isSuchi: false,
+        precio: 5.12),
     Comida(
         nombre: 'BurguerUltra',
         foto: 'assets/images/imagen.webp',
-        descripcion: 'Nada malo',
+        descripcion: 'Burguer ultra maximo bum',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false),
+        isSuchi: false, 
+        precio: 4.12),
      Comida(
          nombre: 'Breaded pepper',
          foto: 'assets/images/piminetoRebo.webp',
-         descripcion: 'Nada malo',
+         descripcion: 'Comida rara',
          isCarne: false,
          isBurguer: false,
          isEnsalada: true,
          isPizza: false,
          isPescado: false,
-         isSuchi: false),
+         isSuchi: false,
+         precio: 5.99),
      Comida(
          nombre: 'Shrimp Scampi',
          foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Nada malo',
+         descripcion: 'Ratoncio',
          isCarne: false,
          isBurguer: false,
          isEnsalada: false,
          isPizza: false,
          isPescado: false,
-         isSuchi: false),
+         isSuchi: false,
+         precio: 3.22),
   ];
   return listaDeComida;
+}
+double conversorMoneda(double original){
+  return 2.2;
+}
+
+class ComidaViewCarrusel extends StatefulWidget{
+  final Comida comida;
+  const ComidaViewCarrusel({super.key, required this.comida});
+  @override
+  State<StatefulWidget> createState() =>_ComidaViewCarrusel();
+}
+
+class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () =>{
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
+          /*
+          Navigator.of(context).push(
+              PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 800),
+                reverseTransitionDuration: const Duration(milliseconds: 800),
+                barrierColor: Colors.black54,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return FadeTransition(opacity: animation,
+                    child: PaginaComida(comida: widget.comida),
+                  );
+                },
+              ))
+              */
+        } ,
+        child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.89),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            BorderRadius.circular(15),
+                            color: Colors.transparent,
+                            image: DecorationImage(
+                                image: AssetImage(widget.comida.foto),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                isAntiAlias: true)),
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                      ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    width: double.infinity,
+                    child: Text(
+                      widget.comida.nombre,
+                      style: const TextStyle(color: Colors.black,fontSize: 25),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
+              ))
+
+    );
+  }
 }

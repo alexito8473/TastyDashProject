@@ -4,7 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/pages/home.dart';
+import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/pages/Home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
@@ -52,7 +53,7 @@ class _Registrarse extends State<Registrarse> {
             builder: (context) => HomePage(
                   person: person,
                   idioma: widget.idioma,
-                  prefs: widget.prefs, icon: icon,
+                  prefs: widget.prefs, icon: icon, monedEnUso: Moneda.DOLAR,
                 )),
         (route) => false,
       );
@@ -121,6 +122,7 @@ class _Registrarse extends State<Registrarse> {
                 margin: EdgeInsets.symmetric(horizontal: size.width*0.2,vertical: size.height*0.015),
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: FloatingActionButton(
+                  heroTag: "moverFloating",
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
                   onPressed: () {
@@ -136,6 +138,7 @@ class _Registrarse extends State<Registrarse> {
             ],
           ),
           floatingActionButton: FloatingActionButton(
+              heroTag: "textoToButton",
               backgroundColor: Colors.orange,
               onPressed: () {
                 Navigator.pop(context);
