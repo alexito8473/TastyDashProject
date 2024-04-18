@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           textTheme:
-          GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+          GoogleFonts.abelTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       initialRoute: '/',

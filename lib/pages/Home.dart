@@ -2,6 +2,7 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -20,8 +21,8 @@ class HomePage extends StatefulWidget {
   final Idioma idioma;
   final BitmapDescriptor icon;
   final SharedPreferences prefs;
-  final Moneda monedEnUso;
-  const HomePage(
+  Moneda monedEnUso;
+  HomePage(
       {super.key,
       required this.person,
       required this.idioma,
@@ -51,6 +52,7 @@ class _HomePage extends State<HomePage> {
   final monedaDropdownController = DropdownController();
   final List<Moneda> monedas = Moneda.values;
   final List<CoolDropdownItem<String>> monedaDropdownItems = [];
+
 
   @override
   void initState() {
@@ -96,6 +98,7 @@ class _HomePage extends State<HomePage> {
             ? Carta(
                 listaDeComida: listaDeComida,
                 idioma: widget.idioma,
+          monedEnUso: widget.monedEnUso,
               )
             : posicion == 1
                 ? Container(
@@ -237,14 +240,16 @@ class _HomePage extends State<HomePage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              SizedBox(
+                                              Container(
+                                                width: 100,
+                                                alignment: Alignment.centerLeft,
                                                 child: Text(
                                                     widget.idioma.datosJson[
                                                             widget.idioma
                                                                 .positionIdioma]
                                                         ["Idioma"],
                                                     style: const TextStyle(
-                                                        fontSize: 20)),
+                                                        fontSize: 20),textAlign: TextAlign.left,),
                                               ),
                                               CoolDropdown<String>(
                                                 controller:
@@ -262,7 +267,6 @@ class _HomePage extends State<HomePage> {
                                                     widget.prefs.setInt(
                                                         "Idioma",
                                                         int.parse(value));
-                                                    print(value);
                                                   }),
                                                 },
                                                 resultOptions:
@@ -292,14 +296,54 @@ class _HomePage extends State<HomePage> {
                                             ],
                                           ),
                                         ),
-                                        CambioMoneda(
-                                          size: size,
-                                          prefs: widget.prefs,
-                                          idioma: widget.idioma,
-                                          monedaDropdownController:
-                                              monedaDropdownController,
-                                          monedaDropdownItems:
-                                              monedaDropdownItems,
+                                        Container(
+                                          alignment: Alignment.center,
+                                          width: size.width * 0.7,
+                                          height: size.height * 0.05,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              const SizedBox(
+                                                width: 105,
+                                                child: Text("Moneda", style: TextStyle(fontSize: 20)),
+                                              ),
+                                              Center(
+                                                child: CoolDropdown<String>(
+                                                  controller: monedaDropdownController,
+                                                  dropdownList: monedaDropdownItems,
+                                                  defaultItem: monedaDropdownItems[monedas.indexOf(widget.monedEnUso)],
+                                                  onChange: (value) => {
+                                                    setState((){
+                                                      widget.prefs.setString("SimboloMoneda", value);
+                                                      widget.monedEnUso=devolverTipoMoneda(value);
+                                                    })
+
+                                                  },
+                                                  resultOptions: const ResultOptions(
+                                                    width: 90,
+                                                    render: ResultRender.label,
+                                                    openBoxDecoration: BoxDecoration(color: Colors.white),
+                                                    icon: SizedBox(
+                                                      width: 10,
+                                                      height: 10,
+                                                      child: CustomPaint(
+                                                        painter: DropdownArrowPainter(
+                                                          color: Colors.orange,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  dropdownOptions: const DropdownOptions(
+                                                      width: 100, align: DropdownAlign.center),
+                                                  dropdownItemOptions: styleDropdownItemOptions(),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         BotonTerminosDeUso(
                                           idioma: widget.idioma,
@@ -346,6 +390,7 @@ class _HomePage extends State<HomePage> {
 class CambioMoneda extends StatefulWidget {
   final Size size;
   final Idioma idioma;
+   Moneda monedadeUso;
   final SharedPreferences prefs;
   final List<CoolDropdownItem<String>> monedaDropdownItems;
   final DropdownController monedaDropdownController;
@@ -355,7 +400,8 @@ class CambioMoneda extends StatefulWidget {
       required this.prefs,
       required this.idioma,
       required this.monedaDropdownController,
-      required this.monedaDropdownItems});
+      required this.monedaDropdownItems,
+        required this.monedadeUso});
   @override
   State<StatefulWidget> createState() => _CambioMoneda();
 }
@@ -364,49 +410,7 @@ class _CambioMoneda extends State<CambioMoneda> {
   int preSelect = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: widget.size.width * 0.7,
-      height: widget.size.height * 0.05,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const SizedBox(
-            width: 105,
-            child: Text("Moneda", style: TextStyle(fontSize: 20)),
-          ),
-          Center(
-            child: CoolDropdown<String>(
-              controller: widget.monedaDropdownController,
-              dropdownList: widget.monedaDropdownItems,
-              defaultItem: widget.monedaDropdownItems[0],
-              onChange: (value) => {print},
-              resultOptions: const ResultOptions(
-                width: 90,
-                render: ResultRender.label,
-                openBoxDecoration: BoxDecoration(color: Colors.white),
-                icon: SizedBox(
-                  width: 10,
-                  height: 10,
-                  child: CustomPaint(
-                    painter: DropdownArrowPainter(
-                      color: Colors.orange,
-                    ),
-                  ),
-                ),
-              ),
-              dropdownOptions: const DropdownOptions(
-                  width: 100, align: DropdownAlign.center),
-              dropdownItemOptions: styleDropdownItemOptions(),
-            ),
-          ),
-        ],
-      ),
-    );
+    return Container();
   }
 }
 

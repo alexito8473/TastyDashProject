@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
+import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/pages/PageFood.dart';
 
 class Background extends StatefulWidget {
@@ -144,6 +145,105 @@ List<Comida> CrearListaDeComida(){
         isSuchi: false, 
         precio: 4.12),
      Comida(
+         nombre: 'Burguer Buey',
+         foto: 'assets/images/haburguesaEspecial.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
+         nombre: 'Burguer Complete',
+         foto: 'assets/images/hamburguesaCompleta.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: true,
+         isEnsalada: false,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 4.50),
+     Comida(
          nombre: 'Breaded pepper',
          foto: 'assets/images/piminetoRebo.webp',
          descripcion: 'Comida rara',
@@ -160,11 +260,67 @@ List<Comida> CrearListaDeComida(){
          descripcion: 'Ratoncio',
          isCarne: false,
          isBurguer: false,
-         isEnsalada: false,
+         isEnsalada: true,
          isPizza: false,
          isPescado: false,
          isSuchi: false,
          precio: 3.22),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 3.22),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 3.22),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 3.22),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 3.22),
+     Comida(
+         nombre: 'Shrimp Scampi',
+         foto: 'assets/images/gambasAl.webp',
+         descripcion: 'Ratoncio',
+         isCarne: false,
+         isBurguer: false,
+         isEnsalada: true,
+         isPizza: false,
+         isPescado: false,
+         isSuchi: false,
+         precio: 3.22),
+
   ];
   return listaDeComida;
 }
@@ -174,7 +330,8 @@ double conversorMoneda(double original){
 
 class ComidaViewCarrusel extends StatefulWidget{
   final Comida comida;
-  const ComidaViewCarrusel({super.key, required this.comida});
+  Moneda monedEnUso;
+  ComidaViewCarrusel({super.key, required this.comida, required this.monedEnUso});
   @override
   State<StatefulWidget> createState() =>_ComidaViewCarrusel();
 }
@@ -205,32 +362,44 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                 color: Colors.white.withOpacity(0.89),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Column(
-                children: [
-                  Container(
-                        decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.circular(15),
-                            color: Colors.transparent,
-                            image: DecorationImage(
-                                image: AssetImage(widget.comida.foto),
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                isAntiAlias: true)),
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                      ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    width: double.infinity,
-                    child: Text(
-                      widget.comida.nombre,
-                      style: const TextStyle(color: Colors.black,fontSize: 25),
-                      textAlign: TextAlign.left,
+              child: SingleChildScrollView(
+                child:   Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(15),
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                              image: AssetImage(widget.comida.foto),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                              isAntiAlias: true)),
+                      width: MediaQuery.of(context).size.width,
+                      height: 150,
                     ),
-                  ),
-                ],
-              ))
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: double.infinity,
+                      child: Text(
+                        widget.comida.nombre,
+                        style: const TextStyle(color: Colors.black,fontSize: 25),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: double.infinity,
+                      child: Text(
+                        "${(widget.comida.precio*widget.monedEnUso.conversor).toStringAsFixed(2)} ${widget.monedEnUso.simbolo}",
+                        style: const TextStyle(color: Colors.black,fontSize: 25),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                )
+              )
+            )
 
     );
   }

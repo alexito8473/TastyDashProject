@@ -47,6 +47,10 @@ flutter:
     - assets/images/imagen.webp
     - assets/images/piminetoRebo.webp
     - assets/images/gambasAl.webp
+    - assets/images/hamburguesasBanner.webp
+    - assets/images/ensaladaBanner.webp
+    - assets/images/haburguesaEspecial.webp
+    - assets/images/hamburguesaCompleta.webp
     - Data/leng.json
     - assets/Icons/Spain.svg
     - assets/Icons/Burguer.svg
@@ -56,6 +60,9 @@ flutter:
     - assets/Icons/Drink.svg
     - assets/Icons/Menu.svg
     - assets/Icons/England.svg
+
+
+
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

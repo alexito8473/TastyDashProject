@@ -4,11 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/pages/ListComida.dart';
 
 class Carta extends StatefulWidget {
   final List<Comida> listaDeComida;
   final Idioma idioma;
-  const Carta({super.key, required this.listaDeComida, required this.idioma});
+  Moneda monedEnUso;
+  Carta({super.key, required this.listaDeComida, required this.idioma, required this.monedEnUso});
   @override
   State<Carta> createState() => _Carta();
 }
@@ -20,6 +23,20 @@ class _Carta extends State<Carta> {
     imagenActual = widget.listaDeComida[0].foto;
     super.initState();
   }
+  void NavegarLista(List<Comida> listaDeUnaComida,String imagenBanner){
+    Navigator.of(context).push(
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 500),
+          reverseTransitionDuration: const Duration(milliseconds: 500),
+          barrierColor: Colors.black54,
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(opacity: animation,
+              child: ListaComida(listaComida:listaDeUnaComida, imagenBanner: imagenBanner, monedEnUso: widget.monedEnUso,),
+            );
+          },
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -71,7 +88,7 @@ class _Carta extends State<Carta> {
                         items: widget.listaDeComida.map((i) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return  ComidaViewCarrusel(comida: i);
+                              return  ComidaViewCarrusel(comida: i, monedEnUso: widget.monedEnUso,);
                             },
                           );
                         }).toList(),
@@ -86,7 +103,9 @@ class _Carta extends State<Carta> {
                           children: [
                             FloatingActionButton.large(
                               heroTag: null,
-                              onPressed: () => {},
+                              onPressed: () => {
+                                NavegarLista(widget.listaDeComida.where((element) => element.isBurguer).toList(),"assets/images/hamburguesasBanner.webp")
+                              },
                               backgroundColor: Colors.orange.shade300,
                               tooltip: widget.idioma
                                       .datosJson[widget.idioma.positionIdioma]
@@ -98,7 +117,9 @@ class _Carta extends State<Carta> {
                             ),
                             FloatingActionButton.large(
                               heroTag: null,
-                              onPressed: () => {},
+                              onPressed: () => {
+                                NavegarLista(widget.listaDeComida.where((element) => element.isEnsalada).toList(),"assets/images/ensaladaBanner.webp")
+                              },
                               backgroundColor: Colors.green.shade300,
                               tooltip: widget.idioma
                                       .datosJson[widget.idioma.positionIdioma]
