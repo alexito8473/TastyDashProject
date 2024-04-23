@@ -25,6 +25,8 @@ dependencies:
   cool_dropdown: ^2.1.0
   flutter_svg: ^2.0.10+1
   flutter_rating_bar: ^4.0.1
+  http: ^1.2.1
+  google_generative_ai: ^0.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -37,6 +39,7 @@ flutter_icons:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/bannerFiltros.jpg
     - assets/images/start.webp
     - assets/images/screen.webp
     - assets/images/register.webp

@@ -29,9 +29,11 @@ class _SplashScreen extends State<SplashScreen> {
     String? gmail;
     String? password;
     int? posicionIdioma;
-    Future.delayed(const Duration(seconds: 1), () async {
+    Future.delayed(const Duration(milliseconds: 1000), () async {
       await precacheImage(
           const AssetImage('assets/images/bannersuper.webp'), context);
+      await precacheImage(
+          const AssetImage("assets/images/bannerFiltros.jpg"), context);
       datosJson =
           await leerListaJson(await rootBundle.loadString("Data/leng.json"));
       prefs = await SharedPreferences.getInstance();
@@ -49,7 +51,6 @@ class _SplashScreen extends State<SplashScreen> {
       nombre = prefs.getString("Name");
       gmail = prefs.getString("Gmail");
       password = prefs.getString("Password");
-
       if (nombre == null || gmail == null || password == null) {
         Navigator.pushAndRemoveUntil(
             context,
@@ -75,6 +76,7 @@ class _SplashScreen extends State<SplashScreen> {
                     )),
             (route) => false);
       }
+
     });
   }
 
@@ -83,8 +85,7 @@ class _SplashScreen extends State<SplashScreen> {
     return Scaffold(
       body: Stack(children: [
         const Background(asset: "assets/images/screen.webp"),
-        const Align(
-            alignment: AlignmentDirectional.bottomCenter,
+        const Center(
             child: Padding(
               padding: EdgeInsets.only(bottom: 20),
               child: Column(
@@ -95,13 +96,13 @@ class _SplashScreen extends State<SplashScreen> {
                     "Tasty Dash",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 27,
+                        fontSize: 30,
                         color: Colors.white),
                     textAlign: TextAlign.end,
                   ),
                   Text(
                     "By Alejandro Aguilar",
-                    style: TextStyle(fontSize: 10, color: Colors.white),
+                    style: TextStyle(fontSize: 13, color: Colors.white),
                     textAlign: TextAlign.end,
                   )
                 ],
@@ -115,7 +116,8 @@ class _SplashScreen extends State<SplashScreen> {
             children: [
               CircularProgressIndicator(
                 color: Colors.white,
-                strokeWidth: 6,
+                strokeAlign: 1.5,
+                strokeWidth: 8,
               )
             ],
           ),

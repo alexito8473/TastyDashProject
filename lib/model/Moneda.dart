@@ -1,5 +1,5 @@
 enum Moneda implements Comparable<Moneda> {
-  DOLAR(simbolo: "\$", conversor: 1.06),
+  LIBRA(simbolo: "£", conversor: 0.863271),
   EURO(simbolo: "€", conversor: 1);
    const Moneda({required this.simbolo,required this.conversor});
    final String simbolo;
@@ -12,7 +12,7 @@ enum Moneda implements Comparable<Moneda> {
 
 Moneda devolverTipoMoneda(String? simbolo){
   switch(simbolo){
-    case "\$":return Moneda.DOLAR;
+    case "£":return Moneda.LIBRA;
     case "€":return Moneda.EURO;
     case null:return Moneda.EURO;
     default:return Moneda.EURO;

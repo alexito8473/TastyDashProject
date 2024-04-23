@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tfgsaladillo/Recursos.dart';
@@ -44,27 +45,31 @@ class _Carta extends State<Carta> {
         child: Container(
             width: size.width,
             height: size.height,
-            color: Colors.white,
+            color: Colors.black,
             child: SingleChildScrollView(
                 child: Column(children: [
                   ShaderMask(
                   shaderCallback: (bounds) => const LinearGradient(
                           begin: Alignment.center,
                           end: Alignment.bottomCenter,
+                          stops: [0.2,0.6,1],
                           colors: [
                             Colors.transparent,
-                            Colors.transparent,
-                            Colors.transparent,
-                            Colors.white
+                            Colors.black26,
+                            Colors.black
                           ]).createShader(bounds),
-                  blendMode: BlendMode.colorDodge,
+                  blendMode: BlendMode.darken,
                   child: Container(
+                    width: size.width,
+                      height: size.height*0.55,
                       padding: EdgeInsets.only(
                           top: size.height * 0.15, bottom: size.height * 0.05),
                       decoration: BoxDecoration(
+                        color: Colors.black,
                           image: DecorationImage(
                               image: AssetImage(imagenActual),
-                              fit: BoxFit.cover)),
+                              fit: BoxFit.cover,
+                          )),
                       child: CarouselSlider(
                         options: CarouselOptions(
                             pageSnapping: true,
@@ -72,7 +77,7 @@ class _Carta extends State<Carta> {
                             initialPage: 0,
                             aspectRatio: 16 / 9,
                             disableCenter: false,
-                            viewportFraction: 0.7,
+                            viewportFraction: 0.65,
                             enableInfiniteScroll: true,
                             autoPlay: true,
                             autoPlayInterval: const Duration(seconds: 8),
@@ -93,8 +98,17 @@ class _Carta extends State<Carta> {
                           );
                         }).toList(),
                       ))),
-              SizedBox(
-                  height: size.height*0.375,
+              Container(
+              width: size.width,
+                  height: size.height*0.372,
+                  decoration:  BoxDecoration(
+                      color: Colors.black,
+                    image: DecorationImage(
+                      image: const AssetImage("assets/images/bannerFiltros.jpg"),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.50), BlendMode.darken)
+                    )
+                  ),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

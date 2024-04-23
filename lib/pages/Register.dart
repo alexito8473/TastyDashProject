@@ -46,14 +46,18 @@ class _Registrarse extends State<Registrarse> {
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
-      icon=await BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/images/ic_map.png");
+      icon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(), "assets/images/ic_map.png");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
                   idioma: widget.idioma,
-                  prefs: widget.prefs, icon: icon, monedEnUso: Moneda.DOLAR,
+                  prefs: widget.prefs,
+                  icon: icon,
+                  monedEnUso: devolverTipoMoneda(
+                      widget.prefs.getString("SimboloMoneda")),
                 )),
         (route) => false,
       );
@@ -95,32 +99,33 @@ class _Registrarse extends State<Registrarse> {
                   )),
               Container(
                   margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-                child:   TextFieldMio(
-                  hint: "Email",
-                  sizeContext: size,
-                  textType: TextInputType.emailAddress,
-                  icono: Icons.email,
-                  controller: _gmailController,
-                  action: TextInputAction.next,
-                  obscureText: false,
-                )
-              ),
+                  child: TextFieldMio(
+                    hint: "Email",
+                    sizeContext: size,
+                    textType: TextInputType.emailAddress,
+                    icono: Icons.email,
+                    controller: _gmailController,
+                    action: TextInputAction.next,
+                    obscureText: false,
+                  )),
               Container(
                   margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-                child:  TextFieldMio(
-                  controller: _passwordController,
-                  sizeContext: size,
-                  hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                  ["Contraseña"],
-                  icono: Icons.lock,
-                  textType: TextInputType.name,
-                  action: TextInputAction.none,
-                  obscureText: true,
-                )
-              ),
+                  child: TextFieldMio(
+                    controller: _passwordController,
+                    sizeContext: size,
+                    hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                        ["Contraseña"],
+                    icono: Icons.lock,
+                    textType: TextInputType.name,
+                    action: TextInputAction.none,
+                    obscureText: true,
+                  )),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: size.width*0.2,vertical: size.height*0.015),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.2,
+                    vertical: size.height * 0.015),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: FloatingActionButton(
                   heroTag: "moverFloating",
                   backgroundColor: Colors.orange,

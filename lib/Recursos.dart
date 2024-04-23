@@ -64,7 +64,7 @@ class _TextFielMio extends State<TextFieldMio> {
             : widget.sizeContext.height * 0.11,
         width: widget.sizeContext.width * 0.8,
         decoration: BoxDecoration(
-            color: Colors.white70, borderRadius: BorderRadius.circular(30)),
+            color: Colors.white60, borderRadius: BorderRadius.circular(24)),
         child: TextFormField(
           controller: widget.controller,
           cursorColor: Colors.black,
@@ -77,6 +77,7 @@ class _TextFielMio extends State<TextFieldMio> {
                   color: Colors.black,
                 )),
             border: InputBorder.none,
+            hintStyle: const TextStyle(fontWeight: FontWeight.bold),
             hintText: widget.hint,
           ),
           obscureText: widget.obscureText,

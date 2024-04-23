@@ -1,8 +1,6 @@
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -11,6 +9,7 @@ import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/pages/ChatAi.dart';
 import 'package:tfgsaladillo/pages/MapView.dart';
 import 'package:tfgsaladillo/pages/Carta.dart';
 import 'package:tfgsaladillo/model/Person.dart';
@@ -113,7 +112,8 @@ class _HomePage extends State<HomePage> {
                     decoration: BoxDecoration(
                         color: Colors.black,
                         image: DecorationImage(
-                            image: imagenBannerAjustes, fit: BoxFit.fill)),
+                            image: imagenBannerAjustes, fit: BoxFit.fill,
+                            colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken))),
                     child: SingleChildScrollView(
                         child: SizedBox(
                             width: size.width,
@@ -338,6 +338,7 @@ class _HomePage extends State<HomePage> {
                                                     ),
                                                   ),
                                                   dropdownOptions: const DropdownOptions(
+                                                    color: Colors.white,
                                                       width: 100, align: DropdownAlign.center),
                                                   dropdownItemOptions: styleDropdownItemOptions(),
                                                 ),
@@ -349,6 +350,21 @@ class _HomePage extends State<HomePage> {
                                           idioma: widget.idioma,
                                           size: size,
                                         ),
+                                        FloatingActionButton(
+                                          heroTag: null,
+                                          onPressed: () {
+                                          Navigator.of(context).push(
+                                              PageRouteBuilder(
+                                                transitionDuration: const Duration(milliseconds: 500),
+                                                reverseTransitionDuration: const Duration(milliseconds: 500),
+                                                barrierColor: Colors.black54,
+                                                pageBuilder: (context, animation, secondaryAnimation) {
+                                                  return FadeTransition(opacity: animation,
+                                                    child: ChatAi(),
+                                                  );
+                                                },
+                                              ));
+                                        },)
                                       ],
                                     ),
                                   ))
@@ -357,12 +373,11 @@ class _HomePage extends State<HomePage> {
       ),
       bottomNavigationBar: Container(
           color: Colors.orange,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+          padding:  EdgeInsets.symmetric(vertical: size.height*0.01, horizontal:size.width*0.1),
           child: GNav(
-            tabBackgroundColor: Colors.white70,
-            backgroundColor: Colors.orange,
-            padding: const EdgeInsets.all(15),
-            gap: 12,
+            tabBackgroundColor: Colors.white.withOpacity(0.8),
+            padding: EdgeInsets.symmetric(vertical: size.height*0.015, horizontal:size.width*0.04),
+            gap: size.width*0.01,
             onTabChange: (index) {
               setState(() {
                 posicion = index;

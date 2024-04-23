@@ -48,7 +48,8 @@ class _InicioSesion extends State<InicioSesion> {
                   person: person,
                   idioma: widget.idioma,
                   prefs: widget.prefs,
-                  icon: icon, monedEnUso: Moneda.DOLAR,
+                  icon: icon,
+              monedEnUso: devolverTipoMoneda(widget.prefs.getString("SimboloMoneda")),
                 )),
         (route) => false,
       );
