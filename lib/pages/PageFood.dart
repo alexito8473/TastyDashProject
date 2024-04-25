@@ -59,12 +59,6 @@ class _PaginaComida extends State<PaginaComida>{
                               ),
                             ],
                           ),
-
-                          Container(
-                              width: size.width*0.9,
-                              margin: EdgeInsets.only(left: size.width*0.1,top: size.height*0.05),
-                              child: Text(widget.comida.descripcion+" "+widget.comida.descripcion,style: TextStyle(color: Colors.black,fontSize: 20),textAlign: TextAlign.left,)
-                          ),
                         ],
                       )
                   ),

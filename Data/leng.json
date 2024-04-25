@@ -22,7 +22,8 @@
     "HoverPesca": "Pescado",
     "HoverCarne": "Carne",
     "HoverBebida": "Bebida",
-    "HoverCarta": "Carta"
+    "HoverCarta": "Carta",
+    "Precio": "Precio"
   },
   {
     "Carta": "Menu",
@@ -46,6 +47,7 @@
     "HoverEnsa": "Salad",
     "HoverPesca": "Fish",
     "HoverBebida": "Drink",
-    "HoverCarta": "Menu"
+    "HoverCarta": "Menu",
+    "Precio": "Price"
   }
 ]

@@ -1,7 +1,6 @@
 
 class Comida{
   final String nombre;
-  String descripcion;
   final String foto;
   final bool isCarne;
   final bool isBurguer;
@@ -11,10 +10,9 @@ class Comida{
   final bool isSuchi;
   //El precio esta en español
   final double precio;
-  Comida({
+   const Comida({
     required this.nombre,
     required this.foto,
-    required this.descripcion,
     required this.isCarne,
     required this.isBurguer,
     required this.isEnsalada,

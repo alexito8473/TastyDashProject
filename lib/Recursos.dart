@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
@@ -121,210 +122,7 @@ List<String> CrearListaBanderas(){
 List<String> CrearListaPaises(){
   return ["Español", "English"];
 }
-List<Comida> CrearListaDeComida(){
-   List<Comida> listaDeComida = [
-    Comida(
-        nombre: 'BurguerMax',
-        foto: 'assets/images/hamburguesa.webp',
-        descripcion: 'Mega burguer max',
-        isCarne: false,
-        isBurguer: true,
-        isEnsalada: false,
-        isPizza: false,
-        isPescado: false,
-        isSuchi: false,
-        precio: 5.12),
-    Comida(
-        nombre: 'BurguerUltra',
-        foto: 'assets/images/imagen.webp',
-        descripcion: 'Burguer ultra maximo bum',
-        isCarne: false,
-        isBurguer: true,
-        isEnsalada: false,
-        isPizza: false,
-        isPescado: false,
-        isSuchi: false, 
-        precio: 4.12),
-     Comida(
-         nombre: 'Burguer Buey',
-         foto: 'assets/images/haburguesaEspecial.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Burguer Complete',
-         foto: 'assets/images/hamburguesaCompleta.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: true,
-         isEnsalada: false,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 4.50),
-     Comida(
-         nombre: 'Breaded pepper',
-         foto: 'assets/images/piminetoRebo.webp',
-         descripcion: 'Comida rara',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 5.99),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
-     Comida(
-         nombre: 'Shrimp Scampi',
-         foto: 'assets/images/gambasAl.webp',
-         descripcion: 'Ratoncio',
-         isCarne: false,
-         isBurguer: false,
-         isEnsalada: true,
-         isPizza: false,
-         isPescado: false,
-         isSuchi: false,
-         precio: 3.22),
 
-  ];
-  return listaDeComida;
-}
 double conversorMoneda(double original){
   return 2.2;
 }
@@ -340,10 +138,10 @@ class ComidaViewCarrusel extends StatefulWidget{
 class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
   @override
   Widget build(BuildContext context) {
+    Size size= MediaQuery.of(context).size;
     return GestureDetector(
         onTap: () =>{
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
-          /*
+          //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
           Navigator.of(context).push(
               PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 800),
@@ -355,7 +153,6 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                   );
                 },
               ))
-              */
         } ,
         child: Container(
               padding: const EdgeInsets.all(20),
@@ -376,14 +173,15 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                               fit: BoxFit.cover,
                               alignment: Alignment.center,
                               isAntiAlias: true)),
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
+                      width: size.width,
+                      height: size.height*0.18,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(top: 15),
                       width: double.infinity,
-                      child: Text(
+                      child: AutoSizeText(
                         widget.comida.nombre,
+                         maxLines: 1,
                         style: const TextStyle(color: Colors.black,fontSize: 25),
                         textAlign: TextAlign.left,
                       ),
@@ -391,12 +189,14 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       width: double.infinity,
-                      child: Text(
+                      child: AutoSizeText(
+                        maxLines: 1,
                         "${(widget.comida.precio*widget.monedEnUso.conversor).toStringAsFixed(2)} ${widget.monedEnUso.simbolo}",
                         style: const TextStyle(color: Colors.black,fontSize: 25),
                         textAlign: TextAlign.left,
                       ),
                     ),
+
                   ],
                 )
               )
@@ -404,4 +204,144 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
 
     );
   }
+}
+List<Comida> CrearListaDeComida(){
+  List<Comida> listaDeComida = [
+    // Hamburguesa
+    const Comida(
+        nombre: 'BurguerMax',
+        foto: 'assets/images/hamburguesa.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 5.12),
+    const Comida(
+        nombre: 'BurguerUltra',
+        foto: 'assets/images/imagen.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.12),
+    const Comida(
+        nombre: 'Burguer Buey',
+        foto: 'assets/images/haburguesaEspecial.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+    const Comida(
+        nombre: 'Burguer Complete',
+        foto: 'assets/images/hamburguesaCompleta.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+    const Comida(
+        nombre: 'The Ultimate Beef Burger',
+        foto: 'assets/images/hamburguesaBueyBeiconPatatasFritas.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+    const Comida(
+        nombre: 'Burguer Complete',
+        foto: 'assets/images/hamburguesaCompleta.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+    const Comida(
+        nombre: 'Harmony Burger',
+        foto: 'assets/images/hamburguesaPatatasFritas.webp',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+    const Comida(
+        nombre: 'Veggie Delight',
+        foto: 'assets/images/hamburguesaVegana.jpg',
+        isCarne: false,
+        isBurguer: true,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 4.50),
+
+    // Ensalada
+    //Veggie Delight
+    const Comida(
+        nombre: 'Breaded pepper',
+        foto: 'assets/images/piminetoRebo.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: true,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 5.99),
+    const Comida(
+        nombre: 'Shrimp Scampi',
+        foto: 'assets/images/gambasAl.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: true,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 3.22),
+    // Carne
+    const Comida(
+        nombre: 'Scnizel',
+        foto: 'assets/images/schnitzel.webp',
+        isCarne: true,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 3.22),
+    const Comida(
+        nombre: 'Chocobo',
+        foto: 'assets/images/Chocobo.webp',
+        isCarne: true,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 3.22),
+    const Comida(
+        nombre: 'Ragout',
+        foto: 'assets/images/ragout.webp',
+        isCarne: true,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: false,
+        isSuchi: false,
+        precio: 3.22),
+  ];
+  return listaDeComida;
 }

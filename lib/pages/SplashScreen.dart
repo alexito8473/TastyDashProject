@@ -34,6 +34,8 @@ class _SplashScreen extends State<SplashScreen> {
           const AssetImage('assets/images/bannersuper.webp'), context);
       await precacheImage(
           const AssetImage("assets/images/bannerFiltros.jpg"), context);
+      await precacheImage(
+          const AssetImage("assets/images/bannnerCarne.webp"), context);
       datosJson =
           await leerListaJson(await rootBundle.loadString("Data/leng.json"));
       prefs = await SharedPreferences.getInstance();

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +30,11 @@ class _Carta extends State<Carta> {
     Navigator.of(context).push(
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 500),
+          reverseTransitionDuration: const Duration(milliseconds: 300),
           barrierColor: Colors.black54,
           pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(opacity: animation,
-              child: ListaComida(listaComida:listaDeUnaComida, imagenBanner: imagenBanner, monedEnUso: widget.monedEnUso,),
+              child: ListaComida(listaComida:listaDeUnaComida, imagenBanner: imagenBanner, monedEnUso: widget.monedEnUso, idioma: widget.idioma,),
             );
           },
         ));
@@ -73,9 +75,9 @@ class _Carta extends State<Carta> {
                       child: CarouselSlider(
                         options: CarouselOptions(
                             pageSnapping: true,
+                            enlargeFactor: 0.35,
                             height: size.height * 0.35,
                             initialPage: 0,
-                            aspectRatio: 16 / 9,
                             disableCenter: false,
                             viewportFraction: 0.65,
                             enableInfiniteScroll: true,
@@ -96,6 +98,7 @@ class _Carta extends State<Carta> {
                               return  ComidaViewCarrusel(comida: i, monedEnUso: widget.monedEnUso,);
                             },
                           );
+
                         }).toList(),
                       ))),
               Container(
@@ -145,7 +148,9 @@ class _Carta extends State<Carta> {
                             ),
                             FloatingActionButton.large(
                               heroTag: null,
-                              onPressed: () => {},
+                              onPressed: () => {
+                                //NavegarLista(widget.listaDeComida.where((element) => element.isCarne).toList(),"assets/images/bannerCarne.webp")
+                              },
                               backgroundColor: Colors.blue.shade300,
                               tooltip: widget.idioma
                                       .datosJson[widget.idioma.positionIdioma]
@@ -162,7 +167,9 @@ class _Carta extends State<Carta> {
                             children: [
                               FloatingActionButton.large(
                                 heroTag: null,
-                                onPressed: () => {},
+                                onPressed: () => {
+                                  NavegarLista(widget.listaDeComida.where((element) => element.isCarne).toList(),"assets/images/bannerCarne.webp")
+                                },
                                 backgroundColor: Colors.lime.shade300,
                                 tooltip: widget.idioma
                                         .datosJson[widget.idioma.positionIdioma]

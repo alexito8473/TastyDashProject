@@ -24,9 +24,8 @@ dependencies:
   carousel_slider: ^4.2.1
   cool_dropdown: ^2.1.0
   flutter_svg: ^2.0.10+1
-  flutter_rating_bar: ^4.0.1
-  http: ^1.2.1
   google_generative_ai: ^0.3.1
+  auto_size_text: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,6 +53,14 @@ flutter:
     - assets/images/ensaladaBanner.webp
     - assets/images/haburguesaEspecial.webp
     - assets/images/hamburguesaCompleta.webp
+    - assets/images/schnitzel.webp
+    - assets/images/bannerCarne.webp
+    - assets/images/hamburguesaBueyBeiconPatatasFritas.webp
+    - assets/images/hamburguesaPatatasFritas.webp
+    - assets/images/hamburguesaVegana.jpg
+    - assets/images/Chocobo.webp
+    - assets/images/ragout.webp
+
     - Data/leng.json
     - assets/Icons/Spain.svg
     - assets/Icons/Burguer.svg
