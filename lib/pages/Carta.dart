@@ -13,8 +13,12 @@ import 'package:tfgsaladillo/pages/ListComida.dart';
 class Carta extends StatefulWidget {
   final List<Comida> listaDeComida;
   final Idioma idioma;
-  Moneda monedEnUso;
-  Carta({super.key, required this.listaDeComida, required this.idioma, required this.monedEnUso});
+  Moneda monedaEnUso;
+  Carta(
+      {super.key,
+      required this.listaDeComida,
+      required this.idioma,
+      required this.monedaEnUso});
   @override
   State<Carta> createState() => _Carta();
 }
@@ -26,18 +30,24 @@ class _Carta extends State<Carta> {
     imagenActual = widget.listaDeComida[0].foto;
     super.initState();
   }
-  void NavegarLista(List<Comida> listaDeUnaComida,String imagenBanner){
-    Navigator.of(context).push(
-        PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 300),
-          barrierColor: Colors.black54,
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return FadeTransition(opacity: animation,
-              child: ListaComida(listaComida:listaDeUnaComida, imagenBanner: imagenBanner, monedEnUso: widget.monedEnUso, idioma: widget.idioma,),
-            );
-          },
-        ));
+
+  void NavegarLista(List<Comida> listaDeUnaComida, String imagenBanner,String nombreLista) {
+    Navigator.of(context).push(PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 500),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      barrierColor: Colors.black54,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: ListaComida(
+            listaComida: listaDeUnaComida,
+            imagenBanner: imagenBanner,
+            monedEnUso: widget.monedaEnUso,
+            idioma: widget.idioma, nombreLista: nombreLista,
+          ),
+        );
+      },
+    ));
   }
 
   @override
@@ -50,11 +60,15 @@ class _Carta extends State<Carta> {
             color: Colors.black,
             child: SingleChildScrollView(
                 child: Column(children: [
-                  ShaderMask(
+              ShaderMask(
                   shaderCallback: (bounds) => const LinearGradient(
                           begin: Alignment.center,
                           end: Alignment.bottomCenter,
-                          stops: [0.2,0.6,1],
+                          stops: [
+                            0.2,
+                            0.6,
+                            1
+                          ],
                           colors: [
                             Colors.transparent,
                             Colors.black26,
@@ -62,15 +76,15 @@ class _Carta extends State<Carta> {
                           ]).createShader(bounds),
                   blendMode: BlendMode.darken,
                   child: Container(
-                    width: size.width,
-                      height: size.height*0.55,
+                      width: size.width,
+                      height: size.height * 0.55,
                       padding: EdgeInsets.only(
                           top: size.height * 0.15, bottom: size.height * 0.05),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                          color: Colors.black,
                           image: DecorationImage(
-                              image: AssetImage(imagenActual),
-                              fit: BoxFit.cover,
+                            image: AssetImage(imagenActual),
+                            fit: BoxFit.cover,
                           )),
                       child: CarouselSlider(
                         options: CarouselOptions(
@@ -95,23 +109,27 @@ class _Carta extends State<Carta> {
                         items: widget.listaDeComida.map((i) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return  ComidaViewCarrusel(comida: i, monedEnUso: widget.monedEnUso,);
+                              return ComidaViewCarrusel(
+                                comida: i,
+                                monedaEnUso: widget.monedaEnUso,
+                                idioma: widget.idioma,
+                              );
                             },
                           );
-
                         }).toList(),
                       ))),
               Container(
-              width: size.width,
-                  height: size.height*0.372,
-                  decoration:  BoxDecoration(
+                  width: size.width,
+                  height: size.height * 0.372,
+                  decoration: BoxDecoration(
                       color: Colors.black,
-                    image: DecorationImage(
-                      image: const AssetImage("assets/images/bannerFiltros.jpg"),
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.50), BlendMode.darken)
-                    )
-                  ),
+                      image: DecorationImage(
+                          image: const AssetImage(
+                              "assets/images/bannerFiltros.jpg"),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.75),
+                              BlendMode.darken))),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -121,7 +139,15 @@ class _Carta extends State<Carta> {
                             FloatingActionButton.large(
                               heroTag: null,
                               onPressed: () => {
-                                NavegarLista(widget.listaDeComida.where((element) => element.isBurguer).toList(),"assets/images/hamburguesasBanner.webp")
+                                // Hamburguesa
+                                NavegarLista(
+                                    widget.listaDeComida
+                                        .where((element) => element.isBurguer)
+                                        .toList(),
+                                    "assets/images/hamburguesasBanner.webp",widget.idioma
+                                    .datosJson[widget.idioma.positionIdioma]
+                                ["HoverHambur"]
+                                )
                               },
                               backgroundColor: Colors.orange.shade300,
                               tooltip: widget.idioma
@@ -135,7 +161,14 @@ class _Carta extends State<Carta> {
                             FloatingActionButton.large(
                               heroTag: null,
                               onPressed: () => {
-                                NavegarLista(widget.listaDeComida.where((element) => element.isEnsalada).toList(),"assets/images/ensaladaBanner.webp")
+                                // Ensalada
+                                NavegarLista(
+                                    widget.listaDeComida
+                                        .where((element) => element.isEnsalada)
+                                        .toList(),
+                                    "assets/images/ensaladaBanner.webp",widget.idioma
+                                    .datosJson[widget.idioma.positionIdioma]
+                                ["HoverEnsa"])
                               },
                               backgroundColor: Colors.green.shade300,
                               tooltip: widget.idioma
@@ -149,7 +182,14 @@ class _Carta extends State<Carta> {
                             FloatingActionButton.large(
                               heroTag: null,
                               onPressed: () => {
-                                //NavegarLista(widget.listaDeComida.where((element) => element.isCarne).toList(),"assets/images/bannerCarne.webp")
+                                // Pescado
+                                NavegarLista(
+                                    widget.listaDeComida
+                                        .where((element) => element.isPescado)
+                                        .toList(),
+                                    "assets/images/bannerPescado.webp", widget.idioma
+                                    .datosJson[widget.idioma.positionIdioma]
+                                ["HoverPesca"])
                               },
                               backgroundColor: Colors.blue.shade300,
                               tooltip: widget.idioma
@@ -168,7 +208,14 @@ class _Carta extends State<Carta> {
                               FloatingActionButton.large(
                                 heroTag: null,
                                 onPressed: () => {
-                                  NavegarLista(widget.listaDeComida.where((element) => element.isCarne).toList(),"assets/images/bannerCarne.webp")
+                                  // Carne
+                                  NavegarLista(
+                                      widget.listaDeComida
+                                          .where((element) => element.isCarne)
+                                          .toList(),
+                                      "assets/images/bannerCarne.webp",widget.idioma
+                                      .datosJson[widget.idioma.positionIdioma]
+                                  ["HoverCarne"])
                                 },
                                 backgroundColor: Colors.lime.shade300,
                                 tooltip: widget.idioma
@@ -181,7 +228,16 @@ class _Carta extends State<Carta> {
                               ),
                               FloatingActionButton.large(
                                 heroTag: null,
-                                onPressed: () => {},
+                                onPressed: () => {
+                                  // Filtramos solo por bebida
+                                  NavegarLista(
+                                      widget.listaDeComida
+                                          .where((element) => element.isBebida)
+                                          .toList(),
+                                      "assets/images/bannerBebida.webp",widget.idioma
+                                      .datosJson[widget.idioma.positionIdioma]
+                                  ["HoverBebida"])
+                                },
                                 backgroundColor: Colors.red,
                                 tooltip: widget.idioma
                                         .datosJson[widget.idioma.positionIdioma]
@@ -193,7 +249,12 @@ class _Carta extends State<Carta> {
                               ),
                               FloatingActionButton.large(
                                   heroTag: null,
-                                  onPressed: () => {},
+                                  onPressed: () => {
+                                        // Filtramos solo por
+                                    NavegarLista(
+                                        widget.listaDeComida,
+                                        "assets/images/bannerBebida.webp","Prueba")
+                                      },
                                   backgroundColor: Colors.yellow.shade300,
                                   tooltip: widget.idioma.datosJson[widget
                                       .idioma.positionIdioma]["HoverCarta"],

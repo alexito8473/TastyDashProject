@@ -23,7 +23,9 @@
     "HoverCarne": "Carne",
     "HoverBebida": "Bebida",
     "HoverCarta": "Carta",
-    "Precio": "Precio"
+    "Precio": "Precio",
+    "Tiempo": "Tiempo",
+    "Minuto": "minutos"
   },
   {
     "Carta": "Menu",
@@ -46,8 +48,11 @@
     "HoverHambur":  "Burguer",
     "HoverEnsa": "Salad",
     "HoverPesca": "Fish",
+    "HoverCarne": "Meat",
     "HoverBebida": "Drink",
     "HoverCarta": "Menu",
-    "Precio": "Price"
+    "Precio": "Price",
+    "Tiempo": "Time",
+    "Minuto": "minutes"
   }
 ]

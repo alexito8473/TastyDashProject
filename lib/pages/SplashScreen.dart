@@ -29,13 +29,15 @@ class _SplashScreen extends State<SplashScreen> {
     String? gmail;
     String? password;
     int? posicionIdioma;
-    Future.delayed(const Duration(milliseconds: 1000), () async {
+    Future.delayed(const Duration(milliseconds: 800), () async {
       await precacheImage(
           const AssetImage('assets/images/bannersuper.webp'), context);
       await precacheImage(
           const AssetImage("assets/images/bannerFiltros.jpg"), context);
       await precacheImage(
-          const AssetImage("assets/images/bannnerCarne.webp"), context);
+          const AssetImage("assets/images/bannerCarne.webp"), context);
+      await precacheImage(
+          const AssetImage("assets/images/fondoSuelo.webp"), context);
       datosJson =
           await leerListaJson(await rootBundle.loadString("Data/leng.json"));
       prefs = await SharedPreferences.getInstance();

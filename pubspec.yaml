@@ -60,6 +60,16 @@ flutter:
     - assets/images/hamburguesaVegana.jpg
     - assets/images/Chocobo.webp
     - assets/images/ragout.webp
+    - assets/images/filetePescado.webp
+    - assets/images/bannerBebida.webp
+    - assets/images/bannerPescado.webp
+    - assets/images/fondoSuelo.webp
+    - assets/images/tilapia.webp
+    - assets/images/pulpoGallega.webp
+    - assets/images/besugo.webp
+    - assets/images/pulpoBrasa.webp
+    - assets/images/pescadoPatatasFritas.webp
+
 
     - Data/leng.json
     - assets/Icons/Spain.svg

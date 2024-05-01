@@ -11,14 +11,16 @@ import 'package:tfgsaladillo/pages/PageFood.dart';
 class ListaComida extends StatefulWidget {
   final List<Comida> listaComida;
   final String imagenBanner;
+  final String nombreLista;
   final Idioma idioma;
   Moneda monedEnUso;
   ListaComida(
       {super.key,
-        required this.listaComida,
+      required this.listaComida,
       required this.imagenBanner,
       required this.monedEnUso,
-        required this.idioma});
+      required this.idioma,
+        required this.nombreLista});
   @override
   State<StatefulWidget> createState() => _ListaComida();
 }
@@ -45,12 +47,14 @@ class _ListaComida extends State<ListaComida> {
                         Colors.transparent,
                         Colors.black54,
                         Colors.black87,
+                        Colors.black,
                         Colors.black
                       ]).createShader(bounds),
               blendMode: BlendMode.darken,
               child: Container(
                 width: size.width,
                 height: size.height * 0.30,
+                padding: EdgeInsets.only(top:  size.height * 0.12,left:  size.height * 0.05,right: size.height * 0.05),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
@@ -60,11 +64,15 @@ class _ListaComida extends State<ListaComida> {
                         image: AssetImage(widget.imagenBanner),
                         fit: BoxFit.cover,
                         colorFilter: const ColorFilter.mode(
-                            Colors.black38, BlendMode.lighten)
-                    )),
-              )),
+                            Colors.black38, BlendMode.lighten))
+                ),
+                child:  AutoSizeText(widget.nombreLista,style: const TextStyle(color: Colors.white,fontFamily: AutofillHints.jobTitle,fontWeight: FontWeight.bold,fontSize: 60),textAlign: TextAlign.center, maxLines: 1,),
+
+              )
+          ),
           Container(
-            margin: EdgeInsets.only(top: size.height * 0.28,bottom: size.height * 0.02),
+            margin: EdgeInsets.only(
+                top: size.height * 0.28, bottom: size.height * 0.02),
             color: Colors.black87,
             child: ListView.builder(
               itemCount: widget.listaComida.length,
@@ -84,7 +92,7 @@ class _ListaComida extends State<ListaComida> {
                 height: size.height * 0.020,
                 decoration: const BoxDecoration(
                     color: Colors.black,
-                    borderRadius:  BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(20),
                         bottomLeft: Radius.circular(20))),
               ))
@@ -107,10 +115,13 @@ class BannerComida extends StatelessWidget {
   final Moneda monedaEnUso;
   final Idioma idioma;
   const BannerComida(
-      {super.key, required this.comida, required this.monedaEnUso, required this.idioma});
+      {super.key,
+      required this.comida,
+      required this.monedaEnUso,
+      required this.idioma});
   @override
   Widget build(BuildContext context) {
-    Size size= MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
@@ -119,7 +130,7 @@ class BannerComida extends StatelessWidget {
           barrierColor: Colors.black54,
           pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(
-                opacity: animation, child: PaginaComida(comida: comida));
+                opacity: animation, child: PaginaComida(comida: comida, idioma: idioma, monedaEnUso: monedaEnUso,));
           },
         ));
         //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: comida),));
@@ -140,39 +151,39 @@ class BannerComida extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Container(
-                    child   : AutoSizeText(
-            maxLines: 1,
-            comida.nombre,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
-            textAlign: TextAlign.left,
-          ),
+                  AutoSizeText(
+                    maxLines: 1,
+                    comida.nombre,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
-
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                        child: Text(
-                          "${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
-                          style: const TextStyle(color: Colors.white, fontSize: 25),
+                          child: Center(
+                        child: AutoSizeText(
+                          "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,
+                          maxLines: 1,
                         ),
-                      ),
+                      )),
                       Expanded(
+                          child: Center(
                         child: AutoSizeText(
                           maxLines: 1,
-                          "${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
-                          style: const TextStyle(color: Colors.white, fontSize: 25),
+                          "${comida.tiempoMinuto} ${idioma.datosJson[idioma.positionIdioma]["Minuto"]}",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,
                         ),
-                      ),
+                      )),
                     ],
                   )
-
                 ],
               )
             ],

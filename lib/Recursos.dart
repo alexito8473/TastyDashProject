@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
+import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/pages/PageFood.dart';
 
@@ -129,8 +132,9 @@ double conversorMoneda(double original){
 
 class ComidaViewCarrusel extends StatefulWidget{
   final Comida comida;
-  Moneda monedEnUso;
-  ComidaViewCarrusel({super.key, required this.comida, required this.monedEnUso});
+  Moneda monedaEnUso;
+  final Idioma idioma;
+  ComidaViewCarrusel({super.key, required this.comida, required this.monedaEnUso,required this.idioma});
   @override
   State<StatefulWidget> createState() =>_ComidaViewCarrusel();
 }
@@ -149,7 +153,7 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                 barrierColor: Colors.black54,
                 pageBuilder: (context, animation, secondaryAnimation) {
                   return FadeTransition(opacity: animation,
-                    child: PaginaComida(comida: widget.comida),
+                    child: PaginaComida(comida: widget.comida, idioma: widget.idioma, monedaEnUso: widget.monedaEnUso,),
                   );
                 },
               ))
@@ -157,13 +161,15 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
         child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.89),
+                color: Colors.white.withOpacity(0.91),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: SingleChildScrollView(
-                child:   Column(
+                child: Column(
                   children: [
                     Container(
+                      width: size.width,
+                      height: size.height*0.15,
                       decoration: BoxDecoration(
                           borderRadius:
                           BorderRadius.circular(15),
@@ -173,30 +179,31 @@ class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
                               fit: BoxFit.cover,
                               alignment: Alignment.center,
                               isAntiAlias: true)),
-                      width: size.width,
-                      height: size.height*0.18,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 15),
-                      width: double.infinity,
-                      child: AutoSizeText(
-                        widget.comida.nombre,
-                         maxLines: 1,
-                        style: const TextStyle(color: Colors.black,fontSize: 25),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: double.infinity,
-                      child: AutoSizeText(
-                        maxLines: 1,
-                        "${(widget.comida.precio*widget.monedEnUso.conversor).toStringAsFixed(2)} ${widget.monedEnUso.simbolo}",
-                        style: const TextStyle(color: Colors.black,fontSize: 25),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
 
+                    ),
+                    SizedBox(
+                      width: double.infinity, height: size.height * 0.15,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [ Container(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            widget.comida.nombre,
+                            maxLines: 1,
+                            style: const TextStyle(color: Colors.black,fontSize: 25),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: AutoSizeText("${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 25),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),],
+                      )
+                    )
                   ],
                 )
               )
@@ -216,8 +223,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 5.12),
+        isBebida: false,
+        precio: 5.12,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'BurguerUltra',
         foto: 'assets/images/imagen.webp',
@@ -226,8 +234,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.12),
+        isBebida: false,
+        precio: 4.12,
+  tiempoMinuto: 20),
     const Comida(
         nombre: 'Burguer Buey',
         foto: 'assets/images/haburguesaEspecial.webp',
@@ -236,8 +245,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
+        isBebida: false,
+        precio: 4.50,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Burguer Complete',
         foto: 'assets/images/hamburguesaCompleta.webp',
@@ -246,8 +256,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
+        isBebida: false,
+        precio: 4.50,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'The Ultimate Beef Burger',
         foto: 'assets/images/hamburguesaBueyBeiconPatatasFritas.webp',
@@ -256,18 +267,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
-    const Comida(
-        nombre: 'Burguer Complete',
-        foto: 'assets/images/hamburguesaCompleta.webp',
-        isCarne: false,
-        isBurguer: true,
-        isEnsalada: false,
-        isPizza: false,
-        isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
+        isBebida: false,
+        precio: 4.50,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Harmony Burger',
         foto: 'assets/images/hamburguesaPatatasFritas.webp',
@@ -276,8 +278,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
+        isBebida: false,
+        precio: 4.50,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Veggie Delight',
         foto: 'assets/images/hamburguesaVegana.jpg',
@@ -286,11 +289,10 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 4.50),
-
+        isBebida: false,
+        precio: 4.50,
+        tiempoMinuto: 20),
     // Ensalada
-    //Veggie Delight
     const Comida(
         nombre: 'Breaded pepper',
         foto: 'assets/images/piminetoRebo.webp',
@@ -299,8 +301,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: true,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 5.99),
+        isBebida: false,
+        precio: 5.99,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Shrimp Scampi',
         foto: 'assets/images/gambasAl.webp',
@@ -309,8 +312,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: true,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 3.22),
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
     // Carne
     const Comida(
         nombre: 'Scnizel',
@@ -320,8 +324,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 3.22),
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Chocobo',
         foto: 'assets/images/Chocobo.webp',
@@ -330,8 +335,9 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 3.22),
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
     const Comida(
         nombre: 'Ragout',
         foto: 'assets/images/ragout.webp',
@@ -340,8 +346,76 @@ List<Comida> CrearListaDeComida(){
         isEnsalada: false,
         isPizza: false,
         isPescado: false,
-        isSuchi: false,
-        precio: 3.22),
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    // Pescado
+    const Comida(
+        nombre: 'Fish steak',
+        foto: 'assets/images/filetePescado.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    const Comida(
+        nombre: 'Tilapia',
+        foto: 'assets/images/tilapia.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    const Comida(
+        nombre: 'Octo-Bite',
+        foto: 'assets/images/pulpoGallega.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    const Comida(
+        nombre: 'Besugo',
+        foto: 'assets/images/besugo.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    const Comida(
+        nombre: 'Octo-Grilled',
+        foto: 'assets/images/pulpoBrasa.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
+    const Comida(
+        nombre: 'Octo-chips',
+        foto: 'assets/images/pescadoPatatasFritas.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPizza: false,
+        isPescado: true,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20),
   ];
   return listaDeComida;
 }

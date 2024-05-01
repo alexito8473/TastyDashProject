@@ -49,7 +49,8 @@ class _InicioSesion extends State<InicioSesion> {
                   idioma: widget.idioma,
                   prefs: widget.prefs,
                   icon: icon,
-              monedEnUso: devolverTipoMoneda(widget.prefs.getString("SimboloMoneda")),
+                  monedEnUso: devolverTipoMoneda(
+                      widget.prefs.getString("SimboloMoneda")),
                 )),
         (route) => false,
       );
@@ -129,9 +130,10 @@ class _InicioSesion extends State<InicioSesion> {
                     onTap: () {
                       Navigator.of(context).push(PageRouteBuilder(
                         transitionDuration: const Duration(milliseconds: 1100),
-                        reverseTransitionDuration: const Duration(milliseconds: 700),
+                        reverseTransitionDuration:
+                            const Duration(milliseconds: 700),
                         barrierColor: Colors.black,
-                       opaque: true,
+                        opaque: true,
                         barrierDismissible: true,
                         pageBuilder: (context, animation, secondaryAnimation) {
                           return FadeTransition(

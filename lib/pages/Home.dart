@@ -27,7 +27,7 @@ class HomePage extends StatefulWidget {
       required this.idioma,
       required this.prefs,
       required this.icon,
-        required this.monedEnUso});
+      required this.monedEnUso});
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
@@ -51,7 +51,6 @@ class _HomePage extends State<HomePage> {
   final monedaDropdownController = DropdownController();
   final List<Moneda> monedas = Moneda.values;
   final List<CoolDropdownItem<String>> monedaDropdownItems = [];
-
 
   @override
   void initState() {
@@ -97,7 +96,7 @@ class _HomePage extends State<HomePage> {
             ? Carta(
                 listaDeComida: listaDeComida,
                 idioma: widget.idioma,
-          monedEnUso: widget.monedEnUso,
+                monedaEnUso: widget.monedEnUso,
               )
             : posicion == 1
                 ? Container(
@@ -112,8 +111,10 @@ class _HomePage extends State<HomePage> {
                     decoration: BoxDecoration(
                         color: Colors.black,
                         image: DecorationImage(
-                            image: imagenBannerAjustes, fit: BoxFit.fill,
-                            colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken))),
+                            image: imagenBannerAjustes,
+                            fit: BoxFit.fill,
+                            colorFilter: ColorFilter.mode(
+                                Colors.black38, BlendMode.darken))),
                     child: SingleChildScrollView(
                         child: SizedBox(
                             width: size.width,
@@ -244,12 +245,14 @@ class _HomePage extends State<HomePage> {
                                                 width: 100,
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                    widget.idioma.datosJson[
-                                                            widget.idioma
-                                                                .positionIdioma]
-                                                        ["Idioma"],
-                                                    style: const TextStyle(
-                                                        fontSize: 20),textAlign: TextAlign.left,),
+                                                  widget.idioma.datosJson[widget
+                                                          .idioma
+                                                          .positionIdioma]
+                                                      ["Idioma"],
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
+                                                  textAlign: TextAlign.left,
+                                                ),
                                               ),
                                               CoolDropdown<String>(
                                                 controller:
@@ -291,7 +294,8 @@ class _HomePage extends State<HomePage> {
                                                     const DropdownOptions(
                                                   width: 130,
                                                 ),
-                                                dropdownItemOptions: styleDropdownItemOptions(),
+                                                dropdownItemOptions:
+                                                    styleDropdownItemOptions(),
                                               ),
                                             ],
                                           ),
@@ -302,45 +306,66 @@ class _HomePage extends State<HomePage> {
                                           height: size.height * 0.05,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
                                             children: [
                                               const SizedBox(
                                                 width: 105,
-                                                child: Text("Moneda", style: TextStyle(fontSize: 20)),
+                                                child: Text("Moneda",
+                                                    style: TextStyle(
+                                                        fontSize: 20)),
                                               ),
                                               Center(
                                                 child: CoolDropdown<String>(
-                                                  controller: monedaDropdownController,
-                                                  dropdownList: monedaDropdownItems,
-                                                  defaultItem: monedaDropdownItems[monedas.indexOf(widget.monedEnUso)],
+                                                  controller:
+                                                      monedaDropdownController,
+                                                  dropdownList:
+                                                      monedaDropdownItems,
+                                                  defaultItem:
+                                                      monedaDropdownItems[
+                                                          monedas.indexOf(widget
+                                                              .monedEnUso)],
                                                   onChange: (value) => {
-                                                    setState((){
-                                                      widget.prefs.setString("SimboloMoneda", value);
-                                                      widget.monedEnUso=devolverTipoMoneda(value);
+                                                    setState(() {
+                                                      widget.prefs.setString(
+                                                          "SimboloMoneda",
+                                                          value);
+                                                      widget.monedEnUso =
+                                                          devolverTipoMoneda(
+                                                              value);
                                                     })
-
                                                   },
-                                                  resultOptions: const ResultOptions(
+                                                  resultOptions:
+                                                      const ResultOptions(
                                                     width: 90,
                                                     render: ResultRender.label,
-                                                    openBoxDecoration: BoxDecoration(color: Colors.white),
+                                                    openBoxDecoration:
+                                                        BoxDecoration(
+                                                            color:
+                                                                Colors.white),
                                                     icon: SizedBox(
                                                       width: 10,
                                                       height: 10,
                                                       child: CustomPaint(
-                                                        painter: DropdownArrowPainter(
+                                                        painter:
+                                                            DropdownArrowPainter(
                                                           color: Colors.orange,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                  dropdownOptions: const DropdownOptions(
-                                                    color: Colors.white,
-                                                      width: 100, align: DropdownAlign.center),
-                                                  dropdownItemOptions: styleDropdownItemOptions(),
+                                                  dropdownOptions:
+                                                      const DropdownOptions(
+                                                          color: Colors.white,
+                                                          width: 100,
+                                                          align: DropdownAlign
+                                                              .center),
+                                                  dropdownItemOptions:
+                                                      styleDropdownItemOptions(),
                                                 ),
                                               ),
                                             ],
@@ -353,18 +378,25 @@ class _HomePage extends State<HomePage> {
                                         FloatingActionButton(
                                           heroTag: null,
                                           onPressed: () {
-                                          Navigator.of(context).push(
-                                              PageRouteBuilder(
-                                                transitionDuration: const Duration(milliseconds: 500),
-                                                reverseTransitionDuration: const Duration(milliseconds: 500),
-                                                barrierColor: Colors.black54,
-                                                pageBuilder: (context, animation, secondaryAnimation) {
-                                                  return FadeTransition(opacity: animation,
-                                                    child: ChatAi(),
-                                                  );
-                                                },
-                                              ));
-                                        },)
+                                            Navigator.of(context)
+                                                .push(PageRouteBuilder(
+                                              transitionDuration:
+                                                  const Duration(
+                                                      milliseconds: 500),
+                                              reverseTransitionDuration:
+                                                  const Duration(
+                                                      milliseconds: 500),
+                                              barrierColor: Colors.black54,
+                                              pageBuilder: (context, animation,
+                                                  secondaryAnimation) {
+                                                return FadeTransition(
+                                                  opacity: animation,
+                                                  child: ChatAi(),
+                                                );
+                                              },
+                                            ));
+                                          },
+                                        )
                                       ],
                                     ),
                                   ))
@@ -373,11 +405,13 @@ class _HomePage extends State<HomePage> {
       ),
       bottomNavigationBar: Container(
           color: Colors.orange,
-          padding:  EdgeInsets.symmetric(vertical: size.height*0.01, horizontal:size.width*0.1),
+          padding: EdgeInsets.symmetric(
+              vertical: size.height * 0.01, horizontal: size.width * 0.1),
           child: GNav(
             tabBackgroundColor: Colors.white.withOpacity(0.8),
-            padding: EdgeInsets.symmetric(vertical: size.height*0.015, horizontal:size.width*0.04),
-            gap: size.width*0.01,
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * 0.015, horizontal: size.width * 0.04),
+            gap: size.width * 0.01,
             onTabChange: (index) {
               setState(() {
                 posicion = index;
@@ -405,7 +439,7 @@ class _HomePage extends State<HomePage> {
 class CambioMoneda extends StatefulWidget {
   final Size size;
   final Idioma idioma;
-   Moneda monedadeUso;
+  Moneda monedadeUso;
   final SharedPreferences prefs;
   final List<CoolDropdownItem<String>> monedaDropdownItems;
   final DropdownController monedaDropdownController;
@@ -416,7 +450,7 @@ class CambioMoneda extends StatefulWidget {
       required this.idioma,
       required this.monedaDropdownController,
       required this.monedaDropdownItems,
-        required this.monedadeUso});
+      required this.monedadeUso});
   @override
   State<StatefulWidget> createState() => _CambioMoneda();
 }
@@ -429,7 +463,7 @@ class _CambioMoneda extends State<CambioMoneda> {
   }
 }
 
-DropdownItemOptions styleDropdownItemOptions(){
+DropdownItemOptions styleDropdownItemOptions() {
   return const DropdownItemOptions(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     textStyle: TextStyle(color: Colors.black),
@@ -439,16 +473,18 @@ DropdownItemOptions styleDropdownItemOptions(){
     ),
   );
 }
+
 class BotonTerminosDeUso extends StatelessWidget {
   final Idioma idioma;
   final Size size;
-  const BotonTerminosDeUso({super.key, required this.idioma, required this.size});
+  const BotonTerminosDeUso(
+      {super.key, required this.idioma, required this.size});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           showDialog(
-            barrierColor: Colors.black.withOpacity(0.6),
+              barrierColor: Colors.black.withOpacity(0.6),
               useSafeArea: true,
               context: context,
               builder: (context) =>

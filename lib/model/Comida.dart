@@ -2,12 +2,13 @@
 class Comida{
   final String nombre;
   final String foto;
+  final int tiempoMinuto;
   final bool isCarne;
   final bool isBurguer;
   final bool isEnsalada;
   final bool isPizza;
   final bool isPescado;
-  final bool isSuchi;
+  final bool isBebida;
   //El precio esta en español
   final double precio;
    const Comida({
@@ -18,7 +19,8 @@ class Comida{
     required this.isEnsalada,
     required this.isPizza,
     required this.isPescado,
-    required this.isSuchi,
-    required this.precio
+    required this.isBebida,
+    required this.precio,
+     required this.tiempoMinuto
   });
 }
