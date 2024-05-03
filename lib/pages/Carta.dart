@@ -125,7 +125,7 @@ class _Carta extends State<Carta> {
                       color: Colors.black,
                       image: DecorationImage(
                           image: const AssetImage(
-                              "assets/images/bannerFiltros.jpg"),
+                              "assets/images/bannerFiltros.webp"),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.75),

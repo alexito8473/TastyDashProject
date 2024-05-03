@@ -1,6 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -113,7 +116,7 @@ class _HomePage extends State<HomePage> {
                         image: DecorationImage(
                             image: imagenBannerAjustes,
                             fit: BoxFit.fill,
-                            colorFilter: ColorFilter.mode(
+                            colorFilter: const ColorFilter.mode(
                                 Colors.black38, BlendMode.darken))),
                     child: SingleChildScrollView(
                         child: SizedBox(
@@ -133,14 +136,11 @@ class _HomePage extends State<HomePage> {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.left,
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: size.width * 0.1),
-                                child: Column(
+                              ), Column(
                                   children: [
                                     Container(
                                         margin: EdgeInsets.only(
-                                            top: size.height * 0.01),
+                                            top: size.height * 0.01,left: size.width * 0.1),
                                         width: size.width * 0.9,
                                         child: Text(
                                           widget.idioma.datosJson[widget
@@ -150,8 +150,9 @@ class _HomePage extends State<HomePage> {
                                               fontSize: 20),
                                           textAlign: TextAlign.left,
                                         )),
-                                    SizedBox(
-                                        width: size.width * 0.9,
+                                    Container(
+                                      width:  size.width,
+                                        margin: EdgeInsets.only(left: size.width * 0.1),
                                         child: Text(widget.person.nombre,
                                             style: const TextStyle(
                                                 color: Colors.white,
@@ -159,7 +160,7 @@ class _HomePage extends State<HomePage> {
                                             textAlign: TextAlign.left)),
                                     Container(
                                         margin: EdgeInsets.only(
-                                            top: size.height * 0.01),
+                                            top: size.height * 0.01,left: size.width * 0.1),
                                         width: size.width * 0.9,
                                         child: const Text("E-mail",
                                             style: TextStyle(
@@ -168,45 +169,49 @@ class _HomePage extends State<HomePage> {
                                             textAlign: TextAlign.left)),
                                     Container(
                                         margin: EdgeInsets.only(
-                                            bottom: size.height * 0.02),
+                                            bottom: size.height * 0.02,left: size.width * 0.1),
                                         width: size.width * 0.9,
                                         child: Text(widget.person.gmail,
                                             style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15),
                                             textAlign: TextAlign.left)),
-                                    FloatingActionButton.extended(
-                                        backgroundColor: Colors.white,
-                                        icon: const Icon(Icons.logout,
-                                            color: Colors.black),
-                                        onPressed: () {
-                                          widget.prefs.remove("Name");
-                                          widget.prefs.remove("Gmail");
-                                          widget.prefs.remove("Password");
-                                          Navigator.pushAndRemoveUntil(
+                                    GestureDetector(
+                                      onTap: (){
+                                        widget.prefs.remove("Name");
+                                        widget.prefs.remove("Gmail");
+                                        widget.prefs.remove("Password");
+                                        Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    InicioSesion(
-                                                        idioma: widget.idioma,
-                                                        prefs: widget.prefs)),
-                                            (route) => false,
-                                          );
-                                        },
-                                        label: Container(
-                                            width: size.width * 0.27,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              widget.idioma.datosJson[widget
-                                                      .idioma.positionIdioma]
-                                                  ["Cerrar_sesion"],
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 15),
-                                            )))
+                                            builder: (context) =>
+                                            InicioSesion(
+                                                idioma: widget.idioma,
+                                                prefs: widget.prefs)),
+                                        (route) => false);
+                                      },
+                                      child: Container(
+                                          width: size.width * 0.4,
+                                          height: size.height * 0.06,
+                                          alignment: Alignment.center,
+                                          margin: EdgeInsets.only(top: size.height * 0.02,bottom: size.height * 0.02),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        child: AutoSizeText(
+                                          widget.idioma.datosJson[widget
+                                              .idioma.positionIdioma]
+                                          ["Cerrar_sesion"],
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                          maxLines: 1,
+                                        )
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
                               Container(
                                   height: size.height * 0.9,
                                   margin:
@@ -229,6 +234,7 @@ class _HomePage extends State<HomePage> {
                                         ),
                                         Container(
                                           width: size.width * 0.7,
+                                          height: size.height * 0.06,
                                           margin: EdgeInsets.only(
                                               top: size.height * 0.03,
                                               bottom: size.height * 0.02),
@@ -303,7 +309,7 @@ class _HomePage extends State<HomePage> {
                                         Container(
                                           alignment: Alignment.center,
                                           width: size.width * 0.7,
-                                          height: size.height * 0.05,
+                                          height: size.height * 0.06,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
@@ -484,15 +490,15 @@ class BotonTerminosDeUso extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           showDialog(
+              barrierDismissible: false,
               barrierColor: Colors.black.withOpacity(0.6),
-              useSafeArea: true,
+              useSafeArea: false,
               context: context,
-              builder: (context) =>
-                  AlertDialog(content: PoliticaTexto(idioma: idioma)));
+              builder: (context) => AlertDialog(content: PoliticaTexto(idioma: idioma)));
         },
         child: Container(
             width: size.width * 0.7,
-            height: size.height * 0.05,
+            height: size.height * 0.06,
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: size.height * 0.02),
             decoration: BoxDecoration(
@@ -509,28 +515,52 @@ class PoliticaTexto extends StatelessWidget {
   const PoliticaTexto({super.key, required this.idioma});
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                idioma.datosJson[idioma.positionIdioma]["Politica"],
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              )),
-          Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text1"],
-              style: const TextStyle(fontSize: 12)),
-          Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text2"],
-              style: const TextStyle(fontSize: 12)),
-          Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text3"],
-              style: const TextStyle(fontSize: 12)),
-          Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text4"],
-              style: const TextStyle(fontSize: 12)),
-          Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text5"],
-              style: const TextStyle(fontSize: 12)),
-        ],
-      ),
-    );
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
+        width: size.width * .8,
+        height: size.height * .7,
+        child:  SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {Navigator.of(context).pop();},
+                            child:Container(
+                              width: size.width * .1,
+                              height: size.height * .05,
+                              child: const Icon(Icons.keyboard_backspace),
+                            ),
+                          ),
+        Container(
+          margin: EdgeInsets.only(left: size.width*.05),
+            child:    Text(
+          idioma.datosJson[idioma.positionIdioma]["Politica"],
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 25),
+        ))
+
+                        ]),
+                      ),
+                  Text(
+                      idioma.datosJson[idioma.positionIdioma]["Politica_Text1"],
+                      style: const TextStyle(fontSize: 18)),
+                  Text(
+                      idioma.datosJson[idioma.positionIdioma]["Politica_Text2"],
+                      style: const TextStyle(fontSize: 18)),
+                  Text(
+                      idioma.datosJson[idioma.positionIdioma]["Politica_Text3"],
+                      style: const TextStyle(fontSize: 18)),
+                  Text(
+                      idioma.datosJson[idioma.positionIdioma]["Politica_Text4"],
+                      style: const TextStyle(fontSize: 18)),
+                  Text(
+                      idioma.datosJson[idioma.positionIdioma]["Politica_Text5"],
+                      style: const TextStyle(fontSize: 18)),
+                ],
+              ),
+            ));
   }
 }

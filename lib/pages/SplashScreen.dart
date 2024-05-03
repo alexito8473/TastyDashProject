@@ -33,7 +33,7 @@ class _SplashScreen extends State<SplashScreen> {
       await precacheImage(
           const AssetImage('assets/images/bannersuper.webp'), context);
       await precacheImage(
-          const AssetImage("assets/images/bannerFiltros.jpg"), context);
+          const AssetImage("assets/images/bannerFiltros.webp"), context);
       await precacheImage(
           const AssetImage("assets/images/bannerCarne.webp"), context);
       await precacheImage(

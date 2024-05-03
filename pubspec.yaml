@@ -29,16 +29,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.0
-flutter_icons:
-  android: true
-  ios: true
-  adaptative_icon_foreground: "assets/images/ic_FORE.webp"
+
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/bannerFiltros.jpg
+    - assets/images/bannerFiltros.webp
     - assets/images/start.webp
     - assets/images/screen.webp
     - assets/images/register.webp
@@ -60,7 +56,7 @@ flutter:
     - assets/images/hamburguesaVegana.jpg
     - assets/images/Chocobo.webp
     - assets/images/ragout.webp
-    - assets/images/filetePescado.webp
+    - assets/images/camaronesFritos.webp
     - assets/images/bannerBebida.webp
     - assets/images/bannerPescado.webp
     - assets/images/fondoSuelo.webp
@@ -69,6 +65,15 @@ flutter:
     - assets/images/besugo.webp
     - assets/images/pulpoBrasa.webp
     - assets/images/pescadoPatatasFritas.webp
+    - assets/images/albondiga.webp
+    - assets/images/filete.webp
+    - assets/images/secretoIberico.webp
+    - assets/images/cremaVerdura.webp
+    - assets/images/tacoVerdura.webp
+    - assets/images/cocaCola.webp
+    - assets/images/cocaColaZero.webp
+    - assets/images/fantaLimon.webp
+    - assets/images/fantaNaranja.webp
 
 
     - Data/leng.json

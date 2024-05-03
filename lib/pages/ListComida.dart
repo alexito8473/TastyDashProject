@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
@@ -20,18 +21,30 @@ class ListaComida extends StatefulWidget {
       required this.imagenBanner,
       required this.monedEnUso,
       required this.idioma,
-        required this.nombreLista});
+      required this.nombreLista});
   @override
   State<StatefulWidget> createState() => _ListaComida();
 }
 
 @immutable
 class _ListaComida extends State<ListaComida> {
+  final controller = ScrollController();
+
+  void onListenerController() {
+    setState(() {});
+  }
+
   @override
   void initState() {
+    controller.addListener(onListenerController);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    controller.removeListener(onListenerController);
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -46,15 +59,17 @@ class _ListaComida extends State<ListaComida> {
                       colors: [
                         Colors.transparent,
                         Colors.black54,
-                        Colors.black87,
                         Colors.black,
                         Colors.black
                       ]).createShader(bounds),
               blendMode: BlendMode.darken,
               child: Container(
                 width: size.width,
-                height: size.height * 0.30,
-                padding: EdgeInsets.only(top:  size.height * 0.12,left:  size.height * 0.05,right: size.height * 0.05),
+                height: size.height * 0.28,
+                padding: EdgeInsets.only(
+                    top: size.height * 0.120,
+                    left: size.height * 0.05,
+                    right: size.height * 0.05),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(40),
@@ -64,52 +79,53 @@ class _ListaComida extends State<ListaComida> {
                         image: AssetImage(widget.imagenBanner),
                         fit: BoxFit.cover,
                         colorFilter: const ColorFilter.mode(
-                            Colors.black38, BlendMode.lighten))
+                            Colors.black38, BlendMode.lighten))),
+                child: AutoSizeText(
+                  widget.nombreLista,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: AutofillHints.jobTitle,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 60),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
-                child:  AutoSizeText(widget.nombreLista,style: const TextStyle(color: Colors.white,fontFamily: AutofillHints.jobTitle,fontWeight: FontWeight.bold,fontSize: 60),textAlign: TextAlign.center, maxLines: 1,),
-
-              )
-          ),
+              )),
           Container(
             margin: EdgeInsets.only(
-                top: size.height * 0.28, bottom: size.height * 0.02),
+                top: size.height * 0.25, bottom: size.height * 0.01),
             color: Colors.black87,
             child: ListView.builder(
+              controller: controller,
               itemCount: widget.listaComida.length,
               itemBuilder: (context, index) {
-                return BannerComida(
-                  comida: widget.listaComida[index],
-                  monedaEnUso: widget.monedEnUso,
-                  idioma: widget.idioma,
+                final difference=controller.offset-(index*size.height*0.169);
+                final percent= 1-(difference/(size.height*0.15));
+                double opacity = percent;
+                if(opacity>1.0) opacity = 1.0;
+                if(opacity<0.0) opacity = 0.0;
+                return Opacity(
+                    opacity: opacity,
+                  child:  Transform(
+                    alignment: Alignment.bottomCenter,
+                    transform: Matrix4.identity()..scale(opacity,opacity),
+                    child:   BannerComida(
+                      comida: widget.listaComida[index],
+                      monedaEnUso: widget.monedEnUso,
+                      idioma: widget.idioma,
+                    )
+                  )
+                
                 );
               },
             ),
           ),
-          Positioned(
-              top: size.height * 0.265,
-              child: Container(
-                width: size.width,
-                height: size.height * 0.020,
-                decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20))),
-              ))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        elevation: 20,
-        backgroundColor: Colors.orange,
-        child: const Icon(FontAwesomeIcons.arrowLeft),
-      ),
+      floatingActionButton: BotonVolver(),
     );
   }
 }
-
 class BannerComida extends StatelessWidget {
   final Comida comida;
   final Moneda monedaEnUso;
@@ -121,7 +137,7 @@ class BannerComida extends StatelessWidget {
       required this.idioma});
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size= MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
@@ -130,27 +146,31 @@ class BannerComida extends StatelessWidget {
           barrierColor: Colors.black54,
           pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(
-                opacity: animation, child: PaginaComida(comida: comida, idioma: idioma, monedaEnUso: monedaEnUso,));
+                opacity: animation,
+                child: PaginaComida(
+                  comida: comida,
+                  idioma: idioma,
+                  monedaEnUso: monedaEnUso,
+                ));
           },
         ));
         //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: comida),));
       },
       child: Container(
-          margin: const EdgeInsets.all(10),
+          margin:  EdgeInsets.symmetric(horizontal:  size.width*0.05,vertical: size.height*0.01),
           width: double.infinity,
-          height: 100,
+          height: size.height*0.15,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
                 image: AssetImage(comida.foto),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.59), BlendMode.srcATop)),
+                    Colors.black.withOpacity(0.45), BlendMode.srcATop)),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                children: [
                   AutoSizeText(
                     maxLines: 1,
                     comida.nombre,
@@ -182,8 +202,6 @@ class BannerComida extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                       )),
-                    ],
-                  )
                 ],
               )
             ],
