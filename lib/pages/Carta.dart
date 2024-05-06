@@ -120,7 +120,7 @@ class _Carta extends State<Carta> {
                       ))),
               Container(
                   width: size.width,
-                  height: size.height * 0.372,
+                  height: size.height * 0.374,
                   decoration: BoxDecoration(
                       color: Colors.black,
                       image: DecorationImage(
@@ -128,7 +128,7 @@ class _Carta extends State<Carta> {
                               "assets/images/bannerFiltros.webp"),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.75),
+                              Colors.black.withOpacity(0.7),
                               BlendMode.darken))),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

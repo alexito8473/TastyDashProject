@@ -26,77 +26,186 @@ class _PaginaComida extends State<PaginaComida> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-              top: 0,
-              left: 0,
+        body: Stack(
+          children: [
+            Positioned(
+                top: 0,
+                left: 0,
+                width: size.width,
+                child: ShaderMask(
+                    shaderCallback: (bounds) => const LinearGradient(
+                            begin: Alignment.center,
+                            end: Alignment.bottomCenter,
+                            stops: [0.4, 0.9],
+                            colors: [Colors.transparent, Colors.black])
+                        .createShader(bounds),
+                    blendMode: BlendMode.darken,
+                    child: Container(
+                      width: size.width,
+                      height: size.height * 0.34,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                              image: AssetImage(widget.comida.foto),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center,
+                              isAntiAlias: true)),
+                    ))),
+
+            Container(
               width: size.width,
-              child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                          begin: Alignment.center,
-                          end: Alignment.bottomCenter,
-                          stops: [0.4, 0.9],
-                          colors: [Colors.transparent, Colors.black])
-                      .createShader(bounds),
-                  blendMode: BlendMode.darken,
-                  child: Container(
-                    width: size.width,
-                    height: size.height * 0.41,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        image: DecorationImage(
-                            image: AssetImage(widget.comida.foto),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                            isAntiAlias: true)),
-                  ))),
-          Container(
-            width: size.width,
-            height: size.height,
-            margin: EdgeInsets.only(top: size.height * 0.35),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40),
-                    topLeft: Radius.circular(40)),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/fondoSuelo.webp"),
-                    fit: BoxFit.cover,
-                    colorFilter:
-                        ColorFilter.mode(Colors.black38, BlendMode.darken))),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                Container(
-                    margin: EdgeInsets.only(
-                        left: size.width * 0.1,
-                        top: size.height * 0.05,
-                        right: size.width * 0.1),
-                    alignment: Alignment.centerLeft,
-                    child: AutoSizeText(
-                      widget.comida.nombre,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                      maxLines: 1,
+              height: size.height,
+              margin: EdgeInsets.only(top: size.height * 0.3),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30)),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/fondoSuelo.webp"),
+                      fit: BoxFit.cover,
+                      colorFilter:
+                          ColorFilter.mode(Colors.black26, BlendMode.darken))),
+              child: SingleChildScrollView(
+                  child: Column(
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(
+                          bottom: size.height * 0.03,
+                          left: size.width * 0.1,
+                          top: size.height * 0.03,
+                          right: size.width * 0.1),
+                      alignment: Alignment.center,
+                      child: AutoSizeText(
+                        widget.comida.nombre,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                        maxLines: 1,
+                      )),
+                  Row(children: [
+                    Expanded(
+                        child: Center(
+                      child: AutoSizeText(
+                        "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 25),
+                        textAlign: TextAlign.left,
+                        maxLines: 1,
+                      ),
                     )),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: size.width * 0.1, top: size.height * 0.02),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
-                    style: const TextStyle(color: Colors.white, fontSize: 25),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ],
-            )),
-          ),
+                    Expanded(
+                        child: Center(
+                      child: AutoSizeText(
+                        maxLines: 1,
+                        "${widget.comida.tiempoMinuto} ${widget.idioma.datosJson[widget.idioma.positionIdioma]["Minuto"]}",
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 25),
+                        textAlign: TextAlign.left,
+                      ),
+                    )),
+                  ]),
+                  ExpansionAlergenos(widget.comida, widget.idioma),
+                  if (widget.comida.ingredientes.isNotEmpty)
+                    ExpansionIngredientes(widget.comida, widget.idioma),
+                ],
+              )),
+            ),
+          ],
+        ),
+        floatingActionButton: BotonVolver());
+  }
+}
+
+class ExpansionIngredientes extends StatelessWidget {
+  final Comida comida;
+  final Idioma idioma;
+  const ExpansionIngredientes(this.comida, this.idioma, {super.key});
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return ExpansionTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      iconColor: Colors.orange,
+      shape: const RoundedRectangleBorder(side: BorderSide.none),
+      title: Text(idioma.datosJson[idioma.positionIdioma]["Ingredientes"],
+          style: const TextStyle(color: Colors.white, fontSize: 25)),
+      children: [
+        Container(
+          width: size.width*0.9,
+          child: Text(comida.ingredientes.map((e) => idioma.datosJson[idioma.positionIdioma][e]).join(", "),style: const TextStyle(color: Colors.white,fontSize: 25),textAlign: TextAlign.center,)
+
+        )
         ],
-      ),
-      floatingActionButton: BotonVolver()
     );
   }
+}
+
+class ExpansionAlergenos extends StatelessWidget {
+  final Comida comida;
+  final Idioma idioma;
+  const ExpansionAlergenos(this.comida, this.idioma, {super.key});
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return ExpansionTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      iconColor: Colors.orange,
+      shape: const RoundedRectangleBorder(side: BorderSide.none),
+      expansionAnimationStyle: AnimationStyle(curve: Curves.easeOut),
+      title: Text(idioma.datosJson[idioma.positionIdioma]["Alergeno"],
+          style: const TextStyle(color: Colors.white, fontSize: 25)),
+      children: [
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Apio"],
+            comida.haveApio, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Moluscos"],
+            comida.haveMoluscos, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Crustaceos"],
+            comida.haveCrustaceos, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Mostaza"],
+            comida.haveMostaza, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Huevo"],
+            comida.haveHuevo, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Pescado"],
+            comida.havePescado, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Cacahuetes"],
+            comida.haveCacahuetes, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Gluten"],
+            comida.haveGluten, idioma, size),
+        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Azufre"],
+            comida.haveAzufre, idioma, size),
+      ],
+    );
+  }
+}
+
+String contiene(bool isContiene, Idioma idioma) {
+  return isContiene ? idioma.datosJson[idioma.positionIdioma]["Contiene"]: idioma.datosJson[idioma.positionIdioma]["NoContiene"];
+}
+
+Widget FilaAlergeno(String tipo, bool tiene, Idioma idioma, Size size) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+            width: size.width * 0.3,
+            child: AutoSizeText(
+              maxLines: 1,
+              tipo,
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+              textAlign: TextAlign.left,
+            )),
+        SizedBox(
+          width: size.width * 0.3,
+          child: AutoSizeText(
+            maxLines: 1,
+            contiene(tiene, idioma),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        ),
+      ],
+    ),
+  );
 }

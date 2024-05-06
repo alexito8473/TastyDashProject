@@ -19,6 +19,7 @@ class Comida{
   final bool haveGluten;
   final bool haveLeche;
   final bool haveAzufre;
+  final List<String> ingredientes;
   //El precio esta en español
   final double precio;
    const Comida({
@@ -42,5 +43,6 @@ class Comida{
      required this.haveGluten,
      required this.haveLeche,
      required this.haveAzufre,
+     required this.ingredientes,
   });
 }

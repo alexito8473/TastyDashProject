@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Ingrediente.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/pages/PageFood.dart';
 
@@ -34,8 +35,6 @@ class _Background extends State<Background> {
                         Colors.black38, BlendMode.darken)))));
   }
 }
-
-
 
 class TextFieldMio extends StatefulWidget {
   final String hint;
@@ -116,122 +115,136 @@ void MensajeAlCliente(BuildContext context, String mensage, double font) {
   ));
 }
 
-Future<List <dynamic>> leerListaJson(String json) async {
+Future<List<dynamic>> leerListaJson(String json) async {
   final listaMap = jsonDecode(json);
   return listaMap;
 }
-List<String> CrearListaBanderas(){
+
+List<String> CrearListaBanderas() {
   return ["assets/Icons/Spain.svg", "assets/Icons/England.svg"];
 }
-List<String> CrearListaPaises(){
+
+List<String> CrearListaPaises() {
   return ["Español", "English"];
 }
 
-double conversorMoneda(double original){
+double conversorMoneda(double original) {
   return 2.2;
 }
 
-class ComidaViewCarrusel extends StatefulWidget{
+class ComidaViewCarrusel extends StatefulWidget {
   final Comida comida;
   Moneda monedaEnUso;
   final Idioma idioma;
-  ComidaViewCarrusel({super.key, required this.comida, required this.monedaEnUso,required this.idioma});
+  ComidaViewCarrusel(
+      {super.key,
+      required this.comida,
+      required this.monedaEnUso,
+      required this.idioma});
   @override
-  State<StatefulWidget> createState() =>_ComidaViewCarrusel();
+  State<StatefulWidget> createState() => _ComidaViewCarrusel();
 }
 
-class _ComidaViewCarrusel extends State<ComidaViewCarrusel>{
-  @override
-  Widget build(BuildContext context) {
-    Size size= MediaQuery.of(context).size;
-    return GestureDetector(
-        onTap: () =>{
-          //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
-          Navigator.of(context).push(
-              PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 600),
-                reverseTransitionDuration: const Duration(milliseconds: 300),
-                barrierColor: Colors.black54,
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  return FadeTransition(opacity: animation,
-                    child: PaginaComida(comida: widget.comida, idioma: widget.idioma, monedaEnUso: widget.monedaEnUso,),
-                  );
-                },
-              ))
-        } ,
-        child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.91),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      width: size.width,
-                      height: size.height*0.15,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(15),
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage(widget.comida.foto),
-                              fit: BoxFit.cover,
-                              alignment: Alignment.center,
-                              isAntiAlias: true)),
-
-                    ),
-                    SizedBox(
-                      width: double.infinity, height: size.height * 0.15,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [ Container(
-                          width: double.infinity,
-                          child: AutoSizeText(
-                            widget.comida.nombre,
-                            maxLines: 1,
-                            style: const TextStyle(color: Colors.black,fontSize: 25),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: AutoSizeText("${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 25),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),],
-                      )
-                    )
-                  ],
-                )
-              )
-            )
-
-    );
-  }
-}
-class BotonVolver extends StatelessWidget{
+class _ComidaViewCarrusel extends State<ComidaViewCarrusel> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-        onTap: ()=>Navigator.pop(context),
+        onTap: () => {
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
+              Navigator.of(context).push(PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 600),
+                reverseTransitionDuration: const Duration(milliseconds: 300),
+                barrierColor: Colors.black54,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: PaginaComida(
+                      comida: widget.comida,
+                      idioma: widget.idioma,
+                      monedaEnUso: widget.monedaEnUso,
+                    ),
+                  );
+                },
+              ))
+            },
         child: Container(
-          height: size.height*0.06,
-          width: size.width*0.14,
-          margin: EdgeInsets.only(right: size.height*0.01,bottom: size.height*0.01),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.75),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Container(
+                  width: size.width,
+                  height: size.height * 0.15,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.transparent,
+                      image: DecorationImage(
+                          image: AssetImage(widget.comida.foto),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          isAntiAlias: true)),
+                ),
+                SizedBox(
+                    width: double.infinity,
+                    height: size.height * 0.15,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            widget.comida.nombre,
+                            maxLines: 1,
+                            style: const TextStyle(fontWeight: FontWeight.bold,
+                                color: Colors.black, fontSize: 30),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
+                            style: const TextStyle(fontWeight: FontWeight.bold,
+                                color: Colors.black, fontSize: 25),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
+            ))));
+  }
+}
+
+class BotonVolver extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Container(
+          height: size.width * 0.14,
+          width: size.width * 0.14,
+          margin: EdgeInsets.only(
+              right: size.height * 0.01, bottom: size.height * 0.01),
           decoration: const BoxDecoration(
             color: Colors.orange,
             borderRadius: BorderRadius.all(Radius.circular(14)),
           ),
-          child: const Icon(FontAwesomeIcons.arrowLeft,color: Colors.black,),
+          child: const Icon(
+            FontAwesomeIcons.arrowLeft,
+            color: Colors.black,
+          ),
         ));
   }
 }
-List<Comida> CrearListaDeComida(){
+
+List<Comida> CrearListaDeComida() {
   List<Comida> listaDeComida = [
     // Hamburguesa
     const Comida(
@@ -245,17 +258,22 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 5.12,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
-      haveAzufre: false,
-      haveCacahuetes: false,
-      haveGluten: false,
-      haveHuevo: false,
-      haveLeche: false,
-      haveMostaza: false,
-      havePescado: false
-    ),
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: true,
+        haveHuevo: true,
+        haveLeche: true,
+        haveMostaza: true,
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.SALSA_TARTARA,
+          Ingrediente.CARNE,
+          Ingrediente.LECHUGA,
+          Ingrediente.PAN,
+        ]),
     const Comida(
         nombre: 'BurguerUltra',
         foto: 'assets/images/imagen.webp',
@@ -266,17 +284,25 @@ List<Comida> CrearListaDeComida(){
         isPescado: false,
         isBebida: false,
         precio: 4.12,
-  tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        tiempoMinuto: 20,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
-        haveGluten: false,
-        haveHuevo: false,
-        haveLeche: false,
+        haveGluten: true,
+        haveHuevo: true,
+        haveLeche: true,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.KETCHUP,
+          Ingrediente.CARNE,
+          Ingrediente.LECHUGA,
+          Ingrediente.QUESO,
+          Ingrediente.TOMATE,
+          Ingrediente.PAN,
+        ]),
     const Comida(
         nombre: 'Burguer Buey',
         foto: 'assets/images/haburguesaEspecial.webp',
@@ -288,16 +314,23 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 4.50,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
-        haveAzufre: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: true,
         haveCacahuetes: false,
-        haveGluten: false,
-        haveHuevo: false,
+        haveGluten: true,
+        haveHuevo: true,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.CARNE_BUEY,
+          Ingrediente.QUESO,
+          Ingrediente.LECHUGA,
+          Ingrediente.PAN,
+          Ingrediente.TOMATE
+        ]),
     const Comida(
         nombre: 'Burguer Complete',
         foto: 'assets/images/hamburguesaCompleta.webp',
@@ -309,16 +342,26 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 4.50,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
-        haveGluten: false,
-        haveHuevo: false,
-        haveLeche: false,
+        haveGluten: true,
+        haveHuevo: true,
+        haveLeche: true,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.CARNE,
+          Ingrediente.BEICON,
+          Ingrediente.CEBOLLA,
+          Ingrediente.QUESO,
+          Ingrediente.LECHUGA,
+          Ingrediente.BEICON,
+          Ingrediente.MAYONESA,
+          Ingrediente.TOMATE
+        ]),
     const Comida(
         nombre: 'The Ultimate Beef Burger',
         foto: 'assets/images/hamburguesaBueyBeiconPatatasFritas.webp',
@@ -330,16 +373,23 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 4.50,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
-        haveGluten: false,
-        haveHuevo: false,
-        haveLeche: false,
+        haveGluten: true,
+        haveHuevo: true,
+        haveLeche: true,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.CARNE,
+          Ingrediente.QUESO,
+          Ingrediente.BEICON,
+          Ingrediente.PATATAS_FRITAS,
+          Ingrediente.PAN,
+        ]),
     const Comida(
         nombre: 'Harmony Burger',
         foto: 'assets/images/hamburguesaPatatasFritas.webp',
@@ -351,16 +401,26 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 4.50,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes:  [
+          Ingrediente.CARNE,
+          Ingrediente.QUESO,
+          Ingrediente.MAYONESA,
+          Ingrediente.TOMATE,
+          Ingrediente.LECHUGA,
+          Ingrediente.BEICON,
+          Ingrediente.PATATAS_FRITAS,
+          Ingrediente.PAN,
+        ]),
     const Comida(
         nombre: 'Veggie Delight',
         foto: 'assets/images/hamburguesaVegana.jpg',
@@ -372,16 +432,24 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 4.50,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: [
+          Ingrediente.CARNE_VEGANA,
+          Ingrediente.KETCHUP,
+          Ingrediente.TOMATE,
+          Ingrediente.LECHUGA,
+          Ingrediente.CEBOLLA,
+          Ingrediente.PAN,
+        ]),
     // Ensalada
     const Comida(
         nombre: 'Breaded pepper',
@@ -394,16 +462,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 5.99,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Shrimp Scampi',
         foto: 'assets/images/gambasAl.webp',
@@ -415,16 +484,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Vegetable cream',
         foto: 'assets/images/cremaVerdura.webp',
@@ -436,16 +506,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Vegetable taco',
         foto: 'assets/images/tacoVerdura.webp',
@@ -457,16 +528,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     // Carne
     const Comida(
         nombre: 'Scnizel',
@@ -479,16 +551,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Iberic secret',
         foto: 'assets/images/secretoIberico.webp',
@@ -500,16 +573,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Ragout',
         foto: 'assets/images/ragout.webp',
@@ -521,16 +595,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Meat balls',
         foto: 'assets/images/albondiga.webp',
@@ -542,16 +617,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Fillet',
         foto: 'assets/images/filete.webp',
@@ -563,16 +639,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     // Pescado
     const Comida(
         nombre: 'Fried shrimp',
@@ -585,16 +662,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Tilapia',
         foto: 'assets/images/tilapia.webp',
@@ -606,16 +684,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Octo-Bite',
         foto: 'assets/images/pulpoGallega.webp',
@@ -627,16 +706,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Besugo',
         foto: 'assets/images/besugo.webp',
@@ -648,16 +728,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Octo-Grilled',
         foto: 'assets/images/pulpoBrasa.webp',
@@ -669,16 +750,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Octo-chips',
         foto: 'assets/images/pescadoPatatasFritas.webp',
@@ -690,16 +772,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: false,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
-        haveAzufre: false,
+        haveApio: true,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: true,
         haveCacahuetes: false,
-        haveGluten: false,
+        haveGluten: true,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     // Bebida
     const Comida(
         nombre: 'Coca cola',
@@ -712,16 +795,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: true,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Coca cola zero',
         foto: 'assets/images/cocaColaZero.webp',
@@ -733,16 +817,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: true,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Fanta (Orange)',
         foto: 'assets/images/fantaNaranja.webp',
@@ -754,16 +839,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: true,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
     const Comida(
         nombre: 'Fanta (Lemon)',
         foto: 'assets/images/fantaLimon.webp',
@@ -775,16 +861,17 @@ List<Comida> CrearListaDeComida(){
         isBebida: true,
         precio: 3.22,
         tiempoMinuto: 20,
-      haveApio: false,
-      haveCrustaceos: false,
-      haveMoluscos: false,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
         haveAzufre: false,
         haveCacahuetes: false,
         haveGluten: false,
         haveHuevo: false,
         haveLeche: false,
         haveMostaza: false,
-        havePescado: false),
+        havePescado: false,
+        ingredientes: []),
   ];
   return listaDeComida;
 }
