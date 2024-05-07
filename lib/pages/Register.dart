@@ -9,6 +9,8 @@ import 'package:tfgsaladillo/pages/Home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
+import 'Login.dart';
+
 class Registrarse extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
@@ -31,14 +33,12 @@ class _Registrarse extends State<Registrarse> {
     _passwordController.dispose();
     super.dispose();
   }
-
   void register(BuildContext context) async {
     String nombre = _nameController.text;
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     BitmapDescriptor icon;
-    bool user = await authService.register(gmail, password);
-    if (user) {
+    if (await authService.register(gmail, password)) {
       await date
           .child("Person/${gmail.trim().split("@")[0].toLowerCase()}")
           .set({"Nombre": nombre, "Gmail": gmail, "Password": password});
@@ -47,7 +47,7 @@ class _Registrarse extends State<Registrarse> {
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
       icon = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(), "assets/images/ic_map.png");
+          const ImageConfiguration(), "assets/images/ic_map.webp");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -57,7 +57,7 @@ class _Registrarse extends State<Registrarse> {
                   prefs: widget.prefs,
                   icon: icon,
                   monedEnUso: devolverTipoMoneda(
-                      widget.prefs.getString("SimboloMoneda")),
+                      widget.prefs.getString("SimboloMoneda")), posicionInicial: 2,
                 )),
         (route) => false,
       );
@@ -142,29 +142,10 @@ class _Registrarse extends State<Registrarse> {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-              heroTag: "textoToButton",
-              backgroundColor: Colors.orange,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(Icons.keyboard_backspace)),
+          floatingActionButton: BotonVolver(),
         )
       ],
     );
   }
 }
 
-class Titular extends StatelessWidget {
-  final String title;
-  const Titular({super.key, required this.title});
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Text(title,
-            style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 40)));
-  }
-}

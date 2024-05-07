@@ -61,11 +61,10 @@ class _TextFielMio extends State<TextFieldMio> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding:  EdgeInsets.symmetric(vertical: widget.sizeContext.height*0.01),
       child: Container(
-        height: MediaQuery.of(context).orientation == Orientation.portrait
-            ? widget.sizeContext.height * 0.06
-            : widget.sizeContext.height * 0.11,
+        alignment: Alignment.center,
+        height: widget.sizeContext.height * 0.06,
         width: widget.sizeContext.width * 0.8,
         decoration: BoxDecoration(
             color: Colors.white60, borderRadius: BorderRadius.circular(24)),

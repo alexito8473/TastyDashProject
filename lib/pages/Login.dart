@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,6 +52,7 @@ class _InicioSesion extends State<InicioSesion> {
                   icon: icon,
                   monedEnUso: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
+                  posicionInicial: 2,
                 )),
         (route) => false,
       );
@@ -116,34 +118,35 @@ class _InicioSesion extends State<InicioSesion> {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(bottom: 5),
-                margin: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.28, vertical: size.width * 0.01),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  border:
-                      Border(bottom: BorderSide(color: Colors.white, width: 2)),
-                ),
-                child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 1100),
-                        reverseTransitionDuration:
-                            const Duration(milliseconds: 700),
-                        barrierColor: Colors.black,
-                        opaque: true,
-                        barrierDismissible: true,
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: Registrarse(
-                                idioma: widget.idioma, prefs: widget.prefs),
-                          );
-                        },
-                      ));
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(PageRouteBuilder(
+                    transitionDuration: const Duration(milliseconds: 1100),
+                    reverseTransitionDuration:
+                        const Duration(milliseconds: 700),
+                    barrierColor: Colors.black,
+                    opaque: true,
+                    barrierDismissible: true,
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: Registrarse(
+                            idioma: widget.idioma, prefs: widget.prefs),
+                      );
                     },
+                  ));
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(bottom: 5),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.28,
+                        vertical: size.width * 0.01),
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border(
+                          bottom: BorderSide(color: Colors.white, width: 2)),
+                    ),
                     child: Text(
                       widget.idioma.datosJson[widget.idioma.positionIdioma]
                           ["Crear_una_cuenta"],
@@ -157,6 +160,7 @@ class _InicioSesion extends State<InicioSesion> {
               )
             ],
           ),
+          floatingActionButton: BotonVolver(),
         )
       ],
     );

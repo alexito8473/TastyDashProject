@@ -24,6 +24,7 @@ class _SplashScreen extends State<SplashScreen> {
   void initState() {
     super.initState();
     Idioma idioma;
+    Person? person;
     String? nombre;
     BitmapDescriptor icon;
     String? gmail;
@@ -55,32 +56,23 @@ class _SplashScreen extends State<SplashScreen> {
       nombre = prefs.getString("Name");
       gmail = prefs.getString("Gmail");
       password = prefs.getString("Password");
-      if (nombre == null || gmail == null || password == null) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => InicioSesion(
-                      idioma: idioma,
-                      prefs: prefs,
-                    )),
-            (route) => false);
-      } else {
-        icon = await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), "assets/images/ic_map.webp");
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomePage(
-                      person: Person(
-                          nombre: nombre!, pasword: password!, gmail: gmail!),
-                      idioma: idioma,
-                      prefs: prefs,
-                      icon: icon,
-                      monedEnUso: devolverTipoMoneda(prefs.getString("SimboloMoneda")),
-                    )),
-            (route) => false);
-      }
-
+      person = (nombre == null || gmail == null || password == null)
+          ? null
+          : Person(nombre: nombre!, pasword: password!, gmail: gmail!);
+      icon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(), "assets/images/ic_map.webp");
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    person: person,
+                    idioma: idioma,
+                    prefs: prefs,
+                    icon: icon,
+                    monedEnUso:
+                        devolverTipoMoneda(prefs.getString("SimboloMoneda")), posicionInicial: 0,
+                  )),
+          (route) => false);
     });
   }
 
@@ -91,27 +83,27 @@ class _SplashScreen extends State<SplashScreen> {
         const Background(asset: "assets/images/screen.webp"),
         const Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Tasty Dash",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white),
-                    textAlign: TextAlign.end,
-                  ),
-                  Text(
-                    "By Alejandro Aguilar",
-                    style: TextStyle(fontSize: 13, color: Colors.white),
-                    textAlign: TextAlign.end,
-                  )
-                ],
+          padding: EdgeInsets.only(bottom: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "Tasty Dash",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.white),
+                textAlign: TextAlign.end,
               ),
-            )),
+              Text(
+                "By Alejandro Aguilar",
+                style: TextStyle(fontSize: 13, color: Colors.white),
+                textAlign: TextAlign.end,
+              )
+            ],
+          ),
+        )),
         Center(
             child: Padding(
           padding:

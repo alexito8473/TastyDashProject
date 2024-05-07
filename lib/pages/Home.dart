@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,10 +20,11 @@ import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/Login.dart';
 
 class HomePage extends StatefulWidget {
-  final Person person;
+  Person? person;
   final Idioma idioma;
   final BitmapDescriptor icon;
   final SharedPreferences prefs;
+  final int posicionInicial;
   Moneda monedEnUso;
   HomePage(
       {super.key,
@@ -30,7 +32,8 @@ class HomePage extends StatefulWidget {
       required this.idioma,
       required this.prefs,
       required this.icon,
-      required this.monedEnUso});
+      required this.monedEnUso,
+      required this.posicionInicial});
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
@@ -57,6 +60,7 @@ class _HomePage extends State<HomePage> {
 
   @override
   void initState() {
+    posicion = widget.posicionInicial;
     List<String> banderas = CrearListaBanderas();
     preSelectecLenguage = widget.idioma.positionIdioma;
     for (var i = 0; i < lenguage.length; i++) {
@@ -85,6 +89,29 @@ class _HomePage extends State<HomePage> {
       );
     }
     super.initState();
+  }
+
+  void NavegarLogin() {
+    Navigator.of(context).push(PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 500),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      barrierColor: Colors.black54,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: InicioSesion(idioma: widget.idioma, prefs: widget.prefs),
+        );
+      },
+    ));
+  }
+
+  void Desloquearte() {
+    setState(() {
+      widget.prefs.remove("Name");
+      widget.prefs.remove("Gmail");
+      widget.prefs.remove("Password");
+      widget.person = null;
+    });
   }
 
   @override
@@ -119,307 +146,196 @@ class _HomePage extends State<HomePage> {
                             colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.6),
                                 BlendMode.darken))),
-                    child: SingleChildScrollView(
-                        child: SizedBox(
-                            width: size.width,
-                            child: Column(children: [
-                              Container(
-                                padding: EdgeInsets.only(
-                                    left: size.width * 0.1,
-                                    top: size.height * 0.07),
-                                width: size.width,
-                                child: Text(
-                                  widget.idioma.datosJson[
-                                      widget.idioma.positionIdioma]["MiCuenta"],
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.left,
-                                ),
+                    child: ListView(children: [
+                      TituloPageSetting(
+                          size:size,
+                          title:widget.idioma.datosJson[widget.idioma.positionIdioma]
+                              ["MiCuenta"]),
+                      if (widget.person != null)
+                        InformacionUsuarioSetting(
+                            size: size,
+                            title: widget.idioma
+                                    .datosJson[widget.idioma.positionIdioma]
+                                ["Nombre"],
+                            subtitle: widget.person!.nombre),
+                      if (widget.person != null)
+                        InformacionUsuarioSetting(
+                            size: size,
+                            title: "E-mail",
+                            subtitle: widget.person!.gmail),
+                      widget.person != null
+                          ? ContaninerButtonFunction(
+                              size: size,
+                              functionCall: Desloquearte,
+                              titulo: widget.idioma
+                                      .datosJson[widget.idioma.positionIdioma]
+                                  ["Cerrar_sesion"])
+                          : ContaninerButtonFunction(
+                              size: size,
+                              functionCall: NavegarLogin,
+                              titulo: "Iniciar sesión"),
+                      Container(
+                        height: size.height * 0.9,
+                        margin: EdgeInsets.only(top: size.height * 0.02),
+                        child: Column(
+                          children: [
+                            TituloPageSetting(
+                                size:size,
+                                title:  widget.idioma
+                                        .datosJson[widget.idioma.positionIdioma]
+                                    ["MiCuenta"]),
+                            Container(
+                              width: size.width * 0.7,
+                              height: size.height * 0.06,
+                              margin: EdgeInsets.only(
+                                  top: size.height * 0.03,
+                                  bottom: size.height * 0.02),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Column(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.only(
-                                          top: size.height * 0.01,
-                                          left: size.width * 0.1),
-                                      width: size.width * 0.9,
-                                      child: Text(
-                                        widget.idioma.datosJson[widget
-                                            .idioma.positionIdioma]["Nombre"],
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                        textAlign: TextAlign.left,
-                                      )),
-                                  Container(
-                                      width: size.width,
-                                      margin: EdgeInsets.only(
-                                          left: size.width * 0.1),
-                                      child: Text(widget.person.nombre,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                          textAlign: TextAlign.left)),
-                                  Container(
-                                      margin: EdgeInsets.only(
-                                          top: size.height * 0.01,
-                                          left: size.width * 0.1),
-                                      width: size.width * 0.9,
-                                      child: const Text("E-mail",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20),
-                                          textAlign: TextAlign.left)),
-                                  Container(
-                                      margin: EdgeInsets.only(
-                                          bottom: size.height * 0.02,
-                                          left: size.width * 0.1),
-                                      width: size.width * 0.9,
-                                      child: Text(widget.person.gmail,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15),
-                                          textAlign: TextAlign.left)),
-                                  GestureDetector(
-                                    onTap: () {
-                                      widget.prefs.remove("Name");
-                                      widget.prefs.remove("Gmail");
-                                      widget.prefs.remove("Password");
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  InicioSesion(
-                                                      idioma: widget.idioma,
-                                                      prefs: widget.prefs)),
-                                          (route) => false);
+                                    width: 100,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      widget.idioma.datosJson[widget
+                                          .idioma.positionIdioma]["Idioma"],
+                                      style: const TextStyle(fontSize: 20),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  CoolDropdown<String>(
+                                    dropdownTriangleOptions:
+                                        const DropdownTriangleOptions(
+                                            borderRadius: 0,
+                                            align: DropdownTriangleAlign.center,
+                                            width: 0),
+                                    controller: lenguageDropdownController,
+                                    dropdownList: lenguageDropdownItems,
+                                    defaultItem: lenguageDropdownItems[
+                                        widget.idioma.positionIdioma],
+                                    onChange: (value) => {
+                                      setState(() {
+                                        widget.idioma.positionIdioma =
+                                            int.parse(value);
+                                        widget.prefs
+                                            .setInt("Idioma", int.parse(value));
+                                      }),
                                     },
-                                    child: Container(
-                                        width: size.width * 0.4,
-                                        height: size.height * 0.06,
-                                        alignment: Alignment.center,
-                                        margin: EdgeInsets.only(
-                                            top: size.height * 0.02,
-                                            bottom: size.height * 0.02),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                    resultOptions: const ResultOptions(
+                                      width: 100,
+                                      render: ResultRender.label,
+                                      openBoxDecoration:
+                                          BoxDecoration(color: Colors.white),
+                                      icon: SizedBox(
+                                        width: 10,
+                                        height: 10,
+                                        child: CustomPaint(
+                                          painter: DropdownArrowPainter(
+                                            color: Colors.orange,
+                                          ),
                                         ),
-                                        child: AutoSizeText(
-                                          widget.idioma.datosJson[widget.idioma
-                                              .positionIdioma]["Cerrar_sesion"],
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20),
-                                          maxLines: 1,
-                                        )),
+                                      ),
+                                    ),
+                                    dropdownOptions: const DropdownOptions(
+                                      width: 130,
+                                    ),
+                                    dropdownItemOptions:
+                                        styleDropdownItemOptions(),
                                   ),
                                 ],
                               ),
-                              Container(
-                                  height: size.height * 0.9,
-                                  margin:
-                                      EdgeInsets.only(top: size.height * 0.02),
-                                  child: Center(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: size.width,
-                                          margin: EdgeInsets.only(
-                                              top: size.height * 0.04,
-                                              left: size.width * 0.1),
-                                          child: Text(
-                                              widget.idioma.datosJson[widget
-                                                  .idioma
-                                                  .positionIdioma]["Ajustes"],
-                                              style: const TextStyle(
-                                                  fontSize: 30,
-                                                  color: Colors.white)),
-                                        ),
-                                        Container(
-                                          width: size.width * 0.7,
-                                          height: size.height * 0.06,
-                                          margin: EdgeInsets.only(
-                                              top: size.height * 0.03,
-                                              bottom: size.height * 0.02),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Container(
-                                                width: 100,
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  widget.idioma.datosJson[widget
-                                                          .idioma
-                                                          .positionIdioma]
-                                                      ["Idioma"],
-                                                  style: const TextStyle(
-                                                      fontSize: 20),
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                              CoolDropdown<String>(
-                                                dropdownTriangleOptions:
-                                                    const DropdownTriangleOptions(
-                                                        borderRadius: 0,
-                                                        align:
-                                                            DropdownTriangleAlign
-                                                                .center,
-                                                        width: 0),
-                                                controller:
-                                                    lenguageDropdownController,
-                                                dropdownList:
-                                                    lenguageDropdownItems,
-                                                defaultItem:
-                                                    lenguageDropdownItems[widget
-                                                        .idioma.positionIdioma],
-                                                onChange: (value) => {
-                                                  setState(() {
-                                                    widget.idioma
-                                                            .positionIdioma =
-                                                        int.parse(value);
-                                                    widget.prefs.setInt(
-                                                        "Idioma",
-                                                        int.parse(value));
-                                                  }),
-                                                },
-                                                resultOptions:
-                                                    const ResultOptions(
-                                                  width: 100,
-                                                  render: ResultRender.label,
-                                                  openBoxDecoration:
-                                                      BoxDecoration(
-                                                          color: Colors.white),
-                                                  icon: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: CustomPaint(
-                                                      painter:
-                                                          DropdownArrowPainter(
-                                                        color: Colors.orange,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                dropdownOptions:
-                                                    const DropdownOptions(
-                                                  width: 130,
-                                                ),
-                                                dropdownItemOptions:
-                                                    styleDropdownItemOptions(),
-                                              ),
-                                            ],
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              width: size.width * 0.7,
+                              height: size.height * 0.06,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const SizedBox(
+                                    width: 105,
+                                    child: Text("Moneda",
+                                        style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Center(
+                                    child: CoolDropdown<String>(
+                                      controller: monedaDropdownController,
+                                      dropdownList: monedaDropdownItems,
+                                      defaultItem: monedaDropdownItems[
+                                          monedas.indexOf(widget.monedEnUso)],
+                                      onChange: (value) => {
+                                        setState(() {
+                                          widget.prefs.setString(
+                                              "SimboloMoneda", value);
+                                          widget.monedEnUso =
+                                              devolverTipoMoneda(value);
+                                        })
+                                      },
+                                      resultOptions: const ResultOptions(
+                                        width: 90,
+                                        render: ResultRender.label,
+                                        openBoxDecoration:
+                                            BoxDecoration(color: Colors.white),
+                                        icon: SizedBox(
+                                          width: 10,
+                                          height: 10,
+                                          child: CustomPaint(
+                                            painter: DropdownArrowPainter(
+                                              color: Colors.orange,
+                                            ),
                                           ),
                                         ),
-                                        Container(
-                                          alignment: Alignment.center,
-                                          width: size.width * 0.7,
-                                          height: size.height * 0.06,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const SizedBox(
-                                                width: 105,
-                                                child: Text("Moneda",
-                                                    style: TextStyle(
-                                                        fontSize: 20)),
-                                              ),
-                                              Center(
-                                                child: CoolDropdown<String>(
-                                                  controller:
-                                                      monedaDropdownController,
-                                                  dropdownList:
-                                                      monedaDropdownItems,
-                                                  defaultItem:
-                                                      monedaDropdownItems[
-                                                          monedas.indexOf(widget
-                                                              .monedEnUso)],
-                                                  onChange: (value) => {
-                                                    setState(() {
-                                                      widget.prefs.setString(
-                                                          "SimboloMoneda",
-                                                          value);
-                                                      widget.monedEnUso =
-                                                          devolverTipoMoneda(
-                                                              value);
-                                                    })
-                                                  },
-                                                  resultOptions:
-                                                      const ResultOptions(
-                                                    width: 90,
-                                                    render: ResultRender.label,
-                                                    openBoxDecoration:
-                                                        BoxDecoration(
-                                                            color:
-                                                                Colors.white),
-                                                    icon: SizedBox(
-                                                      width: 10,
-                                                      height: 10,
-                                                      child: CustomPaint(
-                                                        painter:
-                                                            DropdownArrowPainter(
-                                                          color: Colors.orange,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  dropdownOptions:
-                                                      const DropdownOptions(
-                                                          color: Colors.white,
-                                                          width: 100,
-                                                          align: DropdownAlign
-                                                              .center),
-                                                  dropdownItemOptions:
-                                                      styleDropdownItemOptions(),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        BotonTerminosDeUso(
-                                          idioma: widget.idioma,
-                                          size: size,
-                                        ),
-                                        FloatingActionButton(
-                                          heroTag: null,
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .push(PageRouteBuilder(
-                                              transitionDuration:
-                                                  const Duration(
-                                                      milliseconds: 500),
-                                              reverseTransitionDuration:
-                                                  const Duration(
-                                                      milliseconds: 500),
-                                              barrierColor: Colors.black54,
-                                              pageBuilder: (context, animation,
-                                                  secondaryAnimation) {
-                                                return FadeTransition(
-                                                  opacity: animation,
-                                                  child: ChatAi(),
-                                                );
-                                              },
-                                            ));
-                                          },
-                                        )
-                                      ],
+                                      ),
+                                      dropdownOptions: const DropdownOptions(
+                                          color: Colors.white,
+                                          width: 100,
+                                          align: DropdownAlign.center),
+                                      dropdownItemOptions:
+                                          styleDropdownItemOptions(),
                                     ),
-                                  ))
-                            ]))),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            BotonTerminosDeUso(
+                              idioma: widget.idioma,
+                              size: size,
+                            ),
+                            /*
+                            FloatingActionButton(
+                              heroTag: null,
+                              onPressed: () {
+                                Navigator.of(context).push(PageRouteBuilder(
+                                  transitionDuration:
+                                      const Duration(milliseconds: 500),
+                                  reverseTransitionDuration:
+                                      const Duration(milliseconds: 500),
+                                  barrierColor: Colors.black54,
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: ChatAi(),
+                                    );
+                                  },
+                                ));
+                              },
+                            )
+                            */
+                          ],
+                        ),
+                      )
+                    ]),
                   ),
       ),
       bottomNavigationBar: Container(
@@ -427,6 +343,7 @@ class _HomePage extends State<HomePage> {
           padding: EdgeInsets.symmetric(
               vertical: size.height * 0.01, horizontal: size.width * 0.1),
           child: GNav(
+            selectedIndex: posicion,
             tabBackgroundColor: Colors.white.withOpacity(0.8),
             padding: EdgeInsets.symmetric(
                 vertical: size.height * 0.015, horizontal: size.width * 0.04),
@@ -452,33 +369,6 @@ class _HomePage extends State<HomePage> {
             ],
           )),
     );
-  }
-}
-
-class CambioMoneda extends StatefulWidget {
-  final Size size;
-  final Idioma idioma;
-  Moneda monedadeUso;
-  final SharedPreferences prefs;
-  final List<CoolDropdownItem<String>> monedaDropdownItems;
-  final DropdownController monedaDropdownController;
-  CambioMoneda(
-      {super.key,
-      required this.size,
-      required this.prefs,
-      required this.idioma,
-      required this.monedaDropdownController,
-      required this.monedaDropdownItems,
-      required this.monedadeUso});
-  @override
-  State<StatefulWidget> createState() => _CambioMoneda();
-}
-
-class _CambioMoneda extends State<CambioMoneda> {
-  int preSelect = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 
@@ -571,5 +461,79 @@ class PoliticaTexto extends StatelessWidget {
             ],
           ),
         ));
+  }
+}
+
+class TituloPageSetting extends StatelessWidget {
+  final Size size;
+  final String title;
+  TituloPageSetting({super.key, required this.size, required this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: size.width * 0.09, top: size.height * 0.05),
+      width: size.width,
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.left,
+      ),
+    );
+  }
+}
+
+class InformacionUsuarioSetting extends StatelessWidget {
+  final Size size;
+  final String title;
+  final String subtitle;
+  InformacionUsuarioSetting(
+      {super.key,
+      required this.size,
+      required this.title,
+      required this.subtitle});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin:
+            EdgeInsets.only(left: size.width * 0.05, top: size.height * 0.01),
+        width: size.width,
+        child: ListTile(
+          textColor: Colors.white,
+          title: Text(title,  style: const TextStyle(color: Colors.orange, fontSize: 25)),
+          subtitle: AutoSizeText(
+            maxLines: 1,
+            subtitle,
+            style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 20),
+          ),
+        ));
+  }
+}
+
+class ContaninerButtonFunction extends StatelessWidget {
+  final Size size;
+  final Function functionCall;
+  final String titulo;
+  const ContaninerButtonFunction(
+      {super.key, required this.size, required this.functionCall, required this.titulo});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => functionCall(),
+      child: Container(
+          width: size.width,
+          height: size.height * 0.06,
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(horizontal: size.width * 0.25,vertical:size.height * 0.02),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: AutoSizeText(
+            titulo,
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+            maxLines: 1,
+          )),
+    );
   }
 }
