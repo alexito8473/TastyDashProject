@@ -20,6 +20,7 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesion extends State<InicioSesion> {
+  bool carga=false;
   final TextEditingController _gmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService authService = AuthService();
@@ -30,13 +31,21 @@ class _InicioSesion extends State<InicioSesion> {
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     bool user = await authService.sigIn(gmail, password);
+    if(gmail.isNotEmpty||password.isNotEmpty){
+      setState(() {
+        carga=true;
+      });
+    }
     BitmapDescriptor icon;
     if (user) {
       final snapshot = await date
           .child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre")
           .get();
+      final listaComida = await date
+          .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
+          .get();
       person = Person(
-          nombre: snapshot.value.toString(), gmail: gmail, pasword: password);
+          nombre: snapshot.value.toString(), gmail: gmail, pasword: password, listaComida: listaComida.value as List<dynamic>);
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
@@ -50,14 +59,17 @@ class _InicioSesion extends State<InicioSesion> {
                   idioma: widget.idioma,
                   prefs: widget.prefs,
                   icon: icon,
-                  monedEnUso: devolverTipoMoneda(
+                  monedaEnUso: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
-                  posicionInicial: 2,
+                  posicionInicial: 3,
                 )),
         (route) => false,
       );
     } else {
       MensajeAlCliente(context, "Gmail y/o contraseña no son correctos", 15);
+      setState(() {
+        carga=false;
+      });
     }
   }
 
@@ -111,7 +123,8 @@ class _InicioSesion extends State<InicioSesion> {
                   onPressed: () {
                     login(context);
                   },
-                  child: Text(
+                  child: carga?const CircularProgressIndicator():
+                  Text(
                     widget.idioma.datosJson[widget.idioma.positionIdioma]
                         ["Iniciar_sesion"],
                     style: const TextStyle(fontSize: 20),

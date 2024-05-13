@@ -41,17 +41,16 @@ class _PaginaComida extends State<PaginaComida> {
                         .createShader(bounds),
                     blendMode: BlendMode.darken,
                     child: Container(
-                      width: size.width,
-                      height: size.height * 0.34,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage(widget.comida.foto),
-                              fit: BoxFit.cover,
-                              alignment: Alignment.center,
-                              isAntiAlias: true)),
-                    ))),
-
+                        width: size.width,
+                        alignment: Alignment.topRight,
+                        height: size.height * 0.34,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            image: DecorationImage(
+                                image: AssetImage(widget.comida.foto),
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                isAntiAlias: true))))),
             Container(
               width: size.width,
               height: size.height,
@@ -68,21 +67,45 @@ class _PaginaComida extends State<PaginaComida> {
               child: SingleChildScrollView(
                   child: Column(
                 children: [
-                  Container(
-                      margin: EdgeInsets.only(
-                          bottom: size.height * 0.03,
-                          left: size.width * 0.1,
-                          top: size.height * 0.03,
-                          right: size.width * 0.1),
-                      alignment: Alignment.center,
-                      child: AutoSizeText(
-                        widget.comida.nombre,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold),
-                        maxLines: 1,
-                      )),
+                  SizedBox(
+                    width: size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                            width: size.width * 0.7,
+                            margin: EdgeInsets.only(
+                                bottom: size.height * 0.03,
+                                left: size.width * 0.01,
+                                top: size.height * 0.03),
+                            alignment: Alignment.center,
+                            child: AutoSizeText(
+                              widget.comida.nombre,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                            )),
+                        GestureDetector(
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                right: size.height * 0.01),
+                            width: size.height * 0.07,
+                            height: size.height * 0.07,
+                            child: Icon(
+                              color: Colors.orange,
+                              Icons.star_border_outlined,
+                              size: size.height * 0.07,
+                            ),
+                            //Icons.star_border_outlined,
+                            // Icons.star,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+
                   Row(children: [
                     Expanded(
                         child: Center(
@@ -132,11 +155,15 @@ class ExpansionIngredientes extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 25)),
       children: [
         Container(
-          width: size.width*0.9,
-          child: Text(comida.ingredientes.map((e) => idioma.datosJson[idioma.positionIdioma][e]).join(", "),style: const TextStyle(color: Colors.white,fontSize: 25),textAlign: TextAlign.center,)
-
-        )
-        ],
+            width: size.width * 0.9,
+            child: Text(
+              comida.ingredientes
+                  .map((e) => idioma.datosJson[idioma.positionIdioma][e])
+                  .join(", "),
+              style: const TextStyle(color: Colors.white, fontSize: 25),
+              textAlign: TextAlign.center,
+            ))
+      ],
     );
   }
 }
@@ -180,7 +207,9 @@ class ExpansionAlergenos extends StatelessWidget {
 }
 
 String contiene(bool isContiene, Idioma idioma) {
-  return isContiene ? idioma.datosJson[idioma.positionIdioma]["Contiene"]: idioma.datosJson[idioma.positionIdioma]["NoContiene"];
+  return isContiene
+      ? idioma.datosJson[idioma.positionIdioma]["Contiene"]
+      : idioma.datosJson[idioma.positionIdioma]["NoContiene"];
 }
 
 Widget FilaAlergeno(String tipo, bool tiene, Idioma idioma, Size size) {

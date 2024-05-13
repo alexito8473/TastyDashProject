@@ -2,7 +2,8 @@ class Person {
   final String nombre;
   final String gmail;
   final String pasword;
-  const Person( {required this.nombre,required this.pasword, required this.gmail});
+  final List<dynamic> listaComida;
+  const Person( {required this.nombre,required this.pasword, required this.gmail,required this.listaComida});
 
   String getNombre(){
     return nombre;

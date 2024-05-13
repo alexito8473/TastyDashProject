@@ -26,6 +26,7 @@
     "Precio": "Precio",
     "Tiempo": "Tiempo",
     "Minuto": "minutos",
+    "Moneda": "Moneda",
     "Alergeno": "Alergenos",
     "Apio": "Apio",
     "Moluscos": "Moluscos",
@@ -55,8 +56,8 @@
     "PATATAS_FRITAS": "patatas fritas",
     "CARNE_BUEY": "carne de buey",
     "Contiene": "Contiene",
-    "NoContiene": "No contiene"
-
+    "NoContiene": "No contiene",
+    "Especial": "Favoritos"
   },
   {
     "Carta": "Menu",
@@ -85,6 +86,7 @@
     "Precio": "Price",
     "Tiempo": "Time",
     "Minuto": "minutes",
+    "Moneda": "Coin",
     "Alergeno": "Allergen",
     "Apio": "Celery",
     "Moluscos": "Mollusks",
@@ -115,6 +117,7 @@
     "CARNE_BUEY": "beef",
     "CARNE_VEGANA": "vegan meat",
     "Contiene": "Contains",
-    "NoContiene": "Not Contains"
+    "NoContiene": "Not Contains",
+    "Especial": "Favorites"
   }
 ]

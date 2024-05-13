@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,6 @@ import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/Home.dart';
-import 'package:tfgsaladillo/pages/Login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,6 +23,7 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    DatabaseReference date = FirebaseDatabase.instance.ref();
     Idioma idioma;
     Person? person;
     String? nombre;
@@ -31,6 +32,7 @@ class _SplashScreen extends State<SplashScreen> {
     String? password;
     int? posicionIdioma;
     Future.delayed(const Duration(milliseconds: 800), () async {
+
       await precacheImage(
           const AssetImage('assets/images/bannersuper.webp'), context);
       await precacheImage(
@@ -56,9 +58,23 @@ class _SplashScreen extends State<SplashScreen> {
       nombre = prefs.getString("Name");
       gmail = prefs.getString("Gmail");
       password = prefs.getString("Password");
-      person = (nombre == null || gmail == null || password == null)
-          ? null
-          : Person(nombre: nombre!, pasword: password!, gmail: gmail!);
+      if(nombre == null || gmail == null || password == null){
+        person = null;
+        prefs.remove("Name");
+        prefs.remove("Gmail");
+        prefs.remove("Password");
+      }else{
+        final nombre = await date
+            .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/Nombre")
+            .get();
+        final password = await date
+            .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/Password")
+            .get();
+        final listaComida = await date
+            .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
+            .get();
+        person = Person(nombre: nombre.value.toString(), pasword: password.value.toString(), gmail: gmail!, listaComida:listaComida.value==null?[]:listaComida.value as List<dynamic>);
+      }
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
       Navigator.pushAndRemoveUntil(
@@ -69,7 +85,7 @@ class _SplashScreen extends State<SplashScreen> {
                     idioma: idioma,
                     prefs: prefs,
                     icon: icon,
-                    monedEnUso:
+                    monedaEnUso:
                         devolverTipoMoneda(prefs.getString("SimboloMoneda")), posicionInicial: 0,
                   )),
           (route) => false);
@@ -98,7 +114,7 @@ class _SplashScreen extends State<SplashScreen> {
               ),
               Text(
                 "By Alejandro Aguilar",
-                style: TextStyle(fontSize: 13, color: Colors.white),
+                style: TextStyle(fontSize: 12, color: Colors.white),
                 textAlign: TextAlign.end,
               )
             ],

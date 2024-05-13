@@ -74,6 +74,7 @@ flutter:
     - assets/images/cocaColaZero.webp
     - assets/images/fantaLimon.webp
     - assets/images/fantaNaranja.webp
+    - assets/images/fondoEspecial.webp
 
 
     - Data/leng.json

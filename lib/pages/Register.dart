@@ -33,6 +33,7 @@ class _Registrarse extends State<Registrarse> {
     _passwordController.dispose();
     super.dispose();
   }
+
   void register(BuildContext context) async {
     String nombre = _nameController.text;
     String gmail = _gmailController.text;
@@ -41,8 +42,9 @@ class _Registrarse extends State<Registrarse> {
     if (await authService.register(gmail, password)) {
       await date
           .child("Person/${gmail.trim().split("@")[0].toLowerCase()}")
-          .set({"Nombre": nombre, "Gmail": gmail, "Password": password});
-      person = Person(nombre: nombre, gmail: gmail, pasword: password);
+          .set({"Nombre": nombre, "Gmail": gmail, "Password": password,"listaComida":[""]});
+      person = Person(
+          nombre: nombre, gmail: gmail, pasword: password, listaComida: []);
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
@@ -56,8 +58,9 @@ class _Registrarse extends State<Registrarse> {
                   idioma: widget.idioma,
                   prefs: widget.prefs,
                   icon: icon,
-                  monedEnUso: devolverTipoMoneda(
-                      widget.prefs.getString("SimboloMoneda")), posicionInicial: 2,
+                  monedaEnUso: devolverTipoMoneda(
+                      widget.prefs.getString("SimboloMoneda")),
+                  posicionInicial: 3,
                 )),
         (route) => false,
       );
@@ -148,4 +151,3 @@ class _Registrarse extends State<Registrarse> {
     );
   }
 }
-

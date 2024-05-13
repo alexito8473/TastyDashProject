@@ -31,7 +31,8 @@ class _Carta extends State<Carta> {
     super.initState();
   }
 
-  void NavegarLista(List<Comida> listaDeUnaComida, String imagenBanner,String nombreLista) {
+  void NavegarLista(
+      List<Comida> listaDeUnaComida, String imagenBanner, String nombreLista) {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 500),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -43,7 +44,8 @@ class _Carta extends State<Carta> {
             listaComida: listaDeUnaComida,
             imagenBanner: imagenBanner,
             monedEnUso: widget.monedaEnUso,
-            idioma: widget.idioma, nombreLista: nombreLista,
+            idioma: widget.idioma,
+            nombreLista: nombreLista,
           ),
         );
       },
@@ -136,134 +138,127 @@ class _Carta extends State<Carta> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            FloatingActionButton.large(
-                              heroTag: null,
-                              onPressed: () => {
-                                // Hamburguesa
+                            BotonNavegacion(
+                              function: () => {
                                 NavegarLista(
                                     widget.listaDeComida
                                         .where((element) => element.isBurguer)
                                         .toList(),
-                                    "assets/images/hamburguesasBanner.webp",widget.idioma
-                                    .datosJson[widget.idioma.positionIdioma]
-                                ["HoverHambur"]
-                                )
+                                    "assets/images/hamburguesasBanner.webp",
+                                    widget.idioma.datosJson[widget
+                                        .idioma.positionIdioma]["HoverHambur"])
                               },
-                              backgroundColor: Colors.orange.shade300,
-                              tooltip: widget.idioma
-                                      .datosJson[widget.idioma.positionIdioma]
-                                  ["HoverHambur"],
-                              child: SvgPicture.asset(
-                                "assets/Icons/Burguer.svg",
-                                width: 60,
-                              ),
+                              idioma: widget.idioma,
+                              svgpPath: 'assets/Icons/Burguer.svg',
+                              color: Colors.orange.shade300,
+                              tipoComida: 'HoverHambur',
                             ),
-                            FloatingActionButton.large(
-                              heroTag: null,
-                              onPressed: () => {
-                                // Ensalada
+                            BotonNavegacion(
+                              function: () => {
                                 NavegarLista(
                                     widget.listaDeComida
                                         .where((element) => element.isEnsalada)
                                         .toList(),
-                                    "assets/images/ensaladaBanner.webp",widget.idioma
-                                    .datosJson[widget.idioma.positionIdioma]
-                                ["HoverEnsa"])
+                                    "assets/images/ensaladaBanner.webp",
+                                    widget.idioma.datosJson[widget
+                                        .idioma.positionIdioma]["HoverEnsa"])
                               },
-                              backgroundColor: Colors.green.shade300,
-                              tooltip: widget.idioma
-                                      .datosJson[widget.idioma.positionIdioma]
-                                  ["HoverEnsa"],
-                              child: SvgPicture.asset(
-                                "assets/Icons/Salad.svg",
-                                width: 60,
-                              ),
+                              idioma: widget.idioma,
+                              svgpPath: 'assets/Icons/Salad.svg',
+                              color: Colors.green.shade300,
+                              tipoComida: 'HoverEnsa',
                             ),
-                            FloatingActionButton.large(
-                              heroTag: null,
-                              onPressed: () => {
-                                // Pescado
+                            BotonNavegacion(
+                              function: () => {
                                 NavegarLista(
                                     widget.listaDeComida
                                         .where((element) => element.isPescado)
                                         .toList(),
-                                    "assets/images/bannerPescado.webp", widget.idioma
-                                    .datosJson[widget.idioma.positionIdioma]
-                                ["HoverPesca"])
+                                    "assets/images/bannerPescado.webp",
+                                    widget.idioma.datosJson[widget
+                                        .idioma.positionIdioma]["HoverPesca"])
                               },
-                              backgroundColor: Colors.blue.shade300,
-                              tooltip: widget.idioma
-                                      .datosJson[widget.idioma.positionIdioma]
-                                  ["HoverPesca"],
-                              child: SvgPicture.asset(
-                                "assets/Icons/Fish.svg",
-                                width: 60,
-                              ),
-                            )
+                              idioma: widget.idioma,
+                              svgpPath: 'assets/Icons/Fish.svg',
+                              color: Colors.blue.shade300,
+                              tipoComida: 'HoverPesca',
+                            ),
                           ],
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              FloatingActionButton.large(
-                                heroTag: null,
-                                onPressed: () => {
-                                  // Carne
+                              BotonNavegacion(
+                                function: () => {
                                   NavegarLista(
                                       widget.listaDeComida
                                           .where((element) => element.isCarne)
                                           .toList(),
-                                      "assets/images/bannerCarne.webp",widget.idioma
-                                      .datosJson[widget.idioma.positionIdioma]
-                                  ["HoverCarne"])
+                                      "assets/images/bannerCarne.webp",
+                                      widget.idioma.datosJson[widget
+                                          .idioma.positionIdioma]["HoverCarne"])
                                 },
-                                backgroundColor: Colors.lime.shade300,
-                                tooltip: widget.idioma
-                                        .datosJson[widget.idioma.positionIdioma]
-                                    ["HoverCarne"],
-                                child: SvgPicture.asset(
-                                  "assets/Icons/Meat.svg",
-                                  width: 60,
-                                ),
+                                idioma: widget.idioma,
+                                svgpPath: 'assets/Icons/Meat.svg',
+                                color: Colors.lime.shade300,
+                                tipoComida: 'HoverCarne',
                               ),
-                              FloatingActionButton.large(
-                                heroTag: null,
-                                onPressed: () => {
-                                  // Filtramos solo por bebida
+                              BotonNavegacion(
+                                function: () => {
                                   NavegarLista(
                                       widget.listaDeComida
                                           .where((element) => element.isBebida)
                                           .toList(),
-                                      "assets/images/bannerBebida.webp",widget.idioma
-                                      .datosJson[widget.idioma.positionIdioma]
-                                  ["HoverBebida"])
+                                      "assets/images/bannerBebida.webp",
+                                      widget.idioma.datosJson[widget.idioma
+                                          .positionIdioma]["HoverBebida"])
                                 },
-                                backgroundColor: Colors.red,
-                                tooltip: widget.idioma
-                                        .datosJson[widget.idioma.positionIdioma]
-                                    ["HoverBebida"],
-                                child: SvgPicture.asset(
-                                  "assets/Icons/Drink.svg",
-                                  width: 60,
-                                ),
+                                idioma: widget.idioma,
+                                svgpPath: 'assets/Icons/Drink.svg',
+                                color: Colors.red,
+                                tipoComida: 'HoverBebida',
                               ),
-                              FloatingActionButton.large(
-                                  heroTag: null,
-                                  onPressed: () => {
-                                        // Filtramos solo por
-                                    NavegarLista(
-                                        widget.listaDeComida,
-                                        "assets/images/bannerBebida.webp","Prueba")
-                                      },
-                                  backgroundColor: Colors.yellow.shade300,
-                                  tooltip: widget.idioma.datosJson[widget
-                                      .idioma.positionIdioma]["HoverCarta"],
-                                  child: SvgPicture.asset(
-                                    "assets/Icons/Menu.svg",
-                                    width: 60,
-                                  ))
+                              BotonNavegacion(
+                                function: () => {
+                                  NavegarLista(
+                                      widget.listaDeComida,
+                                      "assets/images/bannerBebida.webp",
+                                      "Prueba")
+                                },
+                                idioma: widget.idioma,
+                                svgpPath: 'assets/Icons/Menu.svg',
+                                color: Colors.yellow.shade300,
+                                tipoComida: 'HoverBebida',
+                              ),
                             ])
                       ]))
             ]))));
+  }
+}
+
+class BotonNavegacion extends StatelessWidget {
+  final Function function;
+  final Idioma idioma;
+  final String svgpPath;
+  final Color color;
+  final String tipoComida;
+  const BotonNavegacion(
+      {super.key,
+      required this.function,
+      required this.idioma,
+      required this.svgpPath,
+      required this.color,
+      required this.tipoComida});
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.large(
+        heroTag: null,
+        onPressed: () => function(),
+        backgroundColor: color,
+        tooltip: idioma.datosJson[idioma.positionIdioma][tipoComida],
+        child: SvgPicture.asset(
+          svgpPath,
+          width: 60,
+        ));
   }
 }
