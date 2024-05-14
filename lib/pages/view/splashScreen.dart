@@ -1,18 +1,19 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
 import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/Home.dart';
+import 'package:tfgsaladillo/pages/view/home.dart';
+
+import '../widget/genericWidget.dart';
+import '../widget/homeWidget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _SplashScreen();
 }
@@ -20,6 +21,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreen extends State<SplashScreen> {
   late final SharedPreferences prefs;
   late List<dynamic> datosJson;
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +34,6 @@ class _SplashScreen extends State<SplashScreen> {
     String? password;
     int? posicionIdioma;
     Future.delayed(const Duration(milliseconds: 800), () async {
-
       await precacheImage(
           const AssetImage('assets/images/bannersuper.webp'), context);
       await precacheImage(
@@ -58,22 +59,30 @@ class _SplashScreen extends State<SplashScreen> {
       nombre = prefs.getString("Name");
       gmail = prefs.getString("Gmail");
       password = prefs.getString("Password");
-      if(nombre == null || gmail == null || password == null){
+      if (nombre == null || gmail == null || password == null) {
         person = null;
         prefs.remove("Name");
         prefs.remove("Gmail");
         prefs.remove("Password");
-      }else{
+      } else {
         final nombre = await date
             .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/Nombre")
             .get();
         final password = await date
-            .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/Password")
+            .child(
+                "Person/${gmail?.trim().split("@")[0].toLowerCase()}/Password")
             .get();
         final listaComida = await date
-            .child("Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
+            .child(
+                "Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
             .get();
-        person = Person(nombre: nombre.value.toString(), pasword: password.value.toString(), gmail: gmail!, listaComida:listaComida.value==null?[]:listaComida.value as List<dynamic>);
+        List<dynamic> listaReserva = [];
+        listaReserva.addAll(listaComida.value as List<dynamic>);
+        person = Person(
+            nombre: nombre.value.toString(),
+            pasword: password.value.toString(),
+            gmail: gmail!,
+            listaComida: listaComida.value == null ? [] : listaReserva);
       }
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
@@ -86,7 +95,8 @@ class _SplashScreen extends State<SplashScreen> {
                     prefs: prefs,
                     icon: icon,
                     monedaEnUso:
-                        devolverTipoMoneda(prefs.getString("SimboloMoneda")), posicionInicial: 0,
+                        devolverTipoMoneda(prefs.getString("SimboloMoneda")),
+                    posicionInicial: 0,
                   )),
           (route) => false);
     });

@@ -57,7 +57,21 @@
     "CARNE_BUEY": "carne de buey",
     "Contiene": "Contiene",
     "NoContiene": "No contiene",
-    "Especial": "Favoritos"
+    "Especial": "Favoritos",
+    "Postre": "Postre",
+    "CARNE_VEGANA": "Carne vegana",
+    "BERENJENA": "Berenjena",
+    "PIMIENTO": "Pimiento",
+    "GAMBA": "Gamba",
+    "ZANAHORIA": "Zanahoria" ,
+    "PATATA": "Patata",
+    "TORTILLA_HARINA": "Tortilla de harina",
+    "AGUACATE": "Aguacate",
+    "CHAMPINONES": "Champiñones",
+    "LIMON": "Limon",
+    "HUEVO": "Huevo",
+    "SECRETO_IBERICO": "Secreto ibérico",
+    "GUISANTE": "Guisante"
   },
   {
     "Carta": "Menu",
@@ -118,6 +132,19 @@
     "CARNE_VEGANA": "vegan meat",
     "Contiene": "Contains",
     "NoContiene": "Not Contains",
-    "Especial": "Favorites"
+    "Especial": "Favorites",
+    "Postre": "Dessert",
+    "BERENJENA": "Eggplant",
+    "PIMIENTO": "Pepper",
+    "GAMBA": "Prawn",
+    "ZANAHORIA": "Carrot",
+    "PATATA": "Potato",
+    "TORTILLA_HARINA": "Flour tortilla",
+    "AGUACATE": "Avocado",
+    "CHAMPINONES": "Mushrooms",
+    "LIMON": "Lemon",
+    "HUEVO": "Egg",
+    "SECRETO_IBERICO": "Iberic secrect",
+    "GUISANTE": "Pea"
   }
 ]

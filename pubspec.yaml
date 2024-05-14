@@ -75,7 +75,12 @@ flutter:
     - assets/images/fantaLimon.webp
     - assets/images/fantaNaranja.webp
     - assets/images/fondoEspecial.webp
-
+    - assets/images/bannerPostre.webp
+    - assets/images/te.webp
+    - assets/images/pistacho.webp
+    - assets/images/cupcakes.webp
+    - assets/images/Tiramisu.webp
+    - assets/images/TartaFrambuesa.webp
 
     - Data/leng.json
     - assets/Icons/Spain.svg
@@ -85,6 +90,7 @@ flutter:
     - assets/Icons/Meat.svg
     - assets/Icons/Drink.svg
     - assets/Icons/Menu.svg
+    - assets/Icons/Postre.svg
     - assets/Icons/England.svg
 
 

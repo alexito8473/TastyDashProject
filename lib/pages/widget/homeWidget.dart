@@ -1,118 +1,7 @@
 import 'dart:convert';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Ingrediente.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
-import 'package:tfgsaladillo/pages/PageFood.dart';
 
-class Background extends StatefulWidget {
-  final String asset;
-  const Background({super.key, required this.asset});
-  @override
-  State<StatefulWidget> createState() => _Background();
-}
-
-class _Background extends State<Background> {
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.centerRight,
-            colors: [Colors.black87, Colors.transparent]).createShader(bounds),
-        blendMode: BlendMode.darken,
-        child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(widget.asset),
-                    fit: BoxFit.cover,
-                    colorFilter: const ColorFilter.mode(
-                        Colors.black38, BlendMode.darken)))));
-  }
-}
-
-class TextFieldMio extends StatefulWidget {
-  final String hint;
-  final TextEditingController controller;
-  final Size sizeContext;
-  final IconData icono;
-  final TextInputType textType;
-  final TextInputAction action;
-  final bool obscureText;
-  const TextFieldMio(
-      {super.key,
-      required this.hint,
-      required this.controller,
-      required this.sizeContext,
-      required this.icono,
-      required this.textType,
-      required this.action,
-      required this.obscureText});
-  @override
-  State<StatefulWidget> createState() => _TextFielMio();
-}
-
-class _TextFielMio extends State<TextFieldMio> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding:  EdgeInsets.symmetric(vertical: widget.sizeContext.height*0.01),
-      child: Container(
-        alignment: Alignment.center,
-        height: widget.sizeContext.height * 0.06,
-        width: widget.sizeContext.width * 0.8,
-        decoration: BoxDecoration(
-            color: Colors.white60, borderRadius: BorderRadius.circular(24)),
-        child: TextFormField(
-          controller: widget.controller,
-          cursorColor: Colors.black,
-          decoration: InputDecoration(
-            prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Icon(
-                  widget.icono,
-                  size: 30,
-                  color: Colors.black,
-                )),
-            border: InputBorder.none,
-            hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-            hintText: widget.hint,
-          ),
-          obscureText: widget.obscureText,
-          keyboardType: widget.textType,
-          textInputAction: widget.action,
-        ),
-      ),
-    );
-  }
-}
-
-void MensajeAlCliente(BuildContext context, String mensage, double font) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    elevation: 1,
-    width: 300.0,
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    backgroundColor: Colors.white70,
-    duration: const Duration(milliseconds: 1100),
-    content: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Text(
-          mensage,
-          style: TextStyle(
-              fontSize: font, fontWeight: FontWeight.bold, color: Colors.black),
-          textAlign: TextAlign.center,
-        )),
-  ));
-}
+import '../../model/Comida.dart';
+import '../../model/Ingrediente.dart';
 
 Future<List<dynamic>> leerListaJson(String json) async {
   final listaMap = jsonDecode(json);
@@ -129,118 +18,6 @@ List<String> CrearListaPaises() {
 
 double conversorMoneda(double original) {
   return 2.2;
-}
-
-class ComidaViewCarrusel extends StatefulWidget {
-  final Comida comida;
-  Moneda monedaEnUso;
-  final Idioma idioma;
-  ComidaViewCarrusel(
-      {super.key,
-      required this.comida,
-      required this.monedaEnUso,
-      required this.idioma});
-  @override
-  State<StatefulWidget> createState() => _ComidaViewCarrusel();
-}
-
-class _ComidaViewCarrusel extends State<ComidaViewCarrusel> {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return GestureDetector(
-        onTap: () => {
-              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: widget.comida),))
-              Navigator.of(context).push(PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 600),
-                reverseTransitionDuration: const Duration(milliseconds: 300),
-                barrierColor: Colors.black54,
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: PaginaComida(
-                      comida: widget.comida,
-                      idioma: widget.idioma,
-                      monedaEnUso: widget.monedaEnUso,
-                    ),
-                  );
-                },
-              ))
-            },
-        child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.75),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.transparent,
-                      image: DecorationImage(
-                          image: AssetImage(widget.comida.foto),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                          isAntiAlias: true)),
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    height: size.height * 0.15,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: AutoSizeText(
-                            widget.comida.nombre,
-                            maxLines: 1,
-                            style: const TextStyle(fontWeight: FontWeight.bold,
-                                color: Colors.black, fontSize: 30),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: AutoSizeText(
-                            "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
-                            style: const TextStyle(fontWeight: FontWeight.bold,
-                                color: Colors.black, fontSize: 25),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ],
-                    ))
-              ],
-            ))));
-  }
-}
-
-class BotonVolver extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return GestureDetector(
-        onTap: () => Navigator.pop(context),
-        child: Container(
-          height: size.width * 0.14,
-          width: size.width * 0.14,
-          margin: EdgeInsets.only(
-              right: size.height * 0.01, bottom: size.height * 0.01),
-          decoration: const BoxDecoration(
-            color: Colors.orange,
-            borderRadius: BorderRadius.all(Radius.circular(14)),
-          ),
-          child: const Icon(
-            FontAwesomeIcons.arrowLeft,
-            color: Colors.black,
-          ),
-        ));
-  }
 }
 
 List<Comida> CrearListaDeComida() {
@@ -410,7 +187,7 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes:  [
+        ingredientes: [
           Ingrediente.CARNE,
           Ingrediente.QUESO,
           Ingrediente.MAYONESA,
@@ -471,7 +248,11 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.PIMIENTO,
+          Ingrediente.QUESO,
+          Ingrediente.BERENJENA
+        ]),
     const Comida(
         nombre: 'Shrimp Scampi',
         foto: 'assets/images/gambasAl.webp',
@@ -493,7 +274,11 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.GAMBA,
+          Ingrediente.BERENJENA,
+          Ingrediente.ZANAHORIA,
+        ]),
     const Comida(
         nombre: 'Vegetable cream',
         foto: 'assets/images/cremaVerdura.webp',
@@ -515,7 +300,11 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.ZANAHORIA,
+          Ingrediente.PATATA,
+          Ingrediente.PIMIENTO,
+        ]),
     const Comida(
         nombre: 'Vegetable taco',
         foto: 'assets/images/tacoVerdura.webp',
@@ -537,7 +326,14 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.AGUACATE,
+          Ingrediente.TOMATE,
+          Ingrediente.CEBOLLA,
+          Ingrediente.PIMIENTO,
+          Ingrediente.CHAMPINONES,
+          Ingrediente.ZANAHORIA,
+        ]),
     // Carne
     const Comida(
         nombre: 'Scnizel',
@@ -560,7 +356,13 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.TOMATE,
+          Ingrediente.LIMON,
+          Ingrediente.AGUACATE,
+          Ingrediente.CARNE,
+          Ingrediente.HUEVO,
+        ]),
     const Comida(
         nombre: 'Iberic secret',
         foto: 'assets/images/secretoIberico.webp',
@@ -582,7 +384,11 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.SECRETO_IBERICO,
+          Ingrediente.LIMON,
+          Ingrediente.HUEVO,
+        ]),
     const Comida(
         nombre: 'Ragout',
         foto: 'assets/images/ragout.webp',
@@ -604,7 +410,12 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.CARNE,
+          Ingrediente.LECHUGA,
+          Ingrediente.HUEVO,
+          Ingrediente.GUISANTE
+        ]),
     const Comida(
         nombre: 'Meat balls',
         foto: 'assets/images/albondiga.webp',
@@ -626,7 +437,12 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.CARNE,
+          Ingrediente.LECHUGA,
+          Ingrediente.CEBOLLA,
+          Ingrediente.TOMATE
+        ]),
     const Comida(
         nombre: 'Fillet',
         foto: 'assets/images/filete.webp',
@@ -648,7 +464,11 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [
+          Ingrediente.CARNE,
+          Ingrediente.LIMON,
+          Ingrediente.CEBOLLA,
+        ]),
     // Pescado
     const Comida(
         nombre: 'Fried shrimp',
@@ -860,6 +680,117 @@ List<Comida> CrearListaDeComida() {
         isBebida: true,
         precio: 3.22,
         tiempoMinuto: 20,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: false,
+        haveHuevo: false,
+        haveLeche: false,
+        haveMostaza: false,
+        havePescado: false,
+        ingredientes: []),
+    const Comida(
+        nombre: 'Te',
+        foto: 'assets/images/te.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPostre: false,
+        isPescado: false,
+        isBebida: true,
+        precio: 1.22,
+        tiempoMinuto: 2,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: false,
+        haveHuevo: false,
+        haveLeche: false,
+        haveMostaza: false,
+        havePescado: false,
+        ingredientes: []),
+    // Postre
+    const Comida(
+        nombre: 'Pistachio cake',
+        foto: 'assets/images/pistacho.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPostre: true,
+        isPescado: false,
+        isBebida: false,
+        precio: 3.22,
+        tiempoMinuto: 20,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: false,
+        haveHuevo: false,
+        haveLeche: false,
+        haveMostaza: false,
+        havePescado: false,
+        ingredientes: []),
+    const Comida(
+        nombre: 'Cupcake',
+        foto: 'assets/images/cupcakes.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPostre: true,
+        isPescado: false,
+        isBebida: false,
+        precio: 1.00,
+        tiempoMinuto: 2,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: false,
+        haveHuevo: false,
+        haveLeche: false,
+        haveMostaza: false,
+        havePescado: false,
+        ingredientes: []),
+    const Comida(
+        nombre: 'Tiramisu',
+        foto: 'assets/images/Tiramisu.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPostre: true,
+        isPescado: false,
+        isBebida: false,
+        precio: 1.00,
+        tiempoMinuto: 2,
+        haveApio: false,
+        haveCrustaceos: false,
+        haveMoluscos: false,
+        haveAzufre: false,
+        haveCacahuetes: false,
+        haveGluten: false,
+        haveHuevo: false,
+        haveLeche: false,
+        haveMostaza: false,
+        havePescado: false,
+        ingredientes: []),
+    const Comida(
+        nombre: 'Raspberry Tart',
+        foto: 'assets/images/TartaFrambuesa.webp',
+        isCarne: false,
+        isBurguer: false,
+        isEnsalada: false,
+        isPostre: true,
+        isPescado: false,
+        isBebida: false,
+        precio: 1.00,
+        tiempoMinuto: 2,
         haveApio: false,
         haveCrustaceos: false,
         haveMoluscos: false,

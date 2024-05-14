@@ -1,5 +1,4 @@
-
-class Comida{
+class Comida {
   final String nombre;
   final String foto;
   final int tiempoMinuto;
@@ -20,9 +19,11 @@ class Comida{
   final bool haveLeche;
   final bool haveAzufre;
   final List<String> ingredientes;
+
   //El precio esta en español
   final double precio;
-   const Comida({
+
+  const Comida({
     required this.nombre,
     required this.foto,
     required this.isCarne,
@@ -32,17 +33,17 @@ class Comida{
     required this.isPescado,
     required this.isBebida,
     required this.precio,
-     required this.tiempoMinuto,
-     required this.haveApio,
-     required this.haveMoluscos,
-     required this.haveCrustaceos,
-     required this.haveMostaza,
-     required this.haveHuevo,
-     required this.havePescado,
-     required this.haveCacahuetes,
-     required this.haveGluten,
-     required this.haveLeche,
-     required this.haveAzufre,
-     required this.ingredientes,
+    required this.tiempoMinuto,
+    required this.haveApio,
+    required this.haveMoluscos,
+    required this.haveCrustaceos,
+    required this.haveMostaza,
+    required this.haveHuevo,
+    required this.havePescado,
+    required this.haveCacahuetes,
+    required this.haveGluten,
+    required this.haveLeche,
+    required this.haveAzufre,
+    required this.ingredientes,
   });
 }

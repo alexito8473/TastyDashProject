@@ -1,151 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Person.dart';
-import '../model/Moneda.dart';
-
-class SettingView extends StatefulWidget {
-  final Function funDesbloquearte;
-  final Function funCambiarMoneda;
-  final Function funCambiarIdioma;
-  final Function funNavegarLogin;
-  final DropdownController lenguageDropdownController;
-  final List<CoolDropdownItem<String>> lenguageDropdownItems;
-  final DropdownController monedaDropdownController;
-  final List<CoolDropdownItem<String>> monedaDropdownItems;
-  final List<Moneda> monedas;
-  final Idioma idioma;
-  final Size size;
-  final ImageProvider imagenBannerAjustes;
-  Moneda monedEnUso;
-  final Person? person;
-
-  SettingView(
-
-      {super.key,
-      required this.funDesbloquearte,
-      required this.funCambiarMoneda,
-      required this.funCambiarIdioma,
-      required this.funNavegarLogin,
-      required this.size,
-      required this.imagenBannerAjustes,
-      required this.idioma,
-      required this.person,
-      required this.lenguageDropdownController,
-      required this.lenguageDropdownItems,
-      required this.monedaDropdownController,
-      required this.monedaDropdownItems,
-        required this.monedas,
-      required this.monedEnUso});
-  @override
-  State<SettingView> createState() => _SettingView();
-}
-
-class _SettingView extends State<SettingView> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.size.width,
-      height: widget.size.height,
-      decoration: BoxDecoration(
-          color: Colors.black,
-          image: DecorationImage(
-              image: widget.imagenBannerAjustes,
-              fit: BoxFit.fill,
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.6), BlendMode.darken))),
-      child: ListView(children: [
-        TituloPageSetting(
-            size: widget.size,
-            title: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                ["MiCuenta"]),
-        if (widget.person != null)
-          InformacionUsuarioSetting(
-              size: widget.size,
-              title: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                  ["Nombre"],
-              subtitle: widget.person!.nombre),
-        if (widget.person != null)
-          InformacionUsuarioSetting(
-              size: widget.size,
-              title: "E-mail",
-              subtitle: widget.person!.gmail),
-        widget.person != null
-            ? ContaninerButtonFunction(
-                size: widget.size,
-                functionCall: widget.funDesbloquearte,
-                titulo: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                    ["Cerrar_sesion"])
-            : ContaninerButtonFunction(
-                size: widget.size,
-                functionCall: widget.funNavegarLogin,
-                titulo: "Iniciar sesión"),
-        Container(
-          height: widget.size.height * 0.9,
-          margin: EdgeInsets.only(top: widget.size.height * 0.02),
-          child: Column(
-            children: [
-              TituloPageSetting(
-                  size: widget.size,
-                  title: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                      ["MiCuenta"]),
-              CambioCoolDropdown(
-                  size: widget.size,
-                  type: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                      ["Idioma"],
-                  dropdownController: widget.lenguageDropdownController,
-                  position: widget.idioma.positionIdioma,
-                  function: widget.funCambiarIdioma,
-                  dropdownItems: widget.lenguageDropdownItems),
-              CambioCoolDropdown(
-                  size: widget.size,
-                  type: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                      ["Moneda"],
-                  dropdownController: widget.monedaDropdownController,
-                  position: widget.monedas.indexOf(widget.monedEnUso),
-                  function: widget.funCambiarMoneda,
-                  dropdownItems: widget.monedaDropdownItems),
-              BotonTerminosDeUso(
-                idioma: widget.idioma,
-                size: widget.size,
-              ),
-              /*
-                            FloatingActionButton(
-                              heroTag: null,
-                              onPressed: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 500),
-                                  reverseTransitionDuration:
-                                      const Duration(milliseconds: 500),
-                                  barrierColor: Colors.black54,
-                                  pageBuilder:
-                                      (context, animation, secondaryAnimation) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: ChatAi(),
-                                    );
-                                  },
-                                ));
-                              },
-                            )
-                            */
-            ],
-          ),
-        )
-      ]),
-    );
-  }
-}
 
 class PoliticaTexto extends StatelessWidget {
   final Idioma idioma;
+
   const PoliticaTexto({super.key, required this.idioma});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -196,8 +59,10 @@ class PoliticaTexto extends StatelessWidget {
 class BotonTerminosDeUso extends StatelessWidget {
   final Idioma idioma;
   final Size size;
+
   const BotonTerminosDeUso(
       {super.key, required this.idioma, required this.size});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -226,7 +91,9 @@ class BotonTerminosDeUso extends StatelessWidget {
 class TituloPageSetting extends StatelessWidget {
   final Size size;
   final String title;
+
   TituloPageSetting({super.key, required this.size, required this.title});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -249,11 +116,13 @@ class InformacionUsuarioSetting extends StatelessWidget {
   final Size size;
   final String title;
   final String subtitle;
+
   InformacionUsuarioSetting(
       {super.key,
       required this.size,
       required this.title,
       required this.subtitle});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -278,11 +147,13 @@ class ContaninerButtonFunction extends StatelessWidget {
   final Size size;
   final Function functionCall;
   final String titulo;
+
   const ContaninerButtonFunction(
       {super.key,
       required this.size,
       required this.functionCall,
       required this.titulo});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -313,6 +184,7 @@ class CambioCoolDropdown extends StatelessWidget {
   final Function function;
   int position;
   final List<CoolDropdownItem<String>> dropdownItems;
+
   CambioCoolDropdown(
       {super.key,
       required this.size,
@@ -321,6 +193,7 @@ class CambioCoolDropdown extends StatelessWidget {
       required this.position,
       required this.function,
       required this.dropdownItems});
+
   @override
   Widget build(BuildContext context) {
     return Container(

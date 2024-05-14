@@ -1,30 +1,35 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
-import 'package:tfgsaladillo/pages/ListComida.dart';
+import 'package:tfgsaladillo/pages/view/listFood.dart';
+import 'package:tfgsaladillo/pages/view/pageFood.dart';
+
+import '../../model/Person.dart';
+import '../widget/letterWidget.dart';
 
 class Carta extends StatefulWidget {
   final List<Comida> listaDeComida;
   final Idioma idioma;
-  Moneda monedaEnUso;
-  Carta(
+  final Moneda monedaEnUso;
+  final Person? person;
+
+  const Carta(
       {super.key,
       required this.listaDeComida,
       required this.idioma,
-      required this.monedaEnUso});
+      required this.monedaEnUso,
+      required this.person});
+
   @override
   State<Carta> createState() => _Carta();
 }
 
 class _Carta extends State<Carta> {
   late String imagenActual;
+
   @override
   void initState() {
     imagenActual = widget.listaDeComida[0].foto;
@@ -34,18 +39,19 @@ class _Carta extends State<Carta> {
   void NavegarLista(
       List<Comida> listaDeUnaComida, String imagenBanner, String nombreLista) {
     Navigator.of(context).push(PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 300),
       barrierColor: Colors.black54,
       pageBuilder: (context, animation, secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
-          child: ListaComida(
+          child: ListFood(
             listaComida: listaDeUnaComida,
             imagenBanner: imagenBanner,
             monedEnUso: widget.monedaEnUso,
             idioma: widget.idioma,
             nombreLista: nombreLista,
+            person: widget.person,
           ),
         );
       },
@@ -115,6 +121,8 @@ class _Carta extends State<Carta> {
                                 comida: i,
                                 monedaEnUso: widget.monedaEnUso,
                                 idioma: widget.idioma,
+                                person: widget.person,
+                                size: size,
                               );
                             },
                           );
@@ -152,6 +160,7 @@ class _Carta extends State<Carta> {
                               svgpPath: 'assets/Icons/Burguer.svg',
                               color: Colors.orange.shade300,
                               tipoComida: 'HoverHambur',
+                              size: size,
                             ),
                             BotonNavegacion(
                               function: () => {
@@ -167,6 +176,7 @@ class _Carta extends State<Carta> {
                               svgpPath: 'assets/Icons/Salad.svg',
                               color: Colors.green.shade300,
                               tipoComida: 'HoverEnsa',
+                              size: size,
                             ),
                             BotonNavegacion(
                               function: () => {
@@ -182,6 +192,7 @@ class _Carta extends State<Carta> {
                               svgpPath: 'assets/Icons/Fish.svg',
                               color: Colors.blue.shade300,
                               tipoComida: 'HoverPesca',
+                              size: size,
                             ),
                           ],
                         ),
@@ -202,6 +213,7 @@ class _Carta extends State<Carta> {
                                 svgpPath: 'assets/Icons/Meat.svg',
                                 color: Colors.lime.shade300,
                                 tipoComida: 'HoverCarne',
+                                size: size,
                               ),
                               BotonNavegacion(
                                 function: () => {
@@ -217,48 +229,122 @@ class _Carta extends State<Carta> {
                                 svgpPath: 'assets/Icons/Drink.svg',
                                 color: Colors.red,
                                 tipoComida: 'HoverBebida',
+                                size: size,
                               ),
                               BotonNavegacion(
                                 function: () => {
                                   NavegarLista(
-                                      widget.listaDeComida,
-                                      "assets/images/bannerBebida.webp",
-                                      "Prueba")
+                                      widget.listaDeComida
+                                          .where((element) => element.isPostre)
+                                          .toList(),
+                                      "assets/images/bannerPostre.webp",
+                                      widget.idioma.datosJson[widget
+                                          .idioma.positionIdioma]["Postre"])
                                 },
                                 idioma: widget.idioma,
-                                svgpPath: 'assets/Icons/Menu.svg',
+                                svgpPath: 'assets/Icons/Postre.svg',
                                 color: Colors.yellow.shade300,
-                                tipoComida: 'HoverBebida',
-                              ),
+                                tipoComida: 'Postre',
+                                size: size,
+                              )
                             ])
                       ]))
             ]))));
   }
 }
 
-class BotonNavegacion extends StatelessWidget {
-  final Function function;
+class ComidaViewCarrusel extends StatelessWidget {
+  final Comida comida;
+  final Moneda monedaEnUso;
   final Idioma idioma;
-  final String svgpPath;
-  final Color color;
-  final String tipoComida;
-  const BotonNavegacion(
+  final Person? person;
+  final Size size;
+
+  const ComidaViewCarrusel(
       {super.key,
-      required this.function,
+      required this.comida,
+      required this.monedaEnUso,
       required this.idioma,
-      required this.svgpPath,
-      required this.color,
-      required this.tipoComida});
+      required this.person,
+      required this.size});
+
+  void vacio(List list) {}
+
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.large(
-        heroTag: null,
-        onPressed: () => function(),
-        backgroundColor: color,
-        tooltip: idioma.datosJson[idioma.positionIdioma][tipoComida],
-        child: SvgPicture.asset(
-          svgpPath,
-          width: 60,
-        ));
+    return GestureDetector(
+        onTap: () => {
+              Navigator.of(context).push(PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 600),
+                reverseTransitionDuration: const Duration(milliseconds: 300),
+                barrierColor: Colors.black54,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: PageFood(
+                      comida: comida,
+                      idioma: idioma,
+                      monedaEnUso: monedaEnUso,
+                      person: person,
+                      anadirQuitarProducto: vacio,
+                    ),
+                  );
+                },
+              ))
+            },
+        child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.75),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Container(
+                  width: size.width,
+                  height: size.height * 0.15,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.transparent,
+                      image: DecorationImage(
+                          image: AssetImage(comida.foto),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          isAntiAlias: true)),
+                ),
+                SizedBox(
+                    width: double.infinity,
+                    height: size.height * 0.15,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            comida.nombre,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 30),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 25),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
+            ))));
   }
 }

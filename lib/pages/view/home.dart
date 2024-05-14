@@ -1,24 +1,22 @@
 import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
-import 'package:tfgsaladillo/pages/MapView.dart';
-import 'package:tfgsaladillo/pages/Carta.dart';
 import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/Login.dart';
+import 'package:tfgsaladillo/pages/view/letter.dart';
+import 'package:tfgsaladillo/pages/view/login.dart';
+import 'package:tfgsaladillo/pages/view/mapView.dart';
 
-import 'EspecialView.dart';
-import 'SettingView.dart';
+import '../widget/homeWidget.dart';
+import 'settingView.dart';
+import 'specialView.dart';
 
 class HomePage extends StatefulWidget {
   Person? person;
@@ -27,6 +25,7 @@ class HomePage extends StatefulWidget {
   final SharedPreferences prefs;
   final int posicionInicial;
   Moneda monedaEnUso;
+
   HomePage(
       {super.key,
       required this.person,
@@ -35,13 +34,15 @@ class HomePage extends StatefulWidget {
       required this.icon,
       required this.monedaEnUso,
       required this.posicionInicial});
+
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
 
 class _HomePage extends State<HomePage> {
   int posicion = 0;
-  bool cambioIconoPrecio=true;
+  bool cambioIconoPrecio = true;
+
   // Lista de la comida
   static List<Comida> listaDeComida = CrearListaDeComida();
 
@@ -101,7 +102,7 @@ class _HomePage extends State<HomePage> {
       pageBuilder: (context, animation, secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
-          child: InicioSesion(idioma: widget.idioma, prefs: widget.prefs),
+          child: Login(idioma: widget.idioma, prefs: widget.prefs),
         );
       },
     ));
@@ -124,9 +125,9 @@ class _HomePage extends State<HomePage> {
     });
   }
 
-  void CambioPrecio(){
+  void CambioPrecio() {
     setState(() {
-      cambioIconoPrecio=!cambioIconoPrecio;
+      cambioIconoPrecio = !cambioIconoPrecio;
     });
   }
 
@@ -146,6 +147,7 @@ class _HomePage extends State<HomePage> {
         listaDeComida: listaDeComida,
         idioma: widget.idioma,
         monedaEnUso: widget.monedaEnUso,
+        person: widget.person,
       ),
       if (widget.person != null)
         EspecialView(
@@ -153,9 +155,12 @@ class _HomePage extends State<HomePage> {
           idioma: widget.idioma,
           listaComida: listaDeComida
               .where((element) =>
-                  widget.person!.listaComida.contains(element.nombre))
+                  widget.person!.listaComida!.contains(element.nombre))
               .toList(),
-          monedaEnUso: widget.monedaEnUso, cambioIconoPrecio: cambioIconoPrecio, function: CambioPrecio,
+          monedaEnUso: widget.monedaEnUso,
+          cambioIconoPrecio: cambioIconoPrecio,
+          function: CambioPrecio,
+          person: widget.person!,
         ),
       Container(
         width: size.width,

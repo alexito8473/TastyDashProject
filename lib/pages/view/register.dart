@@ -2,19 +2,21 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/Recursos.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 import 'package:tfgsaladillo/model/Moneda.dart';
-import 'package:tfgsaladillo/pages/Home.dart';
 import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
-import 'Login.dart';
+import '../widget/genericWidget.dart';
+import '../widget/loginWidget.dart';
 
 class Registrarse extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
+
   const Registrarse({super.key, required this.idioma, required this.prefs});
+
   @override
   State<StatefulWidget> createState() => _Registrarse();
 }
@@ -23,10 +25,10 @@ class _Registrarse extends State<Registrarse> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _gmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthService authService = AuthService();
   late Person person;
-  DatabaseReference date = FirebaseDatabase.instance.ref();
+
   int valueNumeric = 0;
+
   @override
   void dispose() {
     _gmailController.dispose();
@@ -35,14 +37,20 @@ class _Registrarse extends State<Registrarse> {
   }
 
   void register(BuildContext context) async {
+    DatabaseReference date = FirebaseDatabase.instance.ref();
     String nombre = _nameController.text;
     String gmail = _gmailController.text;
     String password = _passwordController.text;
     BitmapDescriptor icon;
-    if (await authService.register(gmail, password)) {
+    if (await AuthService.register(gmail, password)) {
       await date
           .child("Person/${gmail.trim().split("@")[0].toLowerCase()}")
-          .set({"Nombre": nombre, "Gmail": gmail, "Password": password,"listaComida":[""]});
+          .set({
+        "Nombre": nombre,
+        "Gmail": gmail,
+        "Password": password,
+        "listaComida": [""]
+      });
       person = Person(
           nombre: nombre, gmail: gmail, pasword: password, listaComida: []);
       await widget.prefs.setString("Name", person.nombre);
@@ -65,7 +73,7 @@ class _Registrarse extends State<Registrarse> {
         (route) => false,
       );
     } else {
-      MensajeAlCliente(context, "No existe el usuario", 20);
+      messageToCustomer(context, "No existe el usuario", 20);
     }
   }
 
@@ -145,7 +153,7 @@ class _Registrarse extends State<Registrarse> {
               ),
             ],
           ),
-          floatingActionButton: BotonVolver(),
+          floatingActionButton: const ButtonBack(),
         )
       ],
     );
