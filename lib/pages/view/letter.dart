@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
@@ -83,54 +84,60 @@ class _Carta extends State<Carta> {
                             Colors.black
                           ]).createShader(bounds),
                   blendMode: BlendMode.darken,
-                  child: Container(
+                  child: SizedBox(
                       width: size.width,
-                      height: size.height * 0.55,
-                      padding: EdgeInsets.only(
-                          top: size.height * 0.15, bottom: size.height * 0.05),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          image: DecorationImage(
-                            image: AssetImage(imagenActual),
+                      height: size.height * 0.5,
+                      child: Stack(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: imagenActual,
+                            height: size.height * 0.6,
+                            width: double.infinity,
                             fit: BoxFit.cover,
-                          )),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                            pageSnapping: true,
-                            enlargeFactor: 0.35,
-                            height: size.height * 0.35,
-                            initialPage: 0,
-                            disableCenter: false,
-                            viewportFraction: 0.65,
-                            enableInfiniteScroll: true,
-                            autoPlay: true,
-                            autoPlayInterval: const Duration(seconds: 8),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.easeInCubic,
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) => setState(() {
-                                  imagenActual =
-                                      widget.listaDeComida[index].foto;
-                                }),
-                            scrollDirection: Axis.horizontal),
-                        items: widget.listaDeComida.map((i) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return ComidaViewCarrusel(
-                                comida: i,
-                                monedaEnUso: widget.monedaEnUso,
-                                idioma: widget.idioma,
-                                person: widget.person,
-                                size: size,
-                              );
-                            },
-                          );
-                        }).toList(),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: size.height * 0.1),
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                    pageSnapping: true,
+                                    enlargeFactor: 0.35,
+                                    height: size.height * 0.35,
+                                    initialPage: 0,
+                                    disableCenter: false,
+                                    viewportFraction: 0.65,
+                                    enableInfiniteScroll: true,
+                                    autoPlay: true,
+                                    autoPlayInterval:
+                                        const Duration(seconds: 8),
+                                    autoPlayAnimationDuration:
+                                        const Duration(milliseconds: 800),
+                                    autoPlayCurve: Curves.easeInCubic,
+                                    enlargeCenterPage: true,
+                                    onPageChanged: (index, reason) =>
+                                        setState(() {
+                                          imagenActual =
+                                              widget.listaDeComida[index].foto;
+                                        }),
+                                    scrollDirection: Axis.horizontal),
+                                items: widget.listaDeComida.map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return ComidaViewCarrusel(
+                                        comida: i,
+                                        monedaEnUso: widget.monedaEnUso,
+                                        idioma: widget.idioma,
+                                        person: widget.person,
+                                        size: size,
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              )),
+                        ],
                       ))),
               Container(
                   width: size.width,
-                  height: size.height * 0.374,
+                  height: size.height * 0.43,
                   decoration: BoxDecoration(
                       color: Colors.black,
                       image: DecorationImage(
@@ -301,18 +308,15 @@ class ComidaViewCarrusel extends StatelessWidget {
             child: SingleChildScrollView(
                 child: Column(
               children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.transparent,
-                      image: DecorationImage(
-                          image: AssetImage(comida.foto),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                          isAntiAlias: true)),
-                ),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        10.0), // Ajusta el radio de los bordes
+                    child: CachedNetworkImage(
+                      imageUrl: comida.foto,
+                      height: size.height * 0.16,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )),
                 SizedBox(
                     width: double.infinity,
                     height: size.height * 0.15,

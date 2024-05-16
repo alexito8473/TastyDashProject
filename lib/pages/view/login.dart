@@ -9,14 +9,15 @@ import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:tfgsaladillo/pages/view/register.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
+import '../../model/Comida.dart';
 import '../widget/genericWidget.dart';
 import '../widget/loginWidget.dart';
 
 class Login extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
-
-  const Login({super.key, required this.idioma, required this.prefs});
+  final List<Comida> listaComida;
+  const Login({super.key, required this.idioma, required this.prefs, required this.listaComida});
 
   @override
   State<Login> createState() => _Login();
@@ -66,7 +67,7 @@ class _Login extends State<Login> {
                   icon: icon,
                   monedaEnUso: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
-                  posicionInicial: 3,
+                  posicionInicial: 3, listaComida: widget.listaComida,
                 )),
         (route) => false,
       );
@@ -152,7 +153,7 @@ class _Login extends State<Login> {
                       return FadeTransition(
                         opacity: animation,
                         child: Registrarse(
-                            idioma: widget.idioma, prefs: widget.prefs),
+                            idioma: widget.idioma, prefs: widget.prefs, listaComida: widget.listaComida,),
                       );
                     },
                   ));

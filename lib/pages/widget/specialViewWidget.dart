@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/Comida.dart';
@@ -104,38 +106,46 @@ class _BannerComidaGrid extends State<BannerComidaGrid> {
           margin: EdgeInsets.symmetric(
               horizontal: size.width * 0.05, vertical: size.height * 0.01),
           height: size.height * 0.15,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage(widget.comida.foto),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.55), BlendMode.srcATop)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Stack(
             children: [
-              AutoSizeText(
-                maxLines: 1,
-                widget.comida.nombre,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-              AutoSizeText(
-                "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
-                style: const TextStyle(color: Colors.white, fontSize: 20),
-                textAlign: TextAlign.left,
-                maxLines: 1,
-              ),
-              AutoSizeText(
-                maxLines: 1,
-                "${widget.comida.tiempoMinuto} ${widget.idioma.datosJson[widget.idioma.positionIdioma]["Minuto"]}",
-                style: const TextStyle(color: Colors.white, fontSize: 25),
-                textAlign: TextAlign.left,
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      25.0), // Ajusta el radio de los bordes
+                  child: CachedNetworkImage(
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    color: Colors.black54,
+                    colorBlendMode: BlendMode.darken,
+                    imageUrl: widget.comida.foto,
+                  )),
+              Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  AutoSizeText(
+                    maxLines: 1,
+                    widget.comida.nombre,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  AutoSizeText(
+                    "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                  ),
+                  AutoSizeText(
+                    maxLines: 1,
+                    "${widget.comida.tiempoMinuto} ${widget.idioma.datosJson[widget.idioma.positionIdioma]["Minuto"]}",
+                    style: const TextStyle(color: Colors.white, fontSize: 25),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              )),
             ],
           )),
     );

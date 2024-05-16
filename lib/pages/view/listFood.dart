@@ -66,6 +66,7 @@ class _ListFood extends State<ListFood> {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
+                        Colors.black38,
                         Colors.black54,
                         Colors.black,
                         Colors.black

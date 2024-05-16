@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -50,46 +51,55 @@ class BannerComida extends StatelessWidget {
               horizontal: size.width * 0.05, vertical: size.height * 0.01),
           width: double.infinity,
           height: size.height * 0.15,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage(comida.foto),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.45), BlendMode.srcATop)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Stack(
             children: [
-              AutoSizeText(
-                maxLines: 1,
-                comida.nombre,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-              Row(
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      25.0), // Ajusta el radio de los bordes
+                  child:
+                  CachedNetworkImage(
+                    imageUrl: comida.foto,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    color: Colors.black54,
+                    colorBlendMode: BlendMode.darken,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                      child: Center(
-                    child: AutoSizeText(
-                      "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
-                      style: const TextStyle(color: Colors.white, fontSize: 25),
-                      textAlign: TextAlign.left,
-                      maxLines: 1,
-                    ),
-                  )),
-                  Expanded(
-                      child: Center(
-                    child: AutoSizeText(
-                      maxLines: 1,
-                      "${comida.tiempoMinuto} ${idioma.datosJson[idioma.positionIdioma]["Minuto"]}",
-                      style: const TextStyle(color: Colors.white, fontSize: 25),
-                      textAlign: TextAlign.left,
-                    ),
-                  )),
+                  AutoSizeText(
+                    maxLines: 1,
+                    comida.nombre,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Center(
+                        child: AutoSizeText(
+                          "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                        ),
+                      )),
+                      Expanded(
+                          child: Center(
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          "${comida.tiempoMinuto} ${idioma.datosJson[idioma.positionIdioma]["Minuto"]}",
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
+                          textAlign: TextAlign.left,
+                        ),
+                      )),
+                    ],
+                  )
                 ],
               )
             ],

@@ -16,16 +16,13 @@ List<String> CrearListaPaises() {
   return ["Español", "English"];
 }
 
-double conversorMoneda(double original) {
-  return 2.2;
-}
-
 List<Comida> CrearListaDeComida() {
   List<Comida> listaDeComida = [
     // Hamburguesa
     const Comida(
         nombre: 'BurguerMax',
-        foto: 'assets/images/hamburguesa.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesa.webp?alt=media&token=0d4cb107-8861-4cab-b342-8668e54109aa',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -52,7 +49,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'BurguerUltra',
-        foto: 'assets/images/imagen.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/imagen.webp?alt=media&token=e3600b3c-5048-4607-8070-3b08d31d3f2e',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -81,7 +79,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Burguer Buey',
-        foto: 'assets/images/haburguesaEspecial.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/haburguesaEspecial.webp?alt=media&token=db237b38-dfbb-4b23-a863-480aa6522d5b',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -109,7 +108,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Burguer Complete',
-        foto: 'assets/images/hamburguesaCompleta.webp',
+        foto:
+            "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaCompleta.webp?alt=media&token=e3248a95-d9be-495f-b49b-45393cfa3d69",
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -140,7 +140,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'The Ultimate Beef Burger',
-        foto: 'assets/images/hamburguesaBueyBeiconPatatasFritas.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaBueyBeiconPatatasFritas.webp?alt=media&token=b5196fb3-51b3-4947-abaa-0de1cb638a86',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -168,7 +169,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Harmony Burger',
-        foto: 'assets/images/hamburguesaPatatasFritas.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaPatatasFritas.webp?alt=media&token=65e2faf0-15de-4572-8f72-1612cf6dd5fd',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -199,7 +201,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Veggie Delight',
-        foto: 'assets/images/hamburguesaVegana.jpg',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaVegana.jpg?alt=media&token=d0c960d4-d9c2-408f-a244-c3c1f53ae432',
         isCarne: false,
         isBurguer: true,
         isEnsalada: false,
@@ -229,7 +232,8 @@ List<Comida> CrearListaDeComida() {
     // Ensalada
     const Comida(
         nombre: 'Breaded pepper',
-        foto: 'assets/images/piminetoRebo.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/piminetoRebo.webp?alt=media&token=9b35b041-a1d0-4c30-b0b0-3bf8260766c3',
         isCarne: false,
         isBurguer: false,
         isEnsalada: true,
@@ -255,7 +259,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Shrimp Scampi',
-        foto: 'assets/images/gambasAl.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/gambasAl.webp?alt=media&token=21abe417-9266-4a2a-95fd-5048561814ad',
         isCarne: false,
         isBurguer: false,
         isEnsalada: true,
@@ -281,7 +286,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Vegetable cream',
-        foto: 'assets/images/cremaVerdura.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cremaVerdura.webp?alt=media&token=9d2db133-eb84-432e-8cb2-460619c82f2a',
         isCarne: false,
         isBurguer: false,
         isEnsalada: true,
@@ -307,7 +313,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Vegetable taco',
-        foto: 'assets/images/tacoVerdura.webp',
+        foto:
+            "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/tacoVerdura.webp?alt=media&token=4bf00c33-d928-4209-ace5-869168eac77c",
         isCarne: false,
         isBurguer: false,
         isEnsalada: true,
@@ -337,7 +344,8 @@ List<Comida> CrearListaDeComida() {
     // Carne
     const Comida(
         nombre: 'Scnizel',
-        foto: 'assets/images/schnitzel.webp',
+        foto:
+            "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/schnitzel.webp?alt=media&token=386a9aae-b74d-4917-bf26-657c28900727",
         isCarne: true,
         isBurguer: false,
         isEnsalada: false,
@@ -365,7 +373,8 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Iberic secret',
-        foto: 'assets/images/secretoIberico.webp',
+        foto:
+            'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/secretoIberico.webp?alt=media&token=9cc2b663-8e16-4119-ad51-cf8174f7c33f',
         isCarne: true,
         isBurguer: false,
         isEnsalada: false,
@@ -391,7 +400,7 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Ragout',
-        foto: 'assets/images/ragout.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/ragout.webp?alt=media&token=f8baf812-58ae-4ceb-88d9-7555b4379783',
         isCarne: true,
         isBurguer: false,
         isEnsalada: false,
@@ -418,7 +427,7 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Meat balls',
-        foto: 'assets/images/albondiga.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/albondiga.webp?alt=media&token=c084091e-b0fb-4919-8872-75dc72e93752',
         isCarne: true,
         isBurguer: false,
         isEnsalada: false,
@@ -445,7 +454,7 @@ List<Comida> CrearListaDeComida() {
         ]),
     const Comida(
         nombre: 'Fillet',
-        foto: 'assets/images/filete.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/filete.webp?alt=media&token=0e0dfb14-043d-43bd-b075-7f2e27bd984a',
         isCarne: true,
         isBurguer: false,
         isEnsalada: false,
@@ -472,7 +481,7 @@ List<Comida> CrearListaDeComida() {
     // Pescado
     const Comida(
         nombre: 'Fried shrimp',
-        foto: 'assets/images/camaronesFritos.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/camaronesFritos.webp?alt=media&token=3cb036e1-04cb-486c-aa31-61ee877723f6',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -494,7 +503,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Tilapia',
-        foto: 'assets/images/tilapia.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/tilapia.webp?alt=media&token=c0ed07de-f092-4961-a763-c0cccf68366d',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -516,7 +525,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Octo-Bite',
-        foto: 'assets/images/pulpoGallega.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pulpoGallega.webp?alt=media&token=e6f47be7-5e77-409a-aa1e-c4c58f5e4c39',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -538,7 +547,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Besugo',
-        foto: 'assets/images/besugo.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/besugo.webp?alt=media&token=ac8a83ef-fbfe-4f0e-8532-c730d5674744',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -560,7 +569,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Octo-Grilled',
-        foto: 'assets/images/pulpoBrasa.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pulpoBrasa.webp?alt=media&token=5321a065-578c-4b22-92f7-0f29d882b2f5',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -582,7 +591,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Octo-chips',
-        foto: 'assets/images/pescadoPatatasFritas.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pescadoPatatasFritas.webp?alt=media&token=af99a925-8334-4373-967d-b9aa859f7241',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -605,7 +614,7 @@ List<Comida> CrearListaDeComida() {
     // Bebida
     const Comida(
         nombre: 'Coca cola',
-        foto: 'assets/images/cocaCola.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cocaCola.webp?alt=media&token=d500a378-4be8-41fb-92bd-28254d516ae9',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -627,7 +636,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Coca cola zero',
-        foto: 'assets/images/cocaColaZero.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cocaColaZero.webp?alt=media&token=40f7e86c-6512-4fbb-bc7e-15b136858e86',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -649,7 +658,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Fanta (Orange)',
-        foto: 'assets/images/fantaNaranja.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/fantaNaranja.webp?alt=media&token=289b1862-c9fc-4cf1-bf51-b52159397644',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -671,7 +680,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Fanta (Lemon)',
-        foto: 'assets/images/fantaLimon.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/fantaLimon.webp?alt=media&token=f669c7b6-e575-47f1-b91e-a479c9f67756',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -693,7 +702,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Te',
-        foto: 'assets/images/te.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/te.webp?alt=media&token=2db55cd2-f38c-4566-9dce-83044f2fe71d',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -716,7 +725,7 @@ List<Comida> CrearListaDeComida() {
     // Postre
     const Comida(
         nombre: 'Pistachio cake',
-        foto: 'assets/images/pistacho.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pistacho.webp?alt=media&token=14450d94-f9ab-42a3-a40f-d55a1db57ddd',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -738,7 +747,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Cupcake',
-        foto: 'assets/images/cupcakes.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cupcakes.webp?alt=media&token=ebdbb63b-2fc8-4d88-a5bc-faca35632ab7',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -760,7 +769,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Tiramisu',
-        foto: 'assets/images/Tiramisu.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/Tiramisu.webp?alt=media&token=3777f10c-bf06-4ebd-bb2b-0ae1e61bf930',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,
@@ -782,7 +791,7 @@ List<Comida> CrearListaDeComida() {
         ingredientes: []),
     const Comida(
         nombre: 'Raspberry Tart',
-        foto: 'assets/images/TartaFrambuesa.webp',
+        foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/TartaFrambuesa.webp?alt=media&token=ca1a8030-fc28-4212-abf3-3e3a3b9468a3',
         isCarne: false,
         isBurguer: false,
         isEnsalada: false,

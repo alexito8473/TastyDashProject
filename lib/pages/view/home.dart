@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
   final SharedPreferences prefs;
   final int posicionInicial;
   Moneda monedaEnUso;
-
+  List<Comida> listaComida;
   HomePage(
       {super.key,
       required this.person,
@@ -33,18 +33,20 @@ class HomePage extends StatefulWidget {
       required this.prefs,
       required this.icon,
       required this.monedaEnUso,
-      required this.posicionInicial});
+      required this.posicionInicial,
+        required this.listaComida});
 
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
 
 class _HomePage extends State<HomePage> {
+
   int posicion = 0;
   bool cambioIconoPrecio = true;
 
   // Lista de la comida
-  static List<Comida> listaDeComida = CrearListaDeComida();
+  late List<Comida> listaDeComida;
 
   // Datos para realizar el lenguaje
   late int preSelectecLenguage;
@@ -63,6 +65,7 @@ class _HomePage extends State<HomePage> {
 
   @override
   void initState() {
+    listaDeComida = widget.listaComida;
     posicion = widget.posicionInicial;
     List<String> banderas = CrearListaBanderas();
     preSelectecLenguage = widget.idioma.positionIdioma;
@@ -102,7 +105,7 @@ class _HomePage extends State<HomePage> {
       pageBuilder: (context, animation, secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
-          child: Login(idioma: widget.idioma, prefs: widget.prefs),
+          child: Login(idioma: widget.idioma, prefs: widget.prefs, listaComida: widget.listaComida,),
         );
       },
     ));

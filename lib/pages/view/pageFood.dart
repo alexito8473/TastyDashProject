@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -59,16 +60,16 @@ class _PageFood extends State<PageFood> {
                         .createShader(bounds),
                     blendMode: BlendMode.darken,
                     child: Container(
-                        width: size.width,
-                        alignment: Alignment.topRight,
-                        height: size.height * 0.34,
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            image: DecorationImage(
-                                image: AssetImage(widget.comida.foto),
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                isAntiAlias: true))))),
+                      width: size.width,
+                      alignment: Alignment.topRight,
+                      height: size.height * 0.34,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.comida.foto,
+                        height: size.height * 0.654,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ))),
             Container(
               width: size.width,
               height: size.height,

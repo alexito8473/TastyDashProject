@@ -26,6 +26,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   google_generative_ai: ^0.3.1
   auto_size_text: ^3.0.0
+  cached_network_image: ^3.3.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,46 +43,14 @@ flutter:
     - assets/images/ic_FORE.webp
     - assets/images/ic_map.webp
     - assets/images/bannersuper.webp
-    - assets/images/hamburguesa.webp
-    - assets/images/imagen.webp
-    - assets/images/piminetoRebo.webp
-    - assets/images/gambasAl.webp
-    - assets/images/hamburguesasBanner.webp
-    - assets/images/ensaladaBanner.webp
-    - assets/images/haburguesaEspecial.webp
-    - assets/images/hamburguesaCompleta.webp
-    - assets/images/schnitzel.webp
-    - assets/images/bannerCarne.webp
-    - assets/images/hamburguesaBueyBeiconPatatasFritas.webp
-    - assets/images/hamburguesaPatatasFritas.webp
-    - assets/images/hamburguesaVegana.jpg
-    - assets/images/Chocobo.webp
-    - assets/images/ragout.webp
-    - assets/images/camaronesFritos.webp
     - assets/images/bannerBebida.webp
     - assets/images/bannerPescado.webp
     - assets/images/fondoSuelo.webp
-    - assets/images/tilapia.webp
-    - assets/images/pulpoGallega.webp
-    - assets/images/besugo.webp
-    - assets/images/pulpoBrasa.webp
-    - assets/images/pescadoPatatasFritas.webp
-    - assets/images/albondiga.webp
-    - assets/images/filete.webp
-    - assets/images/secretoIberico.webp
-    - assets/images/cremaVerdura.webp
-    - assets/images/tacoVerdura.webp
-    - assets/images/cocaCola.webp
-    - assets/images/cocaColaZero.webp
-    - assets/images/fantaLimon.webp
-    - assets/images/fantaNaranja.webp
+    - assets/images/bannerCarne.webp
+    - assets/images/ensaladaBanner.webp
+    - assets/images/hamburguesasBanner.webp
     - assets/images/fondoEspecial.webp
     - assets/images/bannerPostre.webp
-    - assets/images/te.webp
-    - assets/images/pistacho.webp
-    - assets/images/cupcakes.webp
-    - assets/images/Tiramisu.webp
-    - assets/images/TartaFrambuesa.webp
 
     - Data/leng.json
     - assets/Icons/Spain.svg

@@ -92,7 +92,7 @@ class _SettingView extends State<SettingView> {
               TituloPageSetting(
                   size: widget.size,
                   title: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                      ["MiCuenta"]),
+                      ["Ajustes"]),
               CambioCoolDropdown(
                   size: widget.size,
                   type: widget.idioma.datosJson[widget.idioma.positionIdioma]
@@ -113,6 +113,9 @@ class _SettingView extends State<SettingView> {
                 idioma: widget.idioma,
                 size: widget.size,
               ),
+              FloatingActionButton(onPressed: (){
+
+              })
             ],
           ),
         )

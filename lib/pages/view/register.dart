@@ -8,14 +8,19 @@ import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
+import '../../model/Comida.dart';
 import '../widget/genericWidget.dart';
 import '../widget/loginWidget.dart';
 
 class Registrarse extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
-
-  const Registrarse({super.key, required this.idioma, required this.prefs});
+  final List<Comida> listaComida;
+  const Registrarse(
+      {super.key,
+      required this.idioma,
+      required this.prefs,
+      required this.listaComida});
 
   @override
   State<StatefulWidget> createState() => _Registrarse();
@@ -69,6 +74,7 @@ class _Registrarse extends State<Registrarse> {
                   monedaEnUso: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
                   posicionInicial: 3,
+                  listaComida: widget.listaComida,
                 )),
         (route) => false,
       );

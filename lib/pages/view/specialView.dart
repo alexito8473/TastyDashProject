@@ -54,100 +54,142 @@ class _EspecialView extends State<EspecialView> {
         widget.listaComida.where((element) => element.isBebida).toList());
     listaPostre.addAll(
         widget.listaComida.where((element) => element.isPostre).toList());
-    if (listaBurguer.isNotEmpty) {
-      cant = cant + 1;
-    }
-    if (listaEnsalada.isNotEmpty) {
-      cant = cant + 1;
-    }
-    if (listaPescado.isNotEmpty) {
-      cant = cant + 1;
-    }
-    if (listaCarne.isNotEmpty) {
-      cant = cant + 1;
-    }
-    if (listaBebida.isNotEmpty) {
-      cant = cant + 1;
-    }
-    if (listaPostre.isNotEmpty) {
+    comprobarLista(listaBurguer);
+    comprobarLista(listaEnsalada);
+    comprobarLista(listaPescado);
+    comprobarLista(listaCarne);
+    comprobarLista(listaBebida);
+    comprobarLista(listaPostre);
+  }
+
+  void comprobarLista(List<Comida> lista) {
+    if (lista.isNotEmpty) {
       cant = cant + 1;
     }
   }
 
   void resetBurger(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaBurguer.isEmpty;
       listaBurguer.clear();
       listaBurguer.addAll(widget.listaComida
           .where((element) =>
               element.isBurguer && listNameFood.contains(element.nombre))
           .toList());
       if (listaBurguer.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
 
   void resetSalad(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaEnsalada.isEmpty;
       listaEnsalada.clear();
       listaEnsalada.addAll(widget.listaComida
           .where((element) =>
               element.isEnsalada && listNameFood.contains(element.nombre))
           .toList());
       if (listaEnsalada.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
 
   void resetFish(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaPescado.isEmpty;
       listaPescado.clear();
       listaPescado.addAll(widget.listaComida
           .where((element) =>
               element.isPescado && listNameFood.contains(element.nombre))
           .toList());
       if (listaPescado.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
 
   void resetMeat(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaCarne.isEmpty;
       listaCarne.clear();
       listaCarne.addAll(widget.listaComida
           .where((element) =>
               element.isCarne && listNameFood.contains(element.nombre))
           .toList());
       if (listaCarne.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
 
   void resetDrink(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaBebida.isEmpty;
       listaBebida.clear();
       listaBebida.addAll(widget.listaComida
           .where((element) =>
               element.isBebida && listNameFood.contains(element.nombre))
           .toList());
       if (listaBebida.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
 
   void resetDessert(List<dynamic> listNameFood) {
+    bool control;
     setState(() {
+      control = listaPostre.isEmpty;
       listaPostre.clear();
       listaPostre.addAll(widget.listaComida
           .where((element) =>
               element.isPostre && listNameFood.contains(element.nombre))
           .toList());
       if (listaPostre.isEmpty) {
-        cant = cant - 1;
+        if (!control) {
+          cant = cant - 1;
+        }
+      } else {
+        if (control) {
+          cant = cant + 1;
+        }
       }
     });
   }
