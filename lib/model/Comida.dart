@@ -1,3 +1,5 @@
+import 'Review.dart';
+
 class Comida {
   final String nombre;
   final String foto;
@@ -22,8 +24,10 @@ class Comida {
 
   //El precio esta en español
   final double precio;
-
-  const Comida({
+  int numValoracion;
+  double valoracion;
+  List<Review> listReview=[];
+  Comida({
     required this.nombre,
     required this.foto,
     required this.isCarne,
@@ -45,5 +49,7 @@ class Comida {
     required this.haveLeche,
     required this.haveAzufre,
     required this.ingredientes,
+    this.valoracion=0,
+    this.numValoracion=0,
   });
 }

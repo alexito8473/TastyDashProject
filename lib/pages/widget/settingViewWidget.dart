@@ -4,6 +4,8 @@ import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
 
+import '../view/chatAi.dart';
+
 class PoliticaTexto extends StatelessWidget {
   final Idioma idioma;
 
@@ -18,28 +20,6 @@ class PoliticaTexto extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: Row(children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      width: size.width * .1,
-                      height: size.height * .05,
-                      child: const Icon(Icons.keyboard_backspace),
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(left: size.width * .05),
-                      child: Text(
-                        idioma.datosJson[idioma.positionIdioma]["Politica"],
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      ))
-                ]),
-              ),
               Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text1"],
                   style: const TextStyle(fontSize: 18)),
               Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text2"],
@@ -55,7 +35,39 @@ class PoliticaTexto extends StatelessWidget {
         ));
   }
 }
+class ButtonTastyGpt extends StatelessWidget{
+  final Size size;
+  const ButtonTastyGpt({super.key, required this.size});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 500),
+          reverseTransitionDuration: const Duration(milliseconds: 300),
+          barrierColor: Colors.black54,
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: const ChatAi(),
+            );
+          },
+        ));
+      },
+      child: Container(
+          width: size.width * 0.7,
+          height: size.height * 0.06,
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(bottom: size.height * 0.015),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text("TastyGPT",
+              style: TextStyle(fontSize: 21, color: Colors.black))));
+  }
 
+}
 class BotonTerminosDeUso extends StatelessWidget {
   final Idioma idioma;
   final Size size;
@@ -73,11 +85,31 @@ class BotonTerminosDeUso extends StatelessWidget {
               useSafeArea: false,
               context: context,
               builder: (context) =>
-                  AlertDialog(content: PoliticaTexto(idioma: idioma)));
+                  AlertDialog(title:Row(children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: size.width * .1,
+                        height: size.height * .05,
+                        child: const Icon(Icons.keyboard_backspace),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: size.width * .05),
+                        child: Text(
+                          idioma.datosJson[idioma.positionIdioma]["Politica"],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ))
+                  ]),
+                     shadowColor: Colors.white, surfaceTintColor: Colors.white, backgroundColor: Colors.white, content: PoliticaTexto(idioma: idioma)));
         },
         child: Container(
             width: size.width * 0.7,
             height: size.height * 0.06,
+            margin: EdgeInsets.only(bottom: size.height * 0.015),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -88,18 +120,18 @@ class BotonTerminosDeUso extends StatelessWidget {
   }
 }
 
-class TituloPageSetting extends StatelessWidget {
+class TitlePageSetting extends StatelessWidget {
   final Size size;
   final String title;
 
-  TituloPageSetting({super.key, required this.size, required this.title});
+  const TitlePageSetting({super.key, required this.size, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
           left: size.width * 0.09,
-          top: size.height * 0.05,
+          top: size.height * 0.02,
           bottom: size.height * 0.02),
       width: size.width,
       child: Text(
@@ -127,7 +159,7 @@ class InformacionUsuarioSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin:
-            EdgeInsets.only(left: size.width * 0.05, top: size.height * 0.01),
+            EdgeInsets.only(left: size.width * 0.05, top: size.height * 0.00),
         width: size.width,
         child: ListTile(
           textColor: Colors.white,

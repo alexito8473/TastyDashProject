@@ -60,11 +60,35 @@ class _EspecialView extends State<EspecialView> {
     comprobarLista(listaCarne);
     comprobarLista(listaBebida);
     comprobarLista(listaPostre);
+    orderAllList(!widget.cambioIconoPrecio);
   }
 
   void comprobarLista(List<Comida> lista) {
     if (lista.isNotEmpty) {
       cant = cant + 1;
+    }
+  }
+
+  void orderAllList(bool control) {
+    setState(() {
+      orderList(listaBurguer, control);
+      orderList(listaEnsalada, control);
+      orderList(listaPescado, control);
+      orderList(listaCarne, control);
+      orderList(listaBebida, control);
+      orderList(listaPostre, control);
+    });
+  }
+
+  void orderList(List<Comida> lista, bool control) {
+    if (control) {
+      lista.sort(
+        (a, b) => a.precio.compareTo(b.precio),
+      );
+    } else {
+      lista.sort(
+        (a, b) => b.precio.compareTo(a.precio),
+      );
     }
   }
 
@@ -279,7 +303,7 @@ class _EspecialView extends State<EspecialView> {
                               "assets/images/fondoEspecial.webp"))),
                   child: TabBarView(children: [
                     if (listaBurguer.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaBurguer,
                         monedaEnUso: widget.monedaEnUso,
@@ -288,7 +312,7 @@ class _EspecialView extends State<EspecialView> {
                         anadirQuitarProducto: resetBurger,
                       ),
                     if (listaEnsalada.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaEnsalada,
                         monedaEnUso: widget.monedaEnUso,
@@ -297,7 +321,7 @@ class _EspecialView extends State<EspecialView> {
                         anadirQuitarProducto: resetSalad,
                       ),
                     if (listaPescado.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaPescado,
                         monedaEnUso: widget.monedaEnUso,
@@ -306,7 +330,7 @@ class _EspecialView extends State<EspecialView> {
                         anadirQuitarProducto: resetFish,
                       ),
                     if (listaCarne.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaCarne,
                         monedaEnUso: widget.monedaEnUso,
@@ -315,7 +339,7 @@ class _EspecialView extends State<EspecialView> {
                         anadirQuitarProducto: resetMeat,
                       ),
                     if (listaBebida.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaBebida,
                         monedaEnUso: widget.monedaEnUso,
@@ -324,7 +348,7 @@ class _EspecialView extends State<EspecialView> {
                         anadirQuitarProducto: resetDrink,
                       ),
                     if (listaPostre.isNotEmpty)
-                      MostrarLista(
+                      ShowList(
                         size: widget.size,
                         listaComida: listaPostre,
                         monedaEnUso: widget.monedaEnUso,
@@ -337,20 +361,30 @@ class _EspecialView extends State<EspecialView> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.orange,
-          onPressed: () {
-            widget.function();
-          },
-          child: widget.cambioIconoPrecio
-              ? const Icon(
-                  Icons.arrow_upward,
-                  color: Colors.black,
-                )
-              : const Icon(
-                  Icons.arrow_downward,
-                  color: Colors.black,
+            backgroundColor: Colors.orange,
+            onPressed: () {
+              widget.function();
+              orderAllList(widget.cambioIconoPrecio);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                widget.cambioIconoPrecio
+                    ? const Icon(
+                        Icons.arrow_upward,
+                        color: Colors.black,
+                      )
+                    : const Icon(
+                        Icons.arrow_downward,
+                        color: Colors.black,
+                      ),
+                Text(
+                  widget.monedaEnUso.simbolo,
+                  style: TextStyle(
+                      fontSize: widget.size.width * 0.06, color: Colors.black),
                 ),
-        ),
+              ],
+            )),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/model/Comida.dart';
 import 'package:tfgsaladillo/model/Idioma.dart';
@@ -30,7 +31,8 @@ class PageFood extends StatefulWidget {
 }
 
 class _PageFood extends State<PageFood> {
-  void addOrRemoveList(bool have, String product) {
+  void addOrRemoveList(bool have, String product) async {
+    DatabaseReference date = FirebaseDatabase.instance.ref();
     setState(() {
       if (have) {
         widget.person!.listaComida!.remove(product);
@@ -38,6 +40,10 @@ class _PageFood extends State<PageFood> {
         widget.person!.listaComida!.add(product);
       }
     });
+    await date
+        .child(
+            "Person/${widget.person!.gmail.trim().split("@")[0].toLowerCase()}/listaComida")
+        .set(widget.person!.listaComida!);
     widget.anadirQuitarProducto(widget.person!.listaComida);
   }
 

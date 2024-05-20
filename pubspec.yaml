@@ -27,7 +27,8 @@ dependencies:
   google_generative_ai: ^0.3.1
   auto_size_text: ^3.0.0
   cached_network_image: ^3.3.1
-  
+  dash_chat_2: ^0.0.20
+  flutter_rating_bar: ^4.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,6 +42,8 @@ flutter:
     - assets/images/screen.webp
     - assets/images/register.webp
     - assets/images/ic_FORE.webp
+    - assets/images/usuario.png
+    - assets/images/fondo.png
     - assets/images/ic_map.webp
     - assets/images/bannersuper.webp
     - assets/images/bannerBebida.webp

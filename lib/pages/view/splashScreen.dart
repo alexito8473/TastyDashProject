@@ -23,19 +23,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreen extends State<SplashScreen> {
   late final SharedPreferences prefs;
   late List<dynamic> datosJson;
-
+  List<dynamic> listaReserva = [];
   @override
   void initState() {
     super.initState();
-
     List<Comida> listaComida = CrearListaDeComida();
     DatabaseReference date = FirebaseDatabase.instance.ref();
     Idioma idioma;
     Person? person;
-    String? nombre;
     BitmapDescriptor icon;
     String? gmail;
-    String? password;
     int? posicionIdioma;
     Future.delayed(const Duration(milliseconds: 0), () async {
       await precacheImage(
@@ -49,8 +46,8 @@ class _SplashScreen extends State<SplashScreen> {
       await precacheImage(
           const AssetImage("assets/images/fondoEspecial.webp"), context);
       for (int i = 0; i < listaComida.length; i++) {
-        await DefaultCacheManager()
-            .downloadFile(listaComida[i].foto);
+        // await DefaultCacheManager()
+        //     .downloadFile(listaComida[i].foto);
         await precacheImage(
             CachedNetworkImageProvider(listaComida[i].foto), context);
       }
@@ -68,10 +65,8 @@ class _SplashScreen extends State<SplashScreen> {
           idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
         }
       }
-      nombre = prefs.getString("Name");
       gmail = prefs.getString("Gmail");
-      password = prefs.getString("Password");
-      if (nombre == null || gmail == null || password == null) {
+      if (gmail == null) {
         person = null;
         prefs.remove("Name");
         prefs.remove("Gmail");
@@ -88,13 +83,17 @@ class _SplashScreen extends State<SplashScreen> {
             .child(
                 "Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
             .get();
-        List<dynamic> listaReserva = [];
-        listaReserva.addAll(listaComida.value as List<dynamic>);
+
+        if (listaComida.value is List<dynamic>) {
+          listaReserva.addAll(listaComida.value as List<dynamic>);
+        }
+
         person = Person(
             nombre: nombre.value.toString(),
             pasword: password.value.toString(),
             gmail: gmail!,
-            listaComida: listaComida.value == null ? [] : listaReserva);
+            listaComida:
+                listaComida.value is List<dynamic> ? listaReserva : []);
       }
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");

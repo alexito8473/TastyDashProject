@@ -59,7 +59,7 @@ class _SettingView extends State<SettingView> {
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.6), BlendMode.darken))),
       child: ListView(children: [
-        TituloPageSetting(
+        TitlePageSetting(
             size: widget.size,
             title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                 ["MiCuenta"]),
@@ -68,7 +68,7 @@ class _SettingView extends State<SettingView> {
               size: widget.size,
               title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                   ["Nombre"],
-              subtitle: widget.person!.nombre),
+              subtitle: widget.person!.nombre,),
         if (widget.person != null)
           InformacionUsuarioSetting(
               size: widget.size,
@@ -89,7 +89,7 @@ class _SettingView extends State<SettingView> {
           margin: EdgeInsets.only(top: widget.size.height * 0.02),
           child: Column(
             children: [
-              TituloPageSetting(
+              TitlePageSetting(
                   size: widget.size,
                   title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                       ["Ajustes"]),
@@ -113,9 +113,7 @@ class _SettingView extends State<SettingView> {
                 idioma: widget.idioma,
                 size: widget.size,
               ),
-              FloatingActionButton(onPressed: (){
-
-              })
+              ButtonTastyGpt(size: widget.size),
             ],
           ),
         )

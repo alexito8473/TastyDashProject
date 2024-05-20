@@ -17,7 +17,11 @@ class Login extends StatefulWidget {
   final Idioma idioma;
   final SharedPreferences prefs;
   final List<Comida> listaComida;
-  const Login({super.key, required this.idioma, required this.prefs, required this.listaComida});
+  const Login(
+      {super.key,
+      required this.idioma,
+      required this.prefs,
+      required this.listaComida});
 
   @override
   State<Login> createState() => _Login();
@@ -30,6 +34,7 @@ class _Login extends State<Login> {
   late Person person;
 
   void login() async {
+    List listaReserva = [];
     DatabaseReference date = FirebaseDatabase.instance.ref();
     String gmail = _gmailController.text;
     String password = _passwordController.text;
@@ -45,13 +50,16 @@ class _Login extends State<Login> {
           .get();
       final listaComida = await date
           .child(
-              "Person/${gmail?.trim().split("@")[0].toLowerCase()}/listaComida")
+              "Person/${gmail.trim().split("@")[0].toLowerCase()}/listaComida")
           .get();
+      if (listaComida.value is List<dynamic>) {
+        listaReserva.addAll(listaComida.value as List<dynamic>);
+      }
       person = Person(
           nombre: snapshot.value.toString(),
           gmail: gmail,
           pasword: password,
-          listaComida: listaComida.value as List<dynamic>);
+          listaComida: listaReserva);
       await widget.prefs.setString("Name", person.nombre);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
@@ -67,7 +75,8 @@ class _Login extends State<Login> {
                   icon: icon,
                   monedaEnUso: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
-                  posicionInicial: 3, listaComida: widget.listaComida,
+                  posicionInicial: 3,
+                  listaComida: widget.listaComida,
                 )),
         (route) => false,
       );
@@ -153,7 +162,10 @@ class _Login extends State<Login> {
                       return FadeTransition(
                         opacity: animation,
                         child: Registrarse(
-                            idioma: widget.idioma, prefs: widget.prefs, listaComida: widget.listaComida,),
+                          idioma: widget.idioma,
+                          prefs: widget.prefs,
+                          listaComida: widget.listaComida,
+                        ),
                       );
                     },
                   ));

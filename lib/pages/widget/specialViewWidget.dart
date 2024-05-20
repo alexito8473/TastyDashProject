@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../model/Comida.dart';
 import '../../model/Idioma.dart';
@@ -9,7 +10,7 @@ import '../../model/Moneda.dart';
 import '../../model/Person.dart';
 import '../view/pageFood.dart';
 
-class MostrarLista extends StatefulWidget {
+class ShowList extends StatefulWidget {
   final Size size;
   final List<Comida> listaComida;
   final Moneda monedaEnUso;
@@ -17,7 +18,7 @@ class MostrarLista extends StatefulWidget {
   final Person person;
   final Function anadirQuitarProducto;
 
-  const MostrarLista(
+  const ShowList(
       {super.key,
       required this.size,
       required this.listaComida,
@@ -27,10 +28,10 @@ class MostrarLista extends StatefulWidget {
       required this.anadirQuitarProducto});
 
   @override
-  State<StatefulWidget> createState() => _MostrarLista();
+  State<StatefulWidget> createState() => _ShowList();
 }
 
-class _MostrarLista extends State<MostrarLista> {
+class _ShowList extends State<ShowList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -132,11 +133,20 @@ class _BannerComidaGrid extends State<BannerComidaGrid> {
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.left,
                   ),
-                  AutoSizeText(
-                    "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
-                    style: const TextStyle(color: Colors.white, fontSize: 20),
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
+                  RatingBar(
+                    initialRating: widget.comida.valoracion,
+                    direction: Axis.horizontal,
+                    itemCount: 5,
+                    ignoreGestures: true,
+                    itemSize: size.width * 0.07,
+                    ratingWidget: RatingWidget(
+                      full: Icon(Icons.star, color: Colors.orange),
+                      half: Icon(Icons.star, color: Colors.orange),
+                      empty: Icon(Icons.star, color: Colors.grey),
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
                   ),
                   AutoSizeText(
                     maxLines: 1,
