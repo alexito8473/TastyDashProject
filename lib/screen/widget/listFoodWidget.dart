@@ -1,21 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
-import 'package:tfgsaladillo/pages/view/pageFood.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/screen/view/pageFood.dart';
+import '../../models/Person.dart';
 
-import '../../model/Person.dart';
-
-class BannerComida extends StatelessWidget {
+class BannerFood extends StatelessWidget {
   final Food comida;
   final Coin monedaEnUso;
   final Language idioma;
   final Person? person;
   final Function anadirQuitarProducto;
 
-  const BannerComida(
+  const BannerFood(
       {super.key,
       required this.comida,
       required this.monedaEnUso,
@@ -36,11 +35,11 @@ class BannerComida extends StatelessWidget {
             return FadeTransition(
                 opacity: animation,
                 child: PageFood(
-                  comida: comida,
-                  idioma: idioma,
-                  monedaEnUso: monedaEnUso,
+                  food: comida,
+                  language: idioma,
+                  coin: monedaEnUso,
                   person: person,
-                  anadirQuitarProducto: anadirQuitarProducto,
+                  function: anadirQuitarProducto,
                 ));
           },
         ));

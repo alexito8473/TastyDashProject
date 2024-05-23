@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:tfgsaladillo/model/Message.dart';
+import 'package:tfgsaladillo/models/Message.dart';
 
 class ChatAi extends StatefulWidget {
   const ChatAi({super.key});
@@ -13,13 +13,13 @@ class _ChatAi extends State<ChatAi> {
   final TextEditingController _controller = TextEditingController();
   static const String apiKey = "AIzaSyA9RgM-495b9dsa4RLy2rp18aTT9tP_3TU";
   final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-  late final chatGpt;
+  late final geminisChat;
   List<Message> listMessage = [];
   @override
   void initState() {
-    chatGpt = model.startChat(history: [
+    geminisChat = model.startChat(history: [
       Content.text(
-          'Eres un asistente chat bot de una aplicación movil, te vas a llamar TastyGPT, te dare un contexto  "La aplicación está destinada para una cadena de restaurantes, la aplicación tiene funcionalidades como tener un mapa de todas las ubicaciones de los restaurantes que están repartidos por toda España y en Gibraltar. Tiene 2 idiomas español y ingles. No tiene la opción de resarvar mesas, ni tampoco llevar a domicilio Sus platos son BurguerMax, BurguerUltra, Burguer Buey, Burguer Complete,The Ultimate Beef Burger,Harmony Burger,Veggie Delight,Breaded pepper,Shrimp Scampi,Vegetable cream,Vegetable taco,Scnizel, Iberic secret, Ragout, Meat balls, Fillet, Fried shrimp, Tilapia, Octo-Bite, Besugo, Octo-Grilled, Octo-chips, Coca cola,Coca cola zero, Fanta, Te"')
+          'Eres un asistente chat bot de una aplicación movil del empresa "Tasty Dash", te vas a llamar TastyGPT, te dare un contexto  "La aplicación está destinada para una cadena de restaurantes, la aplicación tiene funcionalidades como tener un mapa de todas las ubicaciones de los restaurantes que están repartidos por toda España y en Gibraltar. Tiene 2 idiomas español y ingles. No tiene la opción de resarvar mesas, ni tampoco llevar a domicilio Sus platos son BurguerMax, BurguerUltra, Burguer Buey, Burguer Complete,The Ultimate Beef Burger,Harmony Burger,Veggie Delight,Breaded pepper,Shrimp Scampi,Vegetable cream,Vegetable taco,Scnizel, Iberic secret, Ragout, Meat balls, Fillet, Fried shrimp, Tilapia, Octo-Bite, Besugo, Octo-Grilled, Octo-chips, Coca cola,Coca cola zero, Fanta, Te"')
     ]);
     super.initState();
   }
@@ -100,7 +100,7 @@ class _ChatAi extends State<ChatAi> {
                                 listMessage.insert(
                                     0, Message(text: texto, person: "person"));
                               });
-                              var response = await chatGpt
+                              var response = await geminisChat
                                   .sendMessage(Content.text(texto));
                               setState(() {
                                 listMessage.insert(

@@ -20,7 +20,7 @@ class Food {
   final bool haveGluten;
   final bool haveLeche;
   final bool haveAzufre;
-  final List<String> ingredientes;
+  final List<String> ingredients;
 
   //El precio esta en español
   final double precio;
@@ -48,7 +48,7 @@ class Food {
     required this.haveGluten,
     required this.haveLeche,
     required this.haveAzufre,
-    required this.ingredientes,
+    required this.ingredients,
     this.valoracion=0,
     this.numValoracion=0,
     required this.listReview

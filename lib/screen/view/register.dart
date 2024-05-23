@@ -1,16 +1,13 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
-import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/view/home.dart';
-import 'package:tfgsaladillo/services/AuthServices.dart';
-
-import '../../model/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/screen/view/home.dart';
+import '../../models/Food.dart';
+import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
-import '../widget/loginWidget.dart';
 
 class Registrarse extends StatefulWidget {
   final Language idioma;
@@ -32,7 +29,7 @@ class _Registrarse extends State<Registrarse> {
   final TextEditingController _passwordController = TextEditingController();
   late Person person;
 
-  int valueNumeric = 0;
+  int value = 0;
 
   @override
   void dispose() {
@@ -41,26 +38,11 @@ class _Registrarse extends State<Registrarse> {
     super.dispose();
   }
 
-  void register(BuildContext context) async {
-    DatabaseReference date = FirebaseDatabase.instance.ref();
-    String nombre = _nameController.text;
-    String gmail = _gmailController.text;
-    String password = _passwordController.text;
+  void register() async {
     BitmapDescriptor icon;
-    if (await AuthService.register(gmail, password)) {
-      await date
-          .child("Person/${gmail.trim().split("@")[0].toLowerCase()}")
-          .set({
-        "Nombre": nombre,
-        "Gmail": gmail,
-        "Password": password,
-        "listaComida": [""]
-      });
-      person = Person(
-          name: nombre, gmail: gmail, pasword: password, listaComida: []);
-      await widget.prefs.setString("Name", person.name);
-      await widget.prefs.setString("Gmail", person.gmail);
-      await widget.prefs.setString("Password", person.pasword);
+    Person? person = await RealTimeService.setUserData(_nameController.text,
+        _gmailController.text, _passwordController.text, widget.prefs);
+    if (person != null) {
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
       await Navigator.pushAndRemoveUntil(
@@ -68,13 +50,13 @@ class _Registrarse extends State<Registrarse> {
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
-                  idioma: widget.idioma,
+                  lenguage: widget.idioma,
                   prefs: widget.prefs,
                   icon: icon,
-                  monedaEnUso: devolverTipoMoneda(
+                  coin: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
-                  posicionInicial: 3,
-                  listaComida: widget.listaComida,
+                  initialPosition: 3,
+                  listFood: widget.listaComida,
                 )),
         (route) => false,
       );
@@ -147,9 +129,7 @@ class _Registrarse extends State<Registrarse> {
                   heroTag: "moverFloating",
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
-                  onPressed: () {
-                    register(context);
-                  },
+                  onPressed: () => register(),
                   child: Text(
                     widget.idioma.datosJson[widget.idioma.positionIdioma]
                         ["Registrarse"],

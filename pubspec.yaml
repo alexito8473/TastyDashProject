@@ -55,7 +55,7 @@ flutter:
     - assets/images/fondoEspecial.webp
     - assets/images/bannerPostre.webp
 
-    - Data/leng.json
+    - assets/json/leng.json
     - assets/Icons/Spain.svg
     - assets/Icons/Burguer.svg
     - assets/Icons/Salad.svg

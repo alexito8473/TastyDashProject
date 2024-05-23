@@ -1,31 +1,31 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 
-import '../../model/Person.dart';
-import '../../model/Review.dart';
+import '../../models/Person.dart';
+import '../../models/Review.dart';
+import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
 import '../widget/pageFoodWidget.dart';
 
 class PageFood extends StatefulWidget {
-  final Food comida;
-  final Language idioma;
-  final Coin monedaEnUso;
+  final Food food;
+  final Language language;
+  final Coin coin;
   final Person? person;
-  final Function anadirQuitarProducto;
+  final Function function;
 
   const PageFood({
     super.key,
-    required this.comida,
-    required this.idioma,
-    required this.monedaEnUso,
+    required this.food,
+    required this.language,
+    required this.coin,
     required this.person,
-    required this.anadirQuitarProducto,
+    required this.function,
   });
 
   @override
@@ -34,40 +34,36 @@ class PageFood extends StatefulWidget {
 
 class _PageFood extends State<PageFood> {
   void addOrRemoveList(bool have, String product) async {
-    DatabaseReference date = FirebaseDatabase.instance.ref();
     setState(() {
       if (have) {
-        widget.person!.listaComida!.remove(product);
+        widget.person!.listFood!.remove(product);
       } else {
-        widget.person!.listaComida!.add(product);
+        widget.person!.listFood!.add(product);
       }
     });
-    await date
-        .child(
-            "Person/${widget.person!.gmail.trim().split("@")[0].toLowerCase()}/listaComida")
-        .set(widget.person!.listaComida!);
-    widget.anadirQuitarProducto(widget.person!.listaComida);
+    RealTimeService.updateListFoodUser(widget.person!);
+    widget.function(widget.person!.listFood);
   }
-
   void addReview() {
     setState(() {
-      widget.comida.listReview.add(Review(
-          autor: 'alejandro',
+      widget.food.listReview.add(Review(
+          autor: widget.person!.name,
           publicacion: DateTime.now(),
           valoracion: 5,
           content:
               'Hola madre mia esto es algo madfnasdjfbasdjfasdklfbasjdbasdhmnbcuasdb fasdbfuasdfhasdbfjhsfhbashfbsjfajfbasfjhqwebfuisdbfasdbdfhsehfasdvcyhasbdjkfaseuifshfbvasdhvbasifbuyasefbasdfv'));
-      widget.comida.valoracion += 5;
-      widget.comida.numValoracion += 1;
+      widget.food.valoracion += 5;
+      widget.food.numValoracion += 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     double resultValoracion =
-        widget.comida.valoracion / widget.comida.numValoracion;
+        widget.food.valoracion / widget.food.numValoracion;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        extendBody: true,
         body: Stack(
           children: [
             Positioned(
@@ -87,7 +83,7 @@ class _PageFood extends State<PageFood> {
                       alignment: Alignment.topRight,
                       height: size.height * 0.34,
                       child: CachedNetworkImage(
-                        imageUrl: widget.comida.foto,
+                        imageUrl: widget.food.foto,
                         height: size.height * 0.654,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -100,9 +96,9 @@ class _PageFood extends State<PageFood> {
                     child: GestureDetector(
                   onTap: () {
                     addOrRemoveList(
-                        widget.person!.listaComida!
-                            .contains(widget.comida.nombre),
-                        widget.comida.nombre);
+                        widget.person!.listFood!
+                            .contains(widget.food.nombre),
+                        widget.food.nombre);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -115,7 +111,7 @@ class _PageFood extends State<PageFood> {
                     height: size.height * 0.07,
                     child: Icon(
                       color: Colors.orange,
-                      widget.person!.listaComida!.contains(widget.comida.nombre)
+                      widget.person!.listFood!.contains(widget.food.nombre)
                           ? FontAwesomeIcons.solidHeart
                           : FontAwesomeIcons.heart,
                       size: size.height * 0.05,
@@ -153,7 +149,7 @@ class _PageFood extends State<PageFood> {
                                 top: size.height * 0.03),
                             alignment: Alignment.center,
                             child: AutoSizeText(
-                              widget.comida.nombre,
+                              widget.food.nombre,
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 35,
@@ -188,7 +184,7 @@ class _PageFood extends State<PageFood> {
                     Expanded(
                         child: Center(
                       child: AutoSizeText(
-                        "${widget.idioma.datosJson[widget.idioma.positionIdioma]["Precio"]}: ${(widget.comida.precio * widget.monedaEnUso.conversor).toStringAsFixed(2)} ${widget.monedaEnUso.simbolo}",
+                        "${widget.language.datosJson[widget.language.positionIdioma]["Precio"]}: ${(widget.food.precio * widget.coin.conversor).toStringAsFixed(2)} ${widget.coin.simbolo}",
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
                         textAlign: TextAlign.left,
@@ -199,48 +195,60 @@ class _PageFood extends State<PageFood> {
                         child: Center(
                       child: AutoSizeText(
                         maxLines: 1,
-                        "${widget.comida.tiempoMinuto} ${widget.idioma.datosJson[widget.idioma.positionIdioma]["Minuto"]}",
+                        "${widget.food.tiempoMinuto} ${widget.language.datosJson[widget.language.positionIdioma]["Minuto"]}",
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
                         textAlign: TextAlign.left,
                       ),
                     )),
                   ]),
-                  GestureDetector(
-                    onTap: () {
-                      addReview();
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [Colors.orange, Colors.orange.shade800])),
-                      margin: EdgeInsets.only(
-                          top: size.height * 0.02, bottom: size.height * 0.02),
-                      width: size.width * 0.4,
-                      height: size.height * 0.06,
-                      child: const Text(
-                        "Añadir Review",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  ExpansionAlergenos(widget.comida, widget.idioma),
-                  if (widget.comida.ingredientes.isNotEmpty)
-                    ExpansionIngredientes(widget.comida, widget.idioma),
+
+                  ExpansionAllergen(widget.food, widget.language),
+                  if (widget.food.ingredients.isNotEmpty)
+                    ExpansionIngredients(widget.food, widget.language),
                   if (widget.person != null)
-                    ExpansionReview(widget.comida, widget.idioma),
+                    Container(
+                      margin: EdgeInsets.only(bottom: size.height*0.08),
+                      child:  ExpansionReview(widget.food, widget.language),
+                    )
+
                 ],
               )),
             ),
           ],
         ),
-        floatingActionButton: const ButtonBack());
+        bottomNavigationBar: Row(
+          mainAxisAlignment:widget.person == null?MainAxisAlignment.end: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.person != null)
+            GestureDetector(
+              onTap: () {
+                addReview();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.orange, Colors.orange.shade800])),
+                margin: EdgeInsets.only(
+                    top: size.height * 0.02, bottom: size.height * 0.02,left: size.width*0.05),
+                width: size.width * 0.4,
+                height: size.height * 0.06,
+                child: const Text(
+                  "Añadir Review",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(right:size.width*0.05 ),
+            child:  const ButtonBack() ,)
+          ],
+        ));
   }
 }

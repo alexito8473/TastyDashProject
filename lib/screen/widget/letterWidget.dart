@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
-import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Person.dart';
 
 import '../view/pageFood.dart';
 
@@ -70,11 +70,11 @@ class ComidaViewCarrusel extends StatelessWidget {
                   return FadeTransition(
                     opacity: animation,
                     child: PageFood(
-                      comida: comida,
-                      idioma: idioma,
-                      monedaEnUso: monedaEnUso,
+                      food: comida,
+                      language: idioma,
+                      coin: monedaEnUso,
                       person: person,
-                      anadirQuitarProducto: (List list) {},
+                      function: (List list) {},
                     ),
                   );
                 },

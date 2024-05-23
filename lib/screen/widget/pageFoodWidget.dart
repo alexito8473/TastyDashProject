@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 import 'package:intl/intl.dart';
-import '../../model/Review.dart';
+import '../../models/Review.dart';
 
 String contiene(bool isContiene, Language idioma) {
   return isContiene
@@ -11,38 +11,51 @@ String contiene(bool isContiene, Language idioma) {
       : idioma.datosJson[idioma.positionIdioma]["NoContiene"];
 }
 
-Widget FilaAlergeno(String tipo, bool tiene, Language idioma, Size size) {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
+class AllergenRow extends StatelessWidget {
+  final String type;
+  final bool have;
+  final Language language;
+  final Size size;
+  const AllergenRow(
+      {super.key,
+      required this.type,
+      required this.have,
+      required this.language,
+      required this.size});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+              width: size.width * 0.3,
+              child: AutoSizeText(
+                maxLines: 1,
+                type,
+                style: const TextStyle(color: Colors.white, fontSize: 20),
+                textAlign: TextAlign.left,
+              )),
+          SizedBox(
             width: size.width * 0.3,
             child: AutoSizeText(
               maxLines: 1,
-              tipo,
+              contiene(have, language),
               style: const TextStyle(color: Colors.white, fontSize: 20),
-              textAlign: TextAlign.left,
-            )),
-        SizedBox(
-          width: size.width * 0.3,
-          child: AutoSizeText(
-            maxLines: 1,
-            contiene(tiene, idioma),
-            style: const TextStyle(color: Colors.white, fontSize: 20),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }
 
-class ExpansionAlergenos extends StatelessWidget {
-  final Food comida;
-  final Language idioma;
+class ExpansionAllergen extends StatelessWidget {
+  final Food food;
+  final Language language;
 
-  const ExpansionAlergenos(this.comida, this.idioma, {super.key});
+  const ExpansionAllergen(this.food, this.language, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,36 +65,72 @@ class ExpansionAlergenos extends StatelessWidget {
       iconColor: Colors.orange,
       shape: const RoundedRectangleBorder(side: BorderSide.none),
       expansionAnimationStyle: AnimationStyle(curve: Curves.easeOut),
-      title: Text(idioma.datosJson[idioma.positionIdioma]["Alergeno"],
+      title: Text(language.datosJson[language.positionIdioma]["Alergeno"],
           style: const TextStyle(color: Colors.white, fontSize: 25)),
       children: [
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Apio"],
-            comida.haveApio, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Moluscos"],
-            comida.haveMoluscos, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Crustaceos"],
-            comida.haveCrustaceos, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Mostaza"],
-            comida.haveMostaza, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Huevo"],
-            comida.haveHuevo, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Pescado"],
-            comida.havePescado, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Cacahuetes"],
-            comida.haveCacahuetes, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Gluten"],
-            comida.haveGluten, idioma, size),
-        FilaAlergeno(idioma.datosJson[idioma.positionIdioma]["Azufre"],
-            comida.haveAzufre, idioma, size),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Apio"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Moluscos"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Crustaceos"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Mostaza"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Huevo"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Pescado"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Cacahuetes"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Gluten"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
+        AllergenRow(
+          type: language.datosJson[language.positionIdioma]["Azufre"],
+          have: food.haveApio,
+          language: language,
+          size: size,
+        ),
       ],
     );
   }
 }
 
-class ExpansionIngredientes extends StatelessWidget {
-  final Food comida;
-  final Language idioma;
-  const ExpansionIngredientes(this.comida, this.idioma, {super.key});
+class ExpansionIngredients extends StatelessWidget {
+  final Food food;
+  final Language language;
+  const ExpansionIngredients(this.food, this.language, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -90,14 +139,14 @@ class ExpansionIngredientes extends StatelessWidget {
       controlAffinity: ListTileControlAffinity.leading,
       iconColor: Colors.orange,
       shape: const RoundedRectangleBorder(side: BorderSide.none),
-      title: Text(idioma.datosJson[idioma.positionIdioma]["Ingredientes"],
+      title: Text(language.datosJson[language.positionIdioma]["Ingredientes"],
           style: const TextStyle(color: Colors.white, fontSize: 25)),
       children: [
         SizedBox(
             width: size.width * 0.9,
             child: Text(
-              comida.ingredientes
-                  .map((e) => idioma.datosJson[idioma.positionIdioma][e])
+              food.ingredients
+                  .map((e) => language.datosJson[language.positionIdioma][e])
                   .join(", "),
               style: const TextStyle(color: Colors.white, fontSize: 25),
               textAlign: TextAlign.center,
@@ -140,21 +189,19 @@ class ShowReview extends StatelessWidget {
           showDialog(
               barrierColor: Colors.black.withOpacity(0.7),
               useSafeArea: true,
-
               context: context,
-              builder: (context) =>  AlertDialog(
+              builder: (context) => AlertDialog(
                   backgroundColor: Colors.white,
                   title: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        Container(
-                            child: Text(
-                              "Realizado por " + review.autor,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ))
-                  ,
+                      Container(
+                          child: Text(
+                        "Realizado por " + review.autor,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
+                      )),
                       Text(
                         "Realizada a las " +
                             DateFormat("HH:mm yyyy/MM/dd")
@@ -164,15 +211,19 @@ class ShowReview extends StatelessWidget {
                       )
                     ],
                   ),
-
                   content: SizedBox(
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Tiene una valoración de : ${review.valoracion}/5.0.",style: const TextStyle(fontSize: 20),textAlign: TextAlign.left,),
-                          Text(review.content,style: const TextStyle(fontSize: 20))
+                          Text(
+                            "Tiene una valoración de : ${review.valoracion}/5.0.",
+                            style: const TextStyle(fontSize: 20),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(review.content,
+                              style: const TextStyle(fontSize: 20))
                         ],
                       ),
                     ),

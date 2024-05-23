@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-
-import '../../model/Food.dart';
-import '../../model/Coin.dart';
-import '../../model/Person.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import '../../models/Food.dart';
+import '../../models/Coin.dart';
+import '../../models/Person.dart';
 import '../widget/specialViewWidget.dart';
 
 class EspecialView extends StatefulWidget {

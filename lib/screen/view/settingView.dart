@@ -2,10 +2,10 @@ import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Person.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Person.dart';
 
-import '../../model/Coin.dart';
+import '../../models/Coin.dart';
 import '../widget/settingViewWidget.dart';
 
 class SettingView extends StatefulWidget {
@@ -64,13 +64,13 @@ class _SettingView extends State<SettingView> {
             title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                 ["MiCuenta"]),
         if (widget.person != null)
-          InformacionUsuarioSetting(
+          InformationUser(
               size: widget.size,
               title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                   ["Nombre"],
               subtitle: widget.person!.name,),
         if (widget.person != null)
-          InformacionUsuarioSetting(
+          InformationUser(
               size: widget.size,
               title: "E-mail",
               subtitle: widget.person!.gmail),
@@ -83,7 +83,8 @@ class _SettingView extends State<SettingView> {
             : ContaninerButtonFunction(
                 size: widget.size,
                 functionCall: widget.funNavegarLogin,
-                titulo: "Iniciar sesión"),
+                titulo:widget.idioma.datosJson[widget.idioma.positionIdioma]
+                ["Iniciar_sesion"] ),
         Container(
           height: widget.size.height * 0.9,
           margin: EdgeInsets.only(top: widget.size.height * 0.02),

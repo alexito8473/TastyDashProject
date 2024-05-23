@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../model/Food.dart';
-import '../../model/Language.dart';
-import '../../model/Coin.dart';
-import '../../model/Person.dart';
+import '../../models/Food.dart';
+import '../../models/Language.dart';
+import '../../models/Coin.dart';
+import '../../models/Person.dart';
 import '../view/pageFood.dart';
 
 class ShowList extends StatefulWidget {
@@ -93,11 +93,11 @@ class _BannerComidaGrid extends State<BannerComidaGrid> {
             return FadeTransition(
                 opacity: animation,
                 child: PageFood(
-                  comida: widget.comida,
-                  idioma: widget.idioma,
-                  monedaEnUso: widget.monedaEnUso,
+                  food: widget.comida,
+                  language: widget.idioma,
+                  coin: widget.monedaEnUso,
                   person: widget.person,
-                  anadirQuitarProducto: widget.anadirQuitarProducto,
+                  function: widget.anadirQuitarProducto,
                 ));
           },
         ));

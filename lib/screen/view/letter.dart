@@ -2,43 +2,43 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
-import 'package:tfgsaladillo/pages/view/listFood.dart';
-import 'package:tfgsaladillo/pages/view/pageFood.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/screen/view/listFood.dart';
+import 'package:tfgsaladillo/screen/view/pageFood.dart';
 
-import '../../model/Person.dart';
+import '../../models/Person.dart';
 import '../widget/letterWidget.dart';
 
-class Carta extends StatefulWidget {
-  final List<Food> listaDeComida;
-  final Language idioma;
-  final Coin monedaEnUso;
+class Letter extends StatefulWidget {
+  final List<Food> listFood;
+  final Language language;
+  final Coin coin;
   final Person? person;
 
-  const Carta(
+  const Letter(
       {super.key,
-      required this.listaDeComida,
-      required this.idioma,
-      required this.monedaEnUso,
+      required this.listFood,
+      required this.language,
+      required this.coin,
       required this.person});
 
   @override
-  State<Carta> createState() => _Carta();
+  State<Letter> createState() => _Carta();
 }
 
-class _Carta extends State<Carta> {
-  late String imagenActual;
+class _Carta extends State<Letter> {
+  late String currentImage;
 
   @override
   void initState() {
-    imagenActual = widget.listaDeComida[0].foto;
+    currentImage = widget.listFood[0].foto;
     super.initState();
   }
 
-  void NavegarLista(
-      List<Food> listaDeUnaComida, String imagenBanner, String nombreLista) {
+  void navigationList(
+      List<Food> listOneFood, String imageBanner, String nameList) {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -47,11 +47,11 @@ class _Carta extends State<Carta> {
         return FadeTransition(
           opacity: animation,
           child: ListFood(
-            listaComida: listaDeUnaComida,
-            imagenBanner: imagenBanner,
-            monedEnUso: widget.monedaEnUso,
-            idioma: widget.idioma,
-            nombreLista: nombreLista,
+            listFood: listOneFood,
+            imageBanner: imageBanner,
+            coin: widget.coin,
+            language: widget.language,
+            nameList: nameList,
             person: widget.person,
           ),
         );
@@ -61,7 +61,7 @@ class _Carta extends State<Carta> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Center(
         child: Container(
             width: size.width,
@@ -90,7 +90,7 @@ class _Carta extends State<Carta> {
                       child: Stack(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: imagenActual,
+                            imageUrl: currentImage,
                             height: size.height * 0.6,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -115,17 +115,17 @@ class _Carta extends State<Carta> {
                                     enlargeCenterPage: true,
                                     onPageChanged: (index, reason) =>
                                         setState(() {
-                                          imagenActual =
-                                              widget.listaDeComida[index].foto;
+                                          currentImage =
+                                              widget.listFood[index].foto;
                                         }),
                                     scrollDirection: Axis.horizontal),
-                                items: widget.listaDeComida.map((i) {
+                                items: widget.listFood.map((i) {
                                   return Builder(
                                     builder: (BuildContext context) {
                                       return ComidaViewCarrusel(
                                         comida: i,
-                                        monedaEnUso: widget.monedaEnUso,
-                                        idioma: widget.idioma,
+                                        monedaEnUso: widget.coin,
+                                        idioma: widget.language,
                                         person: widget.person,
                                         size: size,
                                       );
@@ -155,15 +155,15 @@ class _Carta extends State<Carta> {
                           children: [
                             BotonNavegacion(
                               function: () => {
-                                NavegarLista(
-                                    widget.listaDeComida
+                                navigationList(
+                                    widget.listFood
                                         .where((element) => element.isBurguer)
                                         .toList(),
                                     "assets/images/hamburguesasBanner.webp",
-                                    widget.idioma.datosJson[widget
-                                        .idioma.positionIdioma]["HoverHambur"])
+                                    widget.language.datosJson[widget
+                                        .language.positionIdioma]["HoverHambur"])
                               },
-                              idioma: widget.idioma,
+                              idioma: widget.language,
                               svgpPath: 'assets/Icons/Burguer.svg',
                               color: Colors.orange.shade300,
                               tipoComida: 'HoverHambur',
@@ -171,15 +171,15 @@ class _Carta extends State<Carta> {
                             ),
                             BotonNavegacion(
                               function: () => {
-                                NavegarLista(
-                                    widget.listaDeComida
+                                navigationList(
+                                    widget.listFood
                                         .where((element) => element.isEnsalada)
                                         .toList(),
                                     "assets/images/ensaladaBanner.webp",
-                                    widget.idioma.datosJson[widget
-                                        .idioma.positionIdioma]["HoverEnsa"])
+                                    widget.language.datosJson[widget
+                                        .language.positionIdioma]["HoverEnsa"])
                               },
-                              idioma: widget.idioma,
+                              idioma: widget.language,
                               svgpPath: 'assets/Icons/Salad.svg',
                               color: Colors.green.shade300,
                               tipoComida: 'HoverEnsa',
@@ -187,15 +187,15 @@ class _Carta extends State<Carta> {
                             ),
                             BotonNavegacion(
                               function: () => {
-                                NavegarLista(
-                                    widget.listaDeComida
+                                navigationList(
+                                    widget.listFood
                                         .where((element) => element.isPescado)
                                         .toList(),
                                     "assets/images/bannerPescado.webp",
-                                    widget.idioma.datosJson[widget
-                                        .idioma.positionIdioma]["HoverPesca"])
+                                    widget.language.datosJson[widget
+                                        .language.positionIdioma]["HoverPesca"])
                               },
-                              idioma: widget.idioma,
+                              idioma: widget.language,
                               svgpPath: 'assets/Icons/Fish.svg',
                               color: Colors.blue.shade300,
                               tipoComida: 'HoverPesca',
@@ -208,15 +208,15 @@ class _Carta extends State<Carta> {
                             children: [
                               BotonNavegacion(
                                 function: () => {
-                                  NavegarLista(
-                                      widget.listaDeComida
+                                  navigationList(
+                                      widget.listFood
                                           .where((element) => element.isCarne)
                                           .toList(),
                                       "assets/images/bannerCarne.webp",
-                                      widget.idioma.datosJson[widget
-                                          .idioma.positionIdioma]["HoverCarne"])
+                                      widget.language.datosJson[widget
+                                          .language.positionIdioma]["HoverCarne"])
                                 },
-                                idioma: widget.idioma,
+                                idioma: widget.language,
                                 svgpPath: 'assets/Icons/Meat.svg',
                                 color: Colors.lime.shade300,
                                 tipoComida: 'HoverCarne',
@@ -224,15 +224,15 @@ class _Carta extends State<Carta> {
                               ),
                               BotonNavegacion(
                                 function: () => {
-                                  NavegarLista(
-                                      widget.listaDeComida
+                                  navigationList(
+                                      widget.listFood
                                           .where((element) => element.isBebida)
                                           .toList(),
                                       "assets/images/bannerBebida.webp",
-                                      widget.idioma.datosJson[widget.idioma
+                                      widget.language.datosJson[widget.language
                                           .positionIdioma]["HoverBebida"])
                                 },
-                                idioma: widget.idioma,
+                                idioma: widget.language,
                                 svgpPath: 'assets/Icons/Drink.svg',
                                 color: Colors.red,
                                 tipoComida: 'HoverBebida',
@@ -240,15 +240,15 @@ class _Carta extends State<Carta> {
                               ),
                               BotonNavegacion(
                                 function: () => {
-                                  NavegarLista(
-                                      widget.listaDeComida
+                                  navigationList(
+                                      widget.listFood
                                           .where((element) => element.isPostre)
                                           .toList(),
                                       "assets/images/bannerPostre.webp",
-                                      widget.idioma.datosJson[widget
-                                          .idioma.positionIdioma]["Postre"])
+                                      widget.language.datosJson[widget
+                                          .language.positionIdioma]["Postre"])
                                 },
-                                idioma: widget.idioma,
+                                idioma: widget.language,
                                 svgpPath: 'assets/Icons/Postre.svg',
                                 color: Colors.yellow.shade300,
                                 tipoComida: 'Postre',
@@ -289,11 +289,11 @@ class ComidaViewCarrusel extends StatelessWidget {
                   return FadeTransition(
                     opacity: animation,
                     child: PageFood(
-                      comida: comida,
-                      idioma: idioma,
-                      monedaEnUso: monedaEnUso,
+                      food: comida,
+                      language: idioma,
+                      coin: monedaEnUso,
                       person: person,
-                      anadirQuitarProducto: vacio,
+                      function: vacio,
                     ),
                   );
                 },

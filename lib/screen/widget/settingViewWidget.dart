@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 
 import '../view/chatAi.dart';
 
@@ -144,12 +144,12 @@ class TitlePageSetting extends StatelessWidget {
   }
 }
 
-class InformacionUsuarioSetting extends StatelessWidget {
+class InformationUser extends StatelessWidget {
   final Size size;
   final String title;
   final String subtitle;
 
-  InformacionUsuarioSetting(
+  InformationUser(
       {super.key,
       required this.size,
       required this.title,

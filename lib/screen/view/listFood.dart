@@ -1,35 +1,34 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Food.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 
-import '../../model/Person.dart';
+import '../../models/Person.dart';
 import '../widget/genericWidget.dart';
 import '../widget/listFoodWidget.dart';
 
 class ListFood extends StatefulWidget {
-  final List<Food> listaComida;
-  final String imagenBanner;
-  final String nombreLista;
-  final Language idioma;
+  final List<Food> listFood;
+  final String imageBanner;
+  final String nameList;
+  final Language language;
   final Person? person;
-  final Coin monedEnUso;
+  final Coin coin;
 
   const ListFood(
       {super.key,
-      required this.listaComida,
-      required this.imagenBanner,
-      required this.monedEnUso,
-      required this.idioma,
-      required this.nombreLista,
+      required this.listFood,
+      required this.imageBanner,
+      required this.coin,
+      required this.language,
+      required this.nameList,
       required this.person});
 
   @override
   State<StatefulWidget> createState() => _ListFood();
 }
 
-@immutable
 class _ListFood extends State<ListFood> {
   final controller = ScrollController();
 
@@ -85,12 +84,12 @@ class _ListFood extends State<ListFood> {
                         bottomRight: Radius.circular(40)),
                     color: Colors.black12,
                     image: DecorationImage(
-                        image: AssetImage(widget.imagenBanner),
+                        image: AssetImage(widget.imageBanner),
                         fit: BoxFit.cover,
                         colorFilter: const ColorFilter.mode(
                             Colors.black38, BlendMode.darken))),
                 child: AutoSizeText(
-                  widget.nombreLista,
+                  widget.nameList,
                   style: const TextStyle(
                       color: Colors.white,
                       fontFamily: AutofillHints.jobTitle,
@@ -106,7 +105,7 @@ class _ListFood extends State<ListFood> {
             color: Colors.black87,
             child: ListView.builder(
               controller: controller,
-              itemCount: widget.listaComida.length,
+              itemCount: widget.listFood.length,
               itemBuilder: (context, index) {
                 final difference =
                     controller.offset - (index * size.height * 0.169);
@@ -119,10 +118,10 @@ class _ListFood extends State<ListFood> {
                     child: Transform(
                         alignment: Alignment.bottomCenter,
                         transform: Matrix4.identity()..scale(opacity, opacity),
-                        child: BannerComida(
-                          comida: widget.listaComida[index],
-                          monedaEnUso: widget.monedEnUso,
-                          idioma: widget.idioma,
+                        child: BannerFood(
+                          comida: widget.listFood[index],
+                          monedaEnUso: widget.coin,
+                          idioma: widget.language,
                           person: widget.person,
                           anadirQuitarProducto: vacio,
                         )));

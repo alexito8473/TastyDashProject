@@ -2,16 +2,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Language.dart';
-import 'package:tfgsaladillo/model/Coin.dart';
-import 'package:tfgsaladillo/model/Person.dart';
-import 'package:tfgsaladillo/pages/view/home.dart';
-import 'package:tfgsaladillo/pages/view/register.dart';
-import 'package:tfgsaladillo/services/AuthServices.dart';
-
-import '../../model/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/screen/view/home.dart';
+import 'package:tfgsaladillo/screen/view/register.dart';
+import '../../models/Food.dart';
+import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
-import '../widget/loginWidget.dart';
 
 class Login extends StatefulWidget {
   final Language idioma;
@@ -34,35 +32,13 @@ class _Login extends State<Login> {
   late Person person;
 
   void login() async {
-    List listaReserva = [];
-    DatabaseReference date = FirebaseDatabase.instance.ref();
-    String gmail = _gmailController.text;
-    String password = _passwordController.text;
+    setState(() {
+      carga = true;
+    });
     BitmapDescriptor icon;
-    if (gmail.isNotEmpty || password.isNotEmpty) {
-      setState(() {
-        carga = true;
-      });
-    }
-    if (await AuthService.sigIn(gmail, password)) {
-      final snapshot = await date
-          .child("Person/${gmail.trim().split("@")[0].toLowerCase()}/Nombre")
-          .get();
-      final listaComida = await date
-          .child(
-              "Person/${gmail.trim().split("@")[0].toLowerCase()}/listaComida")
-          .get();
-      if (listaComida.value is List<dynamic>) {
-        listaReserva.addAll(listaComida.value as List<dynamic>);
-      }
-      person = Person(
-          name: snapshot.value.toString(),
-          gmail: gmail,
-          pasword: password,
-          listaComida: listaReserva);
-      await widget.prefs.setString("Name", person.name);
-      await widget.prefs.setString("Gmail", person.gmail);
-      await widget.prefs.setString("Password", person.pasword);
+    Person? person = await RealTimeService.checkAndGetUserData(
+        _gmailController.text, _passwordController.text, widget.prefs);
+    if (person != null) {
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
       await Navigator.pushAndRemoveUntil(
@@ -70,13 +46,13 @@ class _Login extends State<Login> {
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
-                  idioma: widget.idioma,
+                  lenguage: widget.idioma,
                   prefs: widget.prefs,
                   icon: icon,
-                  monedaEnUso: devolverTipoMoneda(
+                  coin: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
-                  posicionInicial: 3,
-                  listaComida: widget.listaComida,
+                  initialPosition: 3,
+                  listFood: widget.listaComida,
                 )),
         (route) => false,
       );
@@ -135,9 +111,7 @@ class _Login extends State<Login> {
                   heroTag: "moverFloating",
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
-                  onPressed: () {
-                    login();
-                  },
+                  onPressed: () => login(),
                   child: carga
                       ? const CircularProgressIndicator(
                           color: Colors.black,
