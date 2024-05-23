@@ -8,4 +8,5 @@ class Review {
       required this.publicacion,
       required this.valoracion,
       required this.content});
+
 }

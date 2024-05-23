@@ -1,11 +1,11 @@
 class Person {
-  final String nombre;
+  final String name;
   final String gmail;
   final String pasword;
   List? listaComida = [];
 
   Person(
-      {required this.nombre,
+      {required this.name,
       required this.pasword,
       required this.gmail,
       required this.listaComida});

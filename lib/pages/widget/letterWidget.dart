@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 
 import '../view/pageFood.dart';
 
 class BotonNavegacion extends StatelessWidget {
   final Function function;
-  final Idioma idioma;
+  final Language idioma;
   final String svgpPath;
   final Color color;
   final String tipoComida;
@@ -44,9 +44,9 @@ class BotonNavegacion extends StatelessWidget {
 }
 
 class ComidaViewCarrusel extends StatelessWidget {
-  final Comida comida;
-  final Moneda monedaEnUso;
-  final Idioma idioma;
+  final Food comida;
+  final Coin monedaEnUso;
+  final Language idioma;
   final Person? person;
   final Size size;
 

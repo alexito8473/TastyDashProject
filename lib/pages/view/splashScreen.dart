@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import '../../model/Comida.dart';
+import '../../model/Food.dart';
 import '../widget/genericWidget.dart';
 import '../widget/homeWidget.dart';
 
@@ -27,9 +27,9 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    List<Comida> listaComida = CrearListaDeComida();
+    List<Food> listaComida = CrearListaDeComida();
     DatabaseReference date = FirebaseDatabase.instance.ref();
-    Idioma idioma;
+    Language idioma;
     Person? person;
     BitmapDescriptor icon;
     String? gmail;
@@ -56,13 +56,13 @@ class _SplashScreen extends State<SplashScreen> {
       prefs = await SharedPreferences.getInstance();
       posicionIdioma = prefs.getInt("Idioma");
       if (posicionIdioma == null) {
-        idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
+        idioma = Language(datosJson: datosJson, positionIdioma: 0);
       } else {
         if (posicionIdioma! >= 0 && posicionIdioma! <= 1) {
           idioma =
-              Idioma(datosJson: datosJson, positionIdioma: posicionIdioma!);
+              Language(datosJson: datosJson, positionIdioma: posicionIdioma!);
         } else {
-          idioma = Idioma(datosJson: datosJson, positionIdioma: 0);
+          idioma = Language(datosJson: datosJson, positionIdioma: 0);
         }
       }
       gmail = prefs.getString("Gmail");
@@ -89,7 +89,7 @@ class _SplashScreen extends State<SplashScreen> {
         }
 
         person = Person(
-            nombre: nombre.value.toString(),
+            name: nombre.value.toString(),
             pasword: password.value.toString(),
             gmail: gmail!,
             listaComida:

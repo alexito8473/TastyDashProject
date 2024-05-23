@@ -1,8 +1,8 @@
-class Idioma {
+class Language {
   final List<dynamic> datosJson;
   int positionIdioma;
 
-  Idioma({required this.datosJson, required this.positionIdioma});
+  Language({required this.datosJson, required this.positionIdioma});
 
   List<dynamic> getDatosJson() {
     return datosJson;

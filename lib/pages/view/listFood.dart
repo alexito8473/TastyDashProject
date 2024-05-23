@@ -1,20 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 
 import '../../model/Person.dart';
 import '../widget/genericWidget.dart';
 import '../widget/listFoodWidget.dart';
 
 class ListFood extends StatefulWidget {
-  final List<Comida> listaComida;
+  final List<Food> listaComida;
   final String imagenBanner;
   final String nombreLista;
-  final Idioma idioma;
+  final Language idioma;
   final Person? person;
-  final Moneda monedEnUso;
+  final Coin monedEnUso;
 
   const ListFood(
       {super.key,

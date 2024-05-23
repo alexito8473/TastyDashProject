@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/view/letter.dart';
 import 'package:tfgsaladillo/pages/view/login.dart';
@@ -20,12 +20,12 @@ import 'specialView.dart';
 
 class HomePage extends StatefulWidget {
   Person? person;
-  final Idioma idioma;
+  final Language idioma;
   final BitmapDescriptor icon;
   final SharedPreferences prefs;
   final int posicionInicial;
-  Moneda monedaEnUso;
-  List<Comida> listaComida;
+  Coin monedaEnUso;
+  List<Food> listaComida;
   HomePage(
       {super.key,
       required this.person,
@@ -46,7 +46,7 @@ class _HomePage extends State<HomePage> {
   bool cambioIconoPrecio = true;
 
   // Lista de la comida
-  late List<Comida> listaDeComida;
+  late List<Food> listaDeComida;
 
   // Datos para realizar el lenguaje
   late int preSelectecLenguage;
@@ -60,7 +60,7 @@ class _HomePage extends State<HomePage> {
 
   // Datos para realizar la moneda
   final monedaDropdownController = DropdownController();
-  final List<Moneda> monedas = Moneda.values;
+  final List<Coin> monedas = Coin.values;
   final List<CoolDropdownItem<String>> monedaDropdownItems = [];
 
   @override

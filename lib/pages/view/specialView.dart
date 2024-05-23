@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Language.dart';
 
-import '../../model/Comida.dart';
-import '../../model/Moneda.dart';
+import '../../model/Food.dart';
+import '../../model/Coin.dart';
 import '../../model/Person.dart';
 import '../widget/specialViewWidget.dart';
 
 class EspecialView extends StatefulWidget {
-  final Idioma idioma;
+  final Language idioma;
   final Size size;
-  final List<Comida> listaComida;
-  final Moneda monedaEnUso;
+  final List<Food> listaComida;
+  final Coin monedaEnUso;
   final Function function;
   bool cambioIconoPrecio;
   Person person;
@@ -32,12 +32,12 @@ class EspecialView extends StatefulWidget {
 
 class _EspecialView extends State<EspecialView> {
   late int cant = 0;
-  late List<Comida> listaBurguer = [];
-  late List<Comida> listaEnsalada = [];
-  late List<Comida> listaPescado = [];
-  late List<Comida> listaCarne = [];
-  late List<Comida> listaBebida = [];
-  late List<Comida> listaPostre = [];
+  late List<Food> listaBurguer = [];
+  late List<Food> listaEnsalada = [];
+  late List<Food> listaPescado = [];
+  late List<Food> listaCarne = [];
+  late List<Food> listaBebida = [];
+  late List<Food> listaPostre = [];
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class _EspecialView extends State<EspecialView> {
     orderAllList(!widget.cambioIconoPrecio);
   }
 
-  void comprobarLista(List<Comida> lista) {
+  void comprobarLista(List<Food> lista) {
     if (lista.isNotEmpty) {
       cant = cant + 1;
     }
@@ -80,7 +80,7 @@ class _EspecialView extends State<EspecialView> {
     });
   }
 
-  void orderList(List<Comida> lista, bool control) {
+  void orderList(List<Food> lista, bool control) {
     if (control) {
       lista.sort(
         (a, b) => a.precio.compareTo(b.precio),

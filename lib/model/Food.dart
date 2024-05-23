@@ -1,6 +1,6 @@
 import 'Review.dart';
 
-class Comida {
+class Food {
   final String nombre;
   final String foto;
   final int tiempoMinuto;
@@ -26,8 +26,8 @@ class Comida {
   final double precio;
   int numValoracion;
   double valoracion;
-  List<Review> listReview=[];
-  Comida({
+  List<Review> listReview;
+  Food({
     required this.nombre,
     required this.foto,
     required this.isCarne,
@@ -51,5 +51,6 @@ class Comida {
     required this.ingredientes,
     this.valoracion=0,
     this.numValoracion=0,
+    required this.listReview
   });
 }

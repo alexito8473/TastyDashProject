@@ -4,17 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../../model/Comida.dart';
-import '../../model/Idioma.dart';
-import '../../model/Moneda.dart';
+import '../../model/Food.dart';
+import '../../model/Language.dart';
+import '../../model/Coin.dart';
 import '../../model/Person.dart';
 import '../view/pageFood.dart';
 
 class ShowList extends StatefulWidget {
   final Size size;
-  final List<Comida> listaComida;
-  final Moneda monedaEnUso;
-  final Idioma idioma;
+  final List<Food> listaComida;
+  final Coin monedaEnUso;
+  final Language idioma;
   final Person person;
   final Function anadirQuitarProducto;
 
@@ -59,11 +59,11 @@ class _ShowList extends State<ShowList> {
 }
 
 class BannerComidaGrid extends StatefulWidget {
-  final Comida comida;
-  final Moneda monedaEnUso;
-  final Idioma idioma;
+  final Food comida;
+  final Coin monedaEnUso;
+  final Language idioma;
   final Person person;
-  final List<Comida> listComida;
+  final List<Food> listComida;
   final Function anadirQuitarProducto;
 
   const BannerComidaGrid(
@@ -140,13 +140,11 @@ class _BannerComidaGrid extends State<BannerComidaGrid> {
                     ignoreGestures: true,
                     itemSize: size.width * 0.07,
                     ratingWidget: RatingWidget(
-                      full: Icon(Icons.star, color: Colors.orange),
-                      half: Icon(Icons.star, color: Colors.orange),
-                      empty: Icon(Icons.star, color: Colors.grey),
+                      full: const Icon(Icons.star, color: Colors.orange),
+                      half: const Icon(Icons.star, color: Colors.orange),
+                      empty: const Icon(Icons.star, color: Colors.grey),
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                    onRatingUpdate: (rating) {},
                   ),
                   AutoSizeText(
                     maxLines: 1,

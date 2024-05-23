@@ -1,4 +1,4 @@
-class Ingrediente {
+class Ingredients {
   static const String PAN = "PAN";
   static const String MOSTAZA = "MOSTAZA";
   static const String KETCHUP = "KETCHUP";

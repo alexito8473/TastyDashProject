@@ -2,21 +2,21 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:tfgsaladillo/pages/view/register.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
-import '../../model/Comida.dart';
+import '../../model/Food.dart';
 import '../widget/genericWidget.dart';
 import '../widget/loginWidget.dart';
 
 class Login extends StatefulWidget {
-  final Idioma idioma;
+  final Language idioma;
   final SharedPreferences prefs;
-  final List<Comida> listaComida;
+  final List<Food> listaComida;
   const Login(
       {super.key,
       required this.idioma,
@@ -56,11 +56,11 @@ class _Login extends State<Login> {
         listaReserva.addAll(listaComida.value as List<dynamic>);
       }
       person = Person(
-          nombre: snapshot.value.toString(),
+          name: snapshot.value.toString(),
           gmail: gmail,
           pasword: password,
           listaComida: listaReserva);
-      await widget.prefs.setString("Name", person.nombre);
+      await widget.prefs.setString("Name", person.name);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
       icon = await BitmapDescriptor.fromAssetImage(

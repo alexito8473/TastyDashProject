@@ -2,18 +2,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 
 import '../../model/Person.dart';
+import '../../model/Review.dart';
 import '../widget/genericWidget.dart';
 import '../widget/pageFoodWidget.dart';
 
 class PageFood extends StatefulWidget {
-  final Comida comida;
-  final Idioma idioma;
-  final Moneda monedaEnUso;
+  final Food comida;
+  final Language idioma;
+  final Coin monedaEnUso;
   final Person? person;
   final Function anadirQuitarProducto;
 
@@ -47,8 +49,23 @@ class _PageFood extends State<PageFood> {
     widget.anadirQuitarProducto(widget.person!.listaComida);
   }
 
+  void addReview() {
+    setState(() {
+      widget.comida.listReview.add(Review(
+          autor: 'alejandro',
+          publicacion: DateTime.now(),
+          valoracion: 5,
+          content:
+              'Hola madre mia esto es algo madfnasdjfbasdjfasdklfbasjdbasdhmnbcuasdb fasdbfuasdfhasdbfjhsfhbashfbsjfajfbasfjhqwebfuisdbfasdbdfhsehfasdvcyhasbdjkfaseuifshfbvasdhvbasifbuyasefbasdfv'));
+      widget.comida.valoracion += 5;
+      widget.comida.numValoracion += 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double resultValoracion =
+        widget.comida.valoracion / widget.comida.numValoracion;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -76,6 +93,36 @@ class _PageFood extends State<PageFood> {
                         fit: BoxFit.cover,
                       ),
                     ))),
+            if (widget.person != null)
+              Positioned(
+                right: 0,
+                child: SafeArea(
+                    child: GestureDetector(
+                  onTap: () {
+                    addOrRemoveList(
+                        widget.person!.listaComida!
+                            .contains(widget.comida.nombre),
+                        widget.comida.nombre);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    margin: EdgeInsets.only(
+                        right: size.height * 0.02, top: size.height * 0.02),
+                    width: size.height * 0.07,
+                    height: size.height * 0.07,
+                    child: Icon(
+                      color: Colors.orange,
+                      widget.person!.listaComida!.contains(widget.comida.nombre)
+                          ? FontAwesomeIcons.solidHeart
+                          : FontAwesomeIcons.heart,
+                      size: size.height * 0.05,
+                    ),
+                  ),
+                )),
+              ),
             Container(
               width: size.width,
               height: size.height,
@@ -96,12 +143,13 @@ class _PageFood extends State<PageFood> {
                     width: size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                            width: size.width * 0.7,
+                            width: size.width * 0.65,
                             margin: EdgeInsets.only(
                                 bottom: size.height * 0.03,
-                                left: size.width * 0.01,
+                                left: size.width * 0.03,
                                 top: size.height * 0.03),
                             alignment: Alignment.center,
                             child: AutoSizeText(
@@ -113,28 +161,26 @@ class _PageFood extends State<PageFood> {
                               maxLines: 1,
                             )),
                         if (widget.person != null)
-                          GestureDetector(
-                            onTap: () {
-                              addOrRemoveList(
-                                  widget.person!.listaComida!
-                                      .contains(widget.comida.nombre),
-                                  widget.comida.nombre);
-                            },
-                            child: Container(
-                              margin:
-                                  EdgeInsets.only(right: size.height * 0.01),
-                              width: size.height * 0.07,
-                              height: size.height * 0.07,
-                              child: Icon(
-                                color: Colors.orange,
-                                widget.person!.listaComida!
-                                        .contains(widget.comida.nombre)
-                                    ? Icons.star
-                                    : Icons.star_border_outlined,
-                                size: size.height * 0.06,
-                              ),
+                          Container(
+                            margin: EdgeInsets.only(right: size.width * 0.05),
+                            width: size.width * 0.2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.orange,
+                                  size: 30,
+                                ),
+                                Text(
+                                  "${resultValoracion.isNaN ? 0.0 : resultValoracion}",
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 25),
+                                ),
+                              ],
                             ),
-                          )
+                          ),
                       ],
                     ),
                   ),
@@ -160,9 +206,36 @@ class _PageFood extends State<PageFood> {
                       ),
                     )),
                   ]),
+                  GestureDetector(
+                    onTap: () {
+                      addReview();
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Colors.orange, Colors.orange.shade800])),
+                      margin: EdgeInsets.only(
+                          top: size.height * 0.02, bottom: size.height * 0.02),
+                      width: size.width * 0.4,
+                      height: size.height * 0.06,
+                      child: const Text(
+                        "Añadir Review",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                   ExpansionAlergenos(widget.comida, widget.idioma),
                   if (widget.comida.ingredientes.isNotEmpty)
                     ExpansionIngredientes(widget.comida, widget.idioma),
+                  if (widget.person != null)
+                    ExpansionReview(widget.comida, widget.idioma),
                 ],
               )),
             ),

@@ -2,10 +2,10 @@ import 'package:cool_dropdown/controllers/dropdown_controller.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Language.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 
-import '../../model/Moneda.dart';
+import '../../model/Coin.dart';
 import '../widget/settingViewWidget.dart';
 
 class SettingView extends StatefulWidget {
@@ -17,11 +17,11 @@ class SettingView extends StatefulWidget {
   final List<CoolDropdownItem<String>> lenguageDropdownItems;
   final DropdownController monedaDropdownController;
   final List<CoolDropdownItem<String>> monedaDropdownItems;
-  final List<Moneda> monedas;
-  final Idioma idioma;
+  final List<Coin> monedas;
+  final Language idioma;
   final Size size;
   final ImageProvider imagenBannerAjustes;
-  Moneda monedEnUso;
+  Coin monedEnUso;
   final Person? person;
 
   SettingView(
@@ -68,7 +68,7 @@ class _SettingView extends State<SettingView> {
               size: widget.size,
               title: widget.idioma.datosJson[widget.idioma.positionIdioma]
                   ["Nombre"],
-              subtitle: widget.person!.nombre,),
+              subtitle: widget.person!.name,),
         if (widget.person != null)
           InformacionUsuarioSetting(
               size: widget.size,

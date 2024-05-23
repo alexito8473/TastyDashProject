@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
+import 'package:tfgsaladillo/model/Language.dart';
 
 import '../view/chatAi.dart';
 
 class PoliticaTexto extends StatelessWidget {
-  final Idioma idioma;
+  final Language idioma;
 
   const PoliticaTexto({super.key, required this.idioma});
 
@@ -69,7 +69,7 @@ class ButtonTastyGpt extends StatelessWidget{
 
 }
 class BotonTerminosDeUso extends StatelessWidget {
-  final Idioma idioma;
+  final Language idioma;
   final Size size;
 
   const BotonTerminosDeUso(

@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/pages/view/listFood.dart';
 import 'package:tfgsaladillo/pages/view/pageFood.dart';
 
@@ -12,9 +12,9 @@ import '../../model/Person.dart';
 import '../widget/letterWidget.dart';
 
 class Carta extends StatefulWidget {
-  final List<Comida> listaDeComida;
-  final Idioma idioma;
-  final Moneda monedaEnUso;
+  final List<Food> listaDeComida;
+  final Language idioma;
+  final Coin monedaEnUso;
   final Person? person;
 
   const Carta(
@@ -38,7 +38,7 @@ class _Carta extends State<Carta> {
   }
 
   void NavegarLista(
-      List<Comida> listaDeUnaComida, String imagenBanner, String nombreLista) {
+      List<Food> listaDeUnaComida, String imagenBanner, String nombreLista) {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -261,9 +261,9 @@ class _Carta extends State<Carta> {
 }
 
 class ComidaViewCarrusel extends StatelessWidget {
-  final Comida comida;
-  final Moneda monedaEnUso;
-  final Idioma idioma;
+  final Food comida;
+  final Coin monedaEnUso;
+  final Language idioma;
   final Person? person;
   final Size size;
 

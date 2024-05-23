@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import '../../model/Comida.dart';
-import '../../model/Ingrediente.dart';
+import '../../model/Food.dart';
+import '../../model/Ingredients.dart';
 
 Future<List<dynamic>> leerListaJson(String json) async {
   final listaMap = jsonDecode(json);
@@ -16,10 +16,10 @@ List<String> CrearListaPaises() {
   return ["Español", "English"];
 }
 
-List<Comida> CrearListaDeComida() {
-  List<Comida> listaDeComida = [
+List<Food> CrearListaDeComida() {
+  List<Food> listaDeComida = [
     // Hamburguesa
-     Comida(
+     Food(
         nombre: 'BurguerMax',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesa.webp?alt=media&token=0d4cb107-8861-4cab-b342-8668e54109aa',
@@ -42,12 +42,13 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: true,
         havePescado: false,
         ingredientes: [
-          Ingrediente.SALSA_TARTARA,
-          Ingrediente.CARNE,
-          Ingrediente.LECHUGA,
-          Ingrediente.PAN,
-        ]),
-     Comida(
+          Ingredients.SALSA_TARTARA,
+          Ingredients.CARNE,
+          Ingredients.LECHUGA,
+          Ingredients.PAN,
+        ],
+         listReview: []),
+     Food(
         nombre: 'BurguerUltra',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/imagen.webp?alt=media&token=e3600b3c-5048-4607-8070-3b08d31d3f2e',
@@ -70,14 +71,14 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.KETCHUP,
-          Ingrediente.CARNE,
-          Ingrediente.LECHUGA,
-          Ingrediente.QUESO,
-          Ingrediente.TOMATE,
-          Ingrediente.PAN,
-        ]),
-     Comida(
+          Ingredients.KETCHUP,
+          Ingredients.CARNE,
+          Ingredients.LECHUGA,
+          Ingredients.QUESO,
+          Ingredients.TOMATE,
+          Ingredients.PAN,
+        ], listReview: []),
+     Food(
         nombre: 'Burguer Buey',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/haburguesaEspecial.webp?alt=media&token=db237b38-dfbb-4b23-a863-480aa6522d5b',
@@ -100,13 +101,13 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE_BUEY,
-          Ingrediente.QUESO,
-          Ingrediente.LECHUGA,
-          Ingrediente.PAN,
-          Ingrediente.TOMATE
-        ]),
-     Comida(
+          Ingredients.CARNE_BUEY,
+          Ingredients.QUESO,
+          Ingredients.LECHUGA,
+          Ingredients.PAN,
+          Ingredients.TOMATE
+        ], listReview: []),
+     Food(
         nombre: 'Burguer Complete',
         foto:
             "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaCompleta.webp?alt=media&token=e3248a95-d9be-495f-b49b-45393cfa3d69",
@@ -129,16 +130,16 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.BEICON,
-          Ingrediente.CEBOLLA,
-          Ingrediente.QUESO,
-          Ingrediente.LECHUGA,
-          Ingrediente.BEICON,
-          Ingrediente.MAYONESA,
-          Ingrediente.TOMATE
-        ]),
-     Comida(
+          Ingredients.CARNE,
+          Ingredients.BEICON,
+          Ingredients.CEBOLLA,
+          Ingredients.QUESO,
+          Ingredients.LECHUGA,
+          Ingredients.BEICON,
+          Ingredients.MAYONESA,
+          Ingredients.TOMATE
+        ], listReview: []),
+     Food(
         nombre: 'The Ultimate Beef Burger',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaBueyBeiconPatatasFritas.webp?alt=media&token=b5196fb3-51b3-4947-abaa-0de1cb638a86',
@@ -161,13 +162,13 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.QUESO,
-          Ingrediente.BEICON,
-          Ingrediente.PATATAS_FRITAS,
-          Ingrediente.PAN,
-        ]),
-     Comida(
+          Ingredients.CARNE,
+          Ingredients.QUESO,
+          Ingredients.BEICON,
+          Ingredients.PATATAS_FRITAS,
+          Ingredients.PAN,
+        ], listReview: []),
+     Food(
         nombre: 'Harmony Burger',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaPatatasFritas.webp?alt=media&token=65e2faf0-15de-4572-8f72-1612cf6dd5fd',
@@ -190,16 +191,16 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.QUESO,
-          Ingrediente.MAYONESA,
-          Ingrediente.TOMATE,
-          Ingrediente.LECHUGA,
-          Ingrediente.BEICON,
-          Ingrediente.PATATAS_FRITAS,
-          Ingrediente.PAN,
-        ]),
-     Comida(
+          Ingredients.CARNE,
+          Ingredients.QUESO,
+          Ingredients.MAYONESA,
+          Ingredients.TOMATE,
+          Ingredients.LECHUGA,
+          Ingredients.BEICON,
+          Ingredients.PATATAS_FRITAS,
+          Ingredients.PAN,
+        ], listReview: []),
+     Food(
         nombre: 'Veggie Delight',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/hamburguesaVegana.jpg?alt=media&token=d0c960d4-d9c2-408f-a244-c3c1f53ae432',
@@ -222,15 +223,15 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE_VEGANA,
-          Ingrediente.KETCHUP,
-          Ingrediente.TOMATE,
-          Ingrediente.LECHUGA,
-          Ingrediente.CEBOLLA,
-          Ingrediente.PAN,
-        ]),
+          Ingredients.CARNE_VEGANA,
+          Ingredients.KETCHUP,
+          Ingredients.TOMATE,
+          Ingredients.LECHUGA,
+          Ingredients.CEBOLLA,
+          Ingredients.PAN,
+        ], listReview: []),
     // Ensalada
-     Comida(
+     Food(
         nombre: 'Breaded pepper',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/piminetoRebo.webp?alt=media&token=9b35b041-a1d0-4c30-b0b0-3bf8260766c3',
@@ -253,11 +254,11 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.PIMIENTO,
-          Ingrediente.QUESO,
-          Ingrediente.BERENJENA
-        ]),
-     Comida(
+          Ingredients.PIMIENTO,
+          Ingredients.QUESO,
+          Ingredients.BERENJENA
+        ], listReview: []),
+     Food(
         nombre: 'Shrimp Scampi',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/gambasAl.webp?alt=media&token=21abe417-9266-4a2a-95fd-5048561814ad',
@@ -280,11 +281,11 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.GAMBA,
-          Ingrediente.BERENJENA,
-          Ingrediente.ZANAHORIA,
-        ]),
-     Comida(
+          Ingredients.GAMBA,
+          Ingredients.BERENJENA,
+          Ingredients.ZANAHORIA,
+        ], listReview: []),
+     Food(
         nombre: 'Vegetable cream',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cremaVerdura.webp?alt=media&token=9d2db133-eb84-432e-8cb2-460619c82f2a',
@@ -307,11 +308,11 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.ZANAHORIA,
-          Ingrediente.PATATA,
-          Ingrediente.PIMIENTO,
-        ]),
-     Comida(
+          Ingredients.ZANAHORIA,
+          Ingredients.PATATA,
+          Ingredients.PIMIENTO,
+        ], listReview: []),
+     Food(
         nombre: 'Vegetable taco',
         foto:
             "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/tacoVerdura.webp?alt=media&token=4bf00c33-d928-4209-ace5-869168eac77c",
@@ -334,15 +335,15 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.AGUACATE,
-          Ingrediente.TOMATE,
-          Ingrediente.CEBOLLA,
-          Ingrediente.PIMIENTO,
-          Ingrediente.CHAMPINONES,
-          Ingrediente.ZANAHORIA,
-        ]),
+          Ingredients.AGUACATE,
+          Ingredients.TOMATE,
+          Ingredients.CEBOLLA,
+          Ingredients.PIMIENTO,
+          Ingredients.CHAMPINONES,
+          Ingredients.ZANAHORIA,
+        ], listReview: []),
     // Carne
-     Comida(
+     Food(
         nombre: 'Schnitzel',
         foto:
             "https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/schnitzel.webp?alt=media&token=386a9aae-b74d-4917-bf26-657c28900727",
@@ -365,13 +366,13 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.TOMATE,
-          Ingrediente.LIMON,
-          Ingrediente.AGUACATE,
-          Ingrediente.CARNE,
-          Ingrediente.HUEVO,
-        ]),
-     Comida(
+          Ingredients.TOMATE,
+          Ingredients.LIMON,
+          Ingredients.AGUACATE,
+          Ingredients.CARNE,
+          Ingredients.HUEVO,
+        ], listReview: []),
+     Food(
         nombre: 'Iberic secret',
         foto:
             'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/secretoIberico.webp?alt=media&token=9cc2b663-8e16-4119-ad51-cf8174f7c33f',
@@ -394,11 +395,11 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.SECRETO_IBERICO,
-          Ingrediente.LIMON,
-          Ingrediente.HUEVO,
-        ]),
-     Comida(
+          Ingredients.SECRETO_IBERICO,
+          Ingredients.LIMON,
+          Ingredients.HUEVO,
+        ], listReview: []),
+     Food(
         nombre: 'Ragout',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/ragout.webp?alt=media&token=f8baf812-58ae-4ceb-88d9-7555b4379783',
         isCarne: true,
@@ -420,12 +421,12 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.LECHUGA,
-          Ingrediente.HUEVO,
-          Ingrediente.GUISANTE
-        ]),
-     Comida(
+          Ingredients.CARNE,
+          Ingredients.LECHUGA,
+          Ingredients.HUEVO,
+          Ingredients.GUISANTE
+        ], listReview: []),
+     Food(
         nombre: 'Meat balls',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/albondiga.webp?alt=media&token=c084091e-b0fb-4919-8872-75dc72e93752',
         isCarne: true,
@@ -447,12 +448,12 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.LECHUGA,
-          Ingrediente.CEBOLLA,
-          Ingrediente.TOMATE
-        ]),
-     Comida(
+          Ingredients.CARNE,
+          Ingredients.LECHUGA,
+          Ingredients.CEBOLLA,
+          Ingredients.TOMATE
+        ], listReview: []),
+     Food(
         nombre: 'Fillet',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/filete.webp?alt=media&token=0e0dfb14-043d-43bd-b075-7f2e27bd984a',
         isCarne: true,
@@ -474,12 +475,12 @@ List<Comida> CrearListaDeComida() {
         haveMostaza: false,
         havePescado: false,
         ingredientes: [
-          Ingrediente.CARNE,
-          Ingrediente.LIMON,
-          Ingrediente.CEBOLLA,
-        ]),
+          Ingredients.CARNE,
+          Ingredients.LIMON,
+          Ingredients.CEBOLLA,
+        ], listReview: []),
     // Pescado
-     Comida(
+     Food(
         nombre: 'Fried shrimp',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/camaronesFritos.webp?alt=media&token=3cb036e1-04cb-486c-aa31-61ee877723f6',
         isCarne: false,
@@ -500,8 +501,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Tilapia',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/tilapia.webp?alt=media&token=c0ed07de-f092-4961-a763-c0cccf68366d',
         isCarne: false,
@@ -522,8 +523,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Octo-Bite',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pulpoGallega.webp?alt=media&token=e6f47be7-5e77-409a-aa1e-c4c58f5e4c39',
         isCarne: false,
@@ -544,8 +545,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Besugo',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/besugo.webp?alt=media&token=ac8a83ef-fbfe-4f0e-8532-c730d5674744',
         isCarne: false,
@@ -566,8 +567,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Octo-Grilled',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pulpoBrasa.webp?alt=media&token=5321a065-578c-4b22-92f7-0f29d882b2f5',
         isCarne: false,
@@ -588,8 +589,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Octo-chips',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pescadoPatatasFritas.webp?alt=media&token=af99a925-8334-4373-967d-b9aa859f7241',
         isCarne: false,
@@ -610,9 +611,9 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [], listReview: []),
     // Bebida
-     Comida(
+     Food(
         nombre: 'Coca cola',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cocaCola.webp?alt=media&token=d500a378-4be8-41fb-92bd-28254d516ae9',
         isCarne: false,
@@ -633,8 +634,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Coca cola zero',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cocaColaZero.webp?alt=media&token=40f7e86c-6512-4fbb-bc7e-15b136858e86',
         isCarne: false,
@@ -655,8 +656,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Fanta (Orange)',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/fantaNaranja.webp?alt=media&token=289b1862-c9fc-4cf1-bf51-b52159397644',
         isCarne: false,
@@ -677,8 +678,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Fanta (Lemon)',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/fantaLimon.webp?alt=media&token=f669c7b6-e575-47f1-b91e-a479c9f67756',
         isCarne: false,
@@ -699,8 +700,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Te',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/te.webp?alt=media&token=2db55cd2-f38c-4566-9dce-83044f2fe71d',
         isCarne: false,
@@ -721,9 +722,9 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [], listReview: []),
     // Postre
-     Comida(
+     Food(
         nombre: 'Pistachio cake',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/pistacho.webp?alt=media&token=14450d94-f9ab-42a3-a40f-d55a1db57ddd',
         isCarne: false,
@@ -744,8 +745,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Cupcake',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/cupcakes.webp?alt=media&token=ebdbb63b-2fc8-4d88-a5bc-faca35632ab7',
         isCarne: false,
@@ -766,8 +767,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Tiramisu',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/Tiramisu.webp?alt=media&token=3777f10c-bf06-4ebd-bb2b-0ae1e61bf930',
         isCarne: false,
@@ -788,8 +789,8 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
-     Comida(
+        ingredientes: [], listReview: []),
+     Food(
         nombre: 'Raspberry Tart',
         foto: 'https://firebasestorage.googleapis.com/v0/b/tfgalejandro-fda96.appspot.com/o/TartaFrambuesa.webp?alt=media&token=ca1a8030-fc28-4212-abf3-3e3a3b9468a3',
         isCarne: false,
@@ -810,7 +811,7 @@ List<Comida> CrearListaDeComida() {
         haveLeche: false,
         haveMostaza: false,
         havePescado: false,
-        ingredientes: []),
+        ingredientes: [], listReview: []),
   ];
   return listaDeComida;
 }

@@ -2,20 +2,20 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/model/Person.dart';
 import 'package:tfgsaladillo/pages/view/home.dart';
 import 'package:tfgsaladillo/services/AuthServices.dart';
 
-import '../../model/Comida.dart';
+import '../../model/Food.dart';
 import '../widget/genericWidget.dart';
 import '../widget/loginWidget.dart';
 
 class Registrarse extends StatefulWidget {
-  final Idioma idioma;
+  final Language idioma;
   final SharedPreferences prefs;
-  final List<Comida> listaComida;
+  final List<Food> listaComida;
   const Registrarse(
       {super.key,
       required this.idioma,
@@ -57,8 +57,8 @@ class _Registrarse extends State<Registrarse> {
         "listaComida": [""]
       });
       person = Person(
-          nombre: nombre, gmail: gmail, pasword: password, listaComida: []);
-      await widget.prefs.setString("Name", person.nombre);
+          name: nombre, gmail: gmail, pasword: password, listaComida: []);
+      await widget.prefs.setString("Name", person.name);
       await widget.prefs.setString("Gmail", person.gmail);
       await widget.prefs.setString("Password", person.pasword);
       icon = await BitmapDescriptor.fromAssetImage(

@@ -1,17 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tfgsaladillo/model/Comida.dart';
-import 'package:tfgsaladillo/model/Idioma.dart';
-import 'package:tfgsaladillo/model/Moneda.dart';
+import 'package:tfgsaladillo/model/Food.dart';
+import 'package:tfgsaladillo/model/Language.dart';
+import 'package:tfgsaladillo/model/Coin.dart';
 import 'package:tfgsaladillo/pages/view/pageFood.dart';
 
 import '../../model/Person.dart';
 
 class BannerComida extends StatelessWidget {
-  final Comida comida;
-  final Moneda monedaEnUso;
-  final Idioma idioma;
+  final Food comida;
+  final Coin monedaEnUso;
+  final Language idioma;
   final Person? person;
   final Function anadirQuitarProducto;
 
