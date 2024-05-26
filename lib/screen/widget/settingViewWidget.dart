@@ -35,39 +35,42 @@ class PoliticaTexto extends StatelessWidget {
         ));
   }
 }
-class ButtonTastyGpt extends StatelessWidget{
+
+class ButtonTastyGpt extends StatelessWidget {
   final Size size;
+
   const ButtonTastyGpt({super.key, required this.size});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          reverseTransitionDuration: const Duration(milliseconds: 300),
-          barrierColor: Colors.black54,
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return FadeTransition(
-              opacity: animation,
-              child: const ChatAi(),
-            );
-          },
-        ));
-      },
-      child: Container(
-          width: size.width * 0.7,
-          height: size.height * 0.06,
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(bottom: size.height * 0.015),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text("TastyGPT",
-              style: TextStyle(fontSize: 21, color: Colors.black))));
+        onTap: () {
+          Navigator.of(context).push(PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 500),
+            reverseTransitionDuration: const Duration(milliseconds: 300),
+            barrierColor: Colors.black54,
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return FadeTransition(
+                opacity: animation,
+                child: const ChatAi(),
+              );
+            },
+          ));
+        },
+        child: Container(
+            width: size.width * 0.7,
+            height: size.height * 0.06,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(bottom: size.height * 0.015),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Text("TastyGPT",
+                style: TextStyle(fontSize: 21, color: Colors.black))));
   }
-
 }
+
 class BotonTerminosDeUso extends StatelessWidget {
   final Language idioma;
   final Size size;
@@ -84,8 +87,8 @@ class BotonTerminosDeUso extends StatelessWidget {
               barrierColor: Colors.black.withOpacity(0.6),
               useSafeArea: false,
               context: context,
-              builder: (context) =>
-                  AlertDialog(title:Row(children: [
+              builder: (context) => AlertDialog(
+                  title: Row(children: [
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop();
@@ -104,7 +107,10 @@ class BotonTerminosDeUso extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ))
                   ]),
-                     shadowColor: Colors.white, surfaceTintColor: Colors.white, backgroundColor: Colors.white, content: PoliticaTexto(idioma: idioma)));
+                  shadowColor: Colors.white,
+                  surfaceTintColor: Colors.white,
+                  backgroundColor: Colors.white,
+                  content: PoliticaTexto(idioma: idioma)));
         },
         child: Container(
             width: size.width * 0.7,

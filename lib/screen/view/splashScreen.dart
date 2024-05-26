@@ -1,12 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
+
 import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
 import '../../utils/LoadImagesFoodCache.dart';
@@ -48,7 +48,7 @@ class _SplashScreen extends State<SplashScreen> {
           MaterialPageRoute(
               builder: (context) => HomePage(
                     person: person,
-                    lenguage: selectLanguage(prefs.getInt("Idioma"),dataJson),
+                    lenguage: selectLanguage(prefs.getInt("Idioma"), dataJson),
                     prefs: prefs,
                     icon: icon,
                     coin: devolverTipoMoneda(prefs.getString("SimboloMoneda")),
@@ -75,7 +75,7 @@ class _SplashScreen extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        const Background(asset: "assets/images/screen.webp"),
+        Background(asset: "assets/images/screen.webp"),
         const Center(
             child: Padding(
           padding: EdgeInsets.only(bottom: 20),

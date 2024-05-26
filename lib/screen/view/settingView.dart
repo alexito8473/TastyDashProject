@@ -65,10 +65,11 @@ class _SettingView extends State<SettingView> {
                 ["MiCuenta"]),
         if (widget.person != null)
           InformationUser(
-              size: widget.size,
-              title: widget.idioma.datosJson[widget.idioma.positionIdioma]
-                  ["Nombre"],
-              subtitle: widget.person!.name,),
+            size: widget.size,
+            title: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                ["Nombre"],
+            subtitle: widget.person!.name,
+          ),
         if (widget.person != null)
           InformationUser(
               size: widget.size,
@@ -83,8 +84,8 @@ class _SettingView extends State<SettingView> {
             : ContaninerButtonFunction(
                 size: widget.size,
                 functionCall: widget.funNavegarLogin,
-                titulo:widget.idioma.datosJson[widget.idioma.positionIdioma]
-                ["Iniciar_sesion"] ),
+                titulo: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                    ["Iniciar_sesion"]),
         Container(
           height: widget.size.height * 0.9,
           margin: EdgeInsets.only(top: widget.size.height * 0.02),

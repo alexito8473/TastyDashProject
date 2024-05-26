@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/screen/view/pageFood.dart';
+
 import '../../models/Person.dart';
 
 class BannerFood extends StatelessWidget {
@@ -55,8 +56,7 @@ class BannerFood extends StatelessWidget {
               ClipRRect(
                   borderRadius: BorderRadius.circular(
                       25.0), // Ajusta el radio de los bordes
-                  child:
-                  CachedNetworkImage(
+                  child: CachedNetworkImage(
                     imageUrl: comida.foto,
                     width: double.infinity,
                     fit: BoxFit.cover,

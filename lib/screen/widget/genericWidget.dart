@@ -28,16 +28,23 @@ class ButtonBack extends StatelessWidget {
 
 class Background extends StatelessWidget {
   final String asset;
+  Alignment begin;
+  Alignment end;
 
-  const Background({super.key, required this.asset});
+  Background(
+      {super.key,
+      required this.asset,
+      this.begin = Alignment.bottomRight,
+      this.end = Alignment.centerRight});
 
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
-        shaderCallback: (bounds) => const LinearGradient(
-            begin: Alignment.bottomRight,
-            end: Alignment.centerRight,
-            colors: [Colors.black87, Colors.transparent]).createShader(bounds),
+        shaderCallback: (bounds) => LinearGradient(
+                begin: begin,
+                end: Alignment.centerRight,
+                colors: const [Colors.black87, Colors.transparent])
+            .createShader(bounds),
         blendMode: BlendMode.darken,
         child: Container(
             decoration: BoxDecoration(
@@ -106,6 +113,7 @@ class _TextFielMio extends State<TextFieldMio> {
     );
   }
 }
+
 class Titular extends StatelessWidget {
   final String title;
 
@@ -121,6 +129,7 @@ class Titular extends StatelessWidget {
                 fontSize: 40)));
   }
 }
+
 void messageToCustomer(BuildContext context, String mensage, double font) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     elevation: 1,

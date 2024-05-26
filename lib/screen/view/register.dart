@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
+
 import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
@@ -13,6 +14,7 @@ class Registrarse extends StatefulWidget {
   final Language idioma;
   final SharedPreferences prefs;
   final List<Food> listaComida;
+
   const Registrarse(
       {super.key,
       required this.idioma,
@@ -70,7 +72,7 @@ class _Registrarse extends State<Registrarse> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        const Background(asset: "assets/images/register.webp"),
+        Background(asset: "assets/images/register.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(

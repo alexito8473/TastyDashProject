@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:intl/intl.dart';
+
 import '../../models/Review.dart';
 
 String contiene(bool isContiene, Language idioma) {
@@ -16,12 +17,14 @@ class AllergenRow extends StatelessWidget {
   final bool have;
   final Language language;
   final Size size;
+
   const AllergenRow(
       {super.key,
       required this.type,
       required this.have,
       required this.language,
       required this.size});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -130,6 +133,7 @@ class ExpansionAllergen extends StatelessWidget {
 class ExpansionIngredients extends StatelessWidget {
   final Food food;
   final Language language;
+
   const ExpansionIngredients(this.food, this.language, {super.key});
 
   @override
@@ -159,6 +163,7 @@ class ExpansionIngredients extends StatelessWidget {
 class ExpansionReview extends StatelessWidget {
   final Food comida;
   final Language idioma;
+
   const ExpansionReview(this.comida, this.idioma, {super.key});
 
   @override
@@ -180,7 +185,9 @@ class ExpansionReview extends StatelessWidget {
 
 class ShowReview extends StatelessWidget {
   final Review review;
+
   const ShowReview({super.key, required this.review});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);

@@ -1,12 +1,12 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
 import 'package:tfgsaladillo/screen/view/register.dart';
+
 import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
   final Language idioma;
   final SharedPreferences prefs;
   final List<Food> listaComida;
+
   const Login(
       {super.key,
       required this.idioma,
@@ -69,7 +70,7 @@ class _Login extends State<Login> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        const Background(asset: "assets/images/start.webp"),
+        Background(asset: "assets/images/start.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(

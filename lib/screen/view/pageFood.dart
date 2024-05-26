@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/screen/view/viewReview.dart';
 
 import '../../models/Person.dart';
-import '../../models/Review.dart';
 import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
 import '../widget/pageFoodWidget.dart';
@@ -44,17 +44,9 @@ class _PageFood extends State<PageFood> {
     RealTimeService.updateListFoodUser(widget.person!);
     widget.function(widget.person!.listFood);
   }
-  void addReview() {
-    setState(() {
-      widget.food.listReview.add(Review(
-          autor: widget.person!.name,
-          publicacion: DateTime.now(),
-          valoracion: 5,
-          content:
-              'Hola madre mia esto es algo madfnasdjfbasdjfasdklfbasjdbasdhmnbcuasdb fasdbfuasdfhasdbfjhsfhbashfbsjfajfbasfjhqwebfuisdbfasdbdfhsehfasdvcyhasbdjkfaseuifshfbvasdhvbasifbuyasefbasdfv'));
-      widget.food.valoracion += 5;
-      widget.food.numValoracion += 1;
-    });
+
+  void activeFood() {
+    setState(() {});
   }
 
   @override
@@ -79,16 +71,18 @@ class _PageFood extends State<PageFood> {
                         .createShader(bounds),
                     blendMode: BlendMode.darken,
                     child: Container(
-                      width: size.width,
-                      alignment: Alignment.topRight,
-                      height: size.height * 0.34,
-                      child: CachedNetworkImage(
-                        imageUrl: widget.food.foto,
-                        height: size.height * 0.654,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ))),
+                        width: size.width,
+                        alignment: Alignment.topRight,
+                        height: size.height * 0.34,
+                        child: Hero(
+                          tag: widget.food.foto,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.food.foto,
+                            height: size.height * 0.654,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        )))),
             if (widget.person != null)
               Positioned(
                 right: 0,
@@ -96,8 +90,7 @@ class _PageFood extends State<PageFood> {
                     child: GestureDetector(
                   onTap: () {
                     addOrRemoveList(
-                        widget.person!.listFood!
-                            .contains(widget.food.nombre),
+                        widget.person!.listFood!.contains(widget.food.nombre),
                         widget.food.nombre);
                   },
                   child: Container(
@@ -202,52 +195,59 @@ class _PageFood extends State<PageFood> {
                       ),
                     )),
                   ]),
-
                   ExpansionAllergen(widget.food, widget.language),
                   if (widget.food.ingredients.isNotEmpty)
                     ExpansionIngredients(widget.food, widget.language),
-                  if (widget.person != null)
-                    Container(
-                      margin: EdgeInsets.only(bottom: size.height*0.08),
-                      child:  ExpansionReview(widget.food, widget.language),
-                    )
-
                 ],
               )),
             ),
           ],
         ),
         bottomNavigationBar: Row(
-          mainAxisAlignment:widget.person == null?MainAxisAlignment.end: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: widget.person == null
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceBetween,
           children: [
             if (widget.person != null)
-            GestureDetector(
-              onTap: () {
-                addReview();
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Colors.orange, Colors.orange.shade800])),
-                margin: EdgeInsets.only(
-                    top: size.height * 0.02, bottom: size.height * 0.02,left: size.width*0.05),
-                width: size.width * 0.4,
-                height: size.height * 0.06,
-                child: const Text(
-                  "Añadir Review",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PageReview(
+                          person: widget.person!,
+                          food: widget.food,
+                          function: activeFood,
+                        ),
+                      ));
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.orange, Colors.orange.shade800])),
+                  margin: EdgeInsets.only(
+                      top: size.height * 0.02,
+                      bottom: size.height * 0.02,
+                      left: size.width * 0.05),
+                  width: size.width * 0.4,
+                  height: size.height * 0.06,
+                  child: const Text(
+                    "Ver reviews",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(right:size.width*0.05 ),
-            child:  const ButtonBack() ,)
+            Padding(
+              padding: EdgeInsets.only(right: size.width * 0.05),
+              child: const ButtonBack(),
+            )
           ],
         ));
   }

@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/screen/view/listFood.dart';
 import 'package:tfgsaladillo/screen/view/pageFood.dart';
 
@@ -160,8 +160,8 @@ class _Carta extends State<Letter> {
                                         .where((element) => element.isBurguer)
                                         .toList(),
                                     "assets/images/hamburguesasBanner.webp",
-                                    widget.language.datosJson[widget
-                                        .language.positionIdioma]["HoverHambur"])
+                                    widget.language.datosJson[widget.language
+                                        .positionIdioma]["HoverHambur"])
                               },
                               idioma: widget.language,
                               svgpPath: 'assets/Icons/Burguer.svg',
@@ -213,8 +213,8 @@ class _Carta extends State<Letter> {
                                           .where((element) => element.isCarne)
                                           .toList(),
                                       "assets/images/bannerCarne.webp",
-                                      widget.language.datosJson[widget
-                                          .language.positionIdioma]["HoverCarne"])
+                                      widget.language.datosJson[widget.language
+                                          .positionIdioma]["HoverCarne"])
                                 },
                                 idioma: widget.language,
                                 svgpPath: 'assets/Icons/Meat.svg',

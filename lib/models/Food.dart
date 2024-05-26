@@ -27,30 +27,30 @@ class Food {
   int numValoracion;
   double valoracion;
   List<Review> listReview;
-  Food({
-    required this.nombre,
-    required this.foto,
-    required this.isCarne,
-    required this.isBurguer,
-    required this.isEnsalada,
-    required this.isPostre,
-    required this.isPescado,
-    required this.isBebida,
-    required this.precio,
-    required this.tiempoMinuto,
-    required this.haveApio,
-    required this.haveMoluscos,
-    required this.haveCrustaceos,
-    required this.haveMostaza,
-    required this.haveHuevo,
-    required this.havePescado,
-    required this.haveCacahuetes,
-    required this.haveGluten,
-    required this.haveLeche,
-    required this.haveAzufre,
-    required this.ingredients,
-    this.valoracion=0,
-    this.numValoracion=0,
-    required this.listReview
-  });
+
+  Food(
+      {required this.nombre,
+      required this.foto,
+      required this.isCarne,
+      required this.isBurguer,
+      required this.isEnsalada,
+      required this.isPostre,
+      required this.isPescado,
+      required this.isBebida,
+      required this.precio,
+      required this.tiempoMinuto,
+      required this.haveApio,
+      required this.haveMoluscos,
+      required this.haveCrustaceos,
+      required this.haveMostaza,
+      required this.haveHuevo,
+      required this.havePescado,
+      required this.haveCacahuetes,
+      required this.haveGluten,
+      required this.haveLeche,
+      required this.haveAzufre,
+      required this.ingredients,
+      this.valoracion = 0,
+      this.numValoracion = 0,
+      required this.listReview});
 }

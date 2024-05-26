@@ -15,6 +15,7 @@ class _ChatAi extends State<ChatAi> {
   final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
   late final geminisChat;
   List<Message> listMessage = [];
+
   @override
   void initState() {
     geminisChat = model.startChat(history: [
@@ -128,7 +129,9 @@ class _ChatAi extends State<ChatAi> {
 
 class ViewMessage extends StatelessWidget {
   final Message message;
+
   const ViewMessage({super.key, required this.message});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

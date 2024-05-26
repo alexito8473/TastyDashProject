@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/models/Coin.dart';
 
 import '../../models/Person.dart';
 import '../widget/genericWidget.dart';

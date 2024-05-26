@@ -1,12 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../models/Coin.dart';
 import '../../models/Food.dart';
 import '../../models/Language.dart';
-import '../../models/Coin.dart';
 import '../../models/Person.dart';
 import '../view/pageFood.dart';
 
@@ -17,6 +16,7 @@ class ShowList extends StatefulWidget {
   final Language idioma;
   final Person person;
   final Function anadirQuitarProducto;
+  final Function updateState;
 
   const ShowList(
       {super.key,
@@ -25,7 +25,8 @@ class ShowList extends StatefulWidget {
       required this.monedaEnUso,
       required this.idioma,
       required this.person,
-      required this.anadirQuitarProducto});
+      required this.anadirQuitarProducto,
+      required this.updateState});
 
   @override
   State<StatefulWidget> createState() => _ShowList();
@@ -41,13 +42,14 @@ class _ShowList extends State<ShowList> {
       child: GridView.builder(
         itemCount: widget.listaComida.length,
         itemBuilder: (context, index) {
-          return BannerComidaGrid(
+          return BannerFoodGrid(
             comida: widget.listaComida[index],
             monedaEnUso: widget.monedaEnUso,
             idioma: widget.idioma,
             person: widget.person,
             anadirQuitarProducto: widget.anadirQuitarProducto,
             listComida: widget.listaComida,
+            updateState: widget.updateState,
           );
         },
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -58,34 +60,36 @@ class _ShowList extends State<ShowList> {
   }
 }
 
-class BannerComidaGrid extends StatefulWidget {
+class BannerFoodGrid extends StatefulWidget {
   final Food comida;
   final Coin monedaEnUso;
   final Language idioma;
   final Person person;
   final List<Food> listComida;
   final Function anadirQuitarProducto;
+  final Function updateState;
 
-  const BannerComidaGrid(
+  const BannerFoodGrid(
       {super.key,
       required this.comida,
       required this.monedaEnUso,
       required this.idioma,
       required this.person,
       required this.anadirQuitarProducto,
-      required this.listComida});
+      required this.listComida,
+      required this.updateState});
 
   @override
   State<StatefulWidget> createState() => _BannerComidaGrid();
 }
 
-class _BannerComidaGrid extends State<BannerComidaGrid> {
+class _BannerComidaGrid extends State<BannerFoodGrid> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(PageRouteBuilder(
+      onTap: () async {
+        await Navigator.of(context).push(PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 600),
           reverseTransitionDuration: const Duration(milliseconds: 300),
           barrierColor: Colors.black54,
@@ -101,7 +105,7 @@ class _BannerComidaGrid extends State<BannerComidaGrid> {
                 ));
           },
         ));
-        setState(() {});
+        widget.updateState();
       },
       child: Container(
           margin: EdgeInsets.symmetric(

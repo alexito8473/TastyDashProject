@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import '../../models/Food.dart';
+
 import '../../models/Coin.dart';
+import '../../models/Food.dart';
 import '../../models/Person.dart';
 import '../widget/specialViewWidget.dart';
 
-class EspecialView extends StatefulWidget {
+class SpecialView extends StatefulWidget {
   final Language idioma;
   final Size size;
   final List<Food> listaComida;
@@ -15,7 +16,7 @@ class EspecialView extends StatefulWidget {
   bool cambioIconoPrecio;
   Person person;
 
-  EspecialView(
+  SpecialView(
       {super.key,
       required this.size,
       required this.idioma,
@@ -26,10 +27,10 @@ class EspecialView extends StatefulWidget {
       required this.person});
 
   @override
-  State<EspecialView> createState() => _EspecialView();
+  State<SpecialView> createState() => _EspecialView();
 }
 
-class _EspecialView extends State<EspecialView> {
+class _EspecialView extends State<SpecialView> {
   late int cant = 0;
   late List<Food> listaBurguer = [];
   late List<Food> listaEnsalada = [];
@@ -53,19 +54,23 @@ class _EspecialView extends State<EspecialView> {
         widget.listaComida.where((element) => element.isBebida).toList());
     listaPostre.addAll(
         widget.listaComida.where((element) => element.isPostre).toList());
-    comprobarLista(listaBurguer);
-    comprobarLista(listaEnsalada);
-    comprobarLista(listaPescado);
-    comprobarLista(listaCarne);
-    comprobarLista(listaBebida);
-    comprobarLista(listaPostre);
+    checkList(listaBurguer);
+    checkList(listaEnsalada);
+    checkList(listaPescado);
+    checkList(listaCarne);
+    checkList(listaBebida);
+    checkList(listaPostre);
     orderAllList(!widget.cambioIconoPrecio);
   }
 
-  void comprobarLista(List<Food> lista) {
+  void checkList(List<Food> lista) {
     if (lista.isNotEmpty) {
       cant = cant + 1;
     }
+  }
+
+  void updateState() {
+    setState(() {});
   }
 
   void orderAllList(bool control) {
@@ -309,6 +314,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetBurger,
+                        updateState: updateState,
                       ),
                     if (listaEnsalada.isNotEmpty)
                       ShowList(
@@ -318,6 +324,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetSalad,
+                        updateState: updateState,
                       ),
                     if (listaPescado.isNotEmpty)
                       ShowList(
@@ -327,6 +334,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetFish,
+                        updateState: updateState,
                       ),
                     if (listaCarne.isNotEmpty)
                       ShowList(
@@ -336,6 +344,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetMeat,
+                        updateState: updateState,
                       ),
                     if (listaBebida.isNotEmpty)
                       ShowList(
@@ -345,6 +354,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetDrink,
+                        updateState: updateState,
                       ),
                     if (listaPostre.isNotEmpty)
                       ShowList(
@@ -354,6 +364,7 @@ class _EspecialView extends State<EspecialView> {
                         idioma: widget.idioma,
                         person: widget.person,
                         anadirQuitarProducto: resetDessert,
+                        updateState: updateState,
                       ),
                   ])),
             )

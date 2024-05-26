@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/letter.dart';
 import 'package:tfgsaladillo/screen/view/login.dart';
@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
   final int initialPosition;
   Coin coin;
   List<Food> listFood;
+
   HomePage(
       {super.key,
       required this.person,
@@ -150,7 +151,7 @@ class _HomePage extends State<HomePage> {
         person: widget.person,
       ),
       if (widget.person != null)
-        EspecialView(
+        SpecialView(
           size: size,
           idioma: widget.lenguage,
           listaComida: widget.listFood
@@ -188,10 +189,13 @@ class _HomePage extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: AnimatedSwitcher(
-          switchInCurve: Curves.linear,
-          duration: const Duration(milliseconds: 400),
-          child: listPages[position]),
+      body: MyInheritedWidget(
+          listFood: widget.listFood,
+          child: AnimatedSwitcher(
+            switchInCurve: Curves.linear,
+            duration: const Duration(milliseconds: 400),
+            child: listPages[position],
+          )),
       bottomNavigationBar: Container(
           color: Colors.orange,
           padding: EdgeInsets.symmetric(
@@ -230,5 +234,23 @@ class _HomePage extends State<HomePage> {
             ],
           )),
     );
+  }
+}
+
+class MyInheritedWidget extends InheritedWidget {
+  MyInheritedWidget({
+    super.key,
+    required super.child,
+    required this.listFood,
+  });
+
+  List<Food> listFood;
+
+  static MyInheritedWidget of(BuildContext context) =>
+      context.findAncestorWidgetOfExactType<MyInheritedWidget>()!;
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return false;
   }
 }
