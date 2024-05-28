@@ -45,15 +45,15 @@ class _EspecialView extends State<SpecialView> {
     listaBurguer.addAll(
         widget.listaComida.where((element) => element.isBurguer).toList());
     listaEnsalada.addAll(
-        widget.listaComida.where((element) => element.isEnsalada).toList());
+        widget.listaComida.where((element) => element.isSalad).toList());
     listaPescado.addAll(
-        widget.listaComida.where((element) => element.isPescado).toList());
+        widget.listaComida.where((element) => element.isFish).toList());
     listaCarne.addAll(
-        widget.listaComida.where((element) => element.isCarne).toList());
+        widget.listaComida.where((element) => element.isMeat).toList());
     listaBebida.addAll(
-        widget.listaComida.where((element) => element.isBebida).toList());
+        widget.listaComida.where((element) => element.isDrink).toList());
     listaPostre.addAll(
-        widget.listaComida.where((element) => element.isPostre).toList());
+        widget.listaComida.where((element) => element.isDessert).toList());
     checkList(listaBurguer);
     checkList(listaEnsalada);
     checkList(listaPescado);
@@ -87,11 +87,11 @@ class _EspecialView extends State<SpecialView> {
   void orderList(List<Food> lista, bool control) {
     if (control) {
       lista.sort(
-        (a, b) => a.precio.compareTo(b.precio),
+        (a, b) => a.price.compareTo(b.price),
       );
     } else {
       lista.sort(
-        (a, b) => b.precio.compareTo(a.precio),
+        (a, b) => b.price.compareTo(a.price),
       );
     }
   }
@@ -103,7 +103,7 @@ class _EspecialView extends State<SpecialView> {
       listaBurguer.clear();
       listaBurguer.addAll(widget.listaComida
           .where((element) =>
-              element.isBurguer && listNameFood.contains(element.nombre))
+              element.isBurguer && listNameFood.contains(element.name))
           .toList());
       if (listaBurguer.isEmpty) {
         if (!control) {
@@ -124,7 +124,7 @@ class _EspecialView extends State<SpecialView> {
       listaEnsalada.clear();
       listaEnsalada.addAll(widget.listaComida
           .where((element) =>
-              element.isEnsalada && listNameFood.contains(element.nombre))
+              element.isSalad && listNameFood.contains(element.name))
           .toList());
       if (listaEnsalada.isEmpty) {
         if (!control) {
@@ -145,7 +145,7 @@ class _EspecialView extends State<SpecialView> {
       listaPescado.clear();
       listaPescado.addAll(widget.listaComida
           .where((element) =>
-              element.isPescado && listNameFood.contains(element.nombre))
+              element.isFish && listNameFood.contains(element.name))
           .toList());
       if (listaPescado.isEmpty) {
         if (!control) {
@@ -166,7 +166,7 @@ class _EspecialView extends State<SpecialView> {
       listaCarne.clear();
       listaCarne.addAll(widget.listaComida
           .where((element) =>
-              element.isCarne && listNameFood.contains(element.nombre))
+              element.isMeat && listNameFood.contains(element.name))
           .toList());
       if (listaCarne.isEmpty) {
         if (!control) {
@@ -187,7 +187,7 @@ class _EspecialView extends State<SpecialView> {
       listaBebida.clear();
       listaBebida.addAll(widget.listaComida
           .where((element) =>
-              element.isBebida && listNameFood.contains(element.nombre))
+              element.isDrink && listNameFood.contains(element.name))
           .toList());
       if (listaBebida.isEmpty) {
         if (!control) {
@@ -208,7 +208,7 @@ class _EspecialView extends State<SpecialView> {
       listaPostre.clear();
       listaPostre.addAll(widget.listaComida
           .where((element) =>
-              element.isPostre && listNameFood.contains(element.nombre))
+              element.isDessert && listNameFood.contains(element.name))
           .toList());
       if (listaPostre.isEmpty) {
         if (!control) {
@@ -234,7 +234,7 @@ class _EspecialView extends State<SpecialView> {
               width: widget.size.width,
               alignment: Alignment.center,
               child: Text(
-                widget.idioma.datosJson[widget.idioma.positionIdioma]
+                widget.idioma.dataJson[widget.idioma.positionLanguage]
                     ["Especial"],
                 style: const TextStyle(
                     letterSpacing: 2,
@@ -389,7 +389,7 @@ class _EspecialView extends State<SpecialView> {
                         color: Colors.black,
                       ),
                 Text(
-                  widget.monedaEnUso.simbolo,
+                  widget.monedaEnUso.symbol,
                   style: TextStyle(
                       fontSize: widget.size.width * 0.06, color: Colors.black),
                 ),

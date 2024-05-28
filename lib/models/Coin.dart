@@ -1,14 +1,14 @@
 enum Coin implements Comparable<Coin> {
-  LIBRA(simbolo: "£", conversor: 0.863271),
-  EURO(simbolo: "€", conversor: 1);
+  LIBRA(symbol: "£", converter: 0.863271),
+  EURO(symbol: "€", converter: 1);
 
-  const Coin({required this.simbolo, required this.conversor});
+  const Coin({required this.symbol, required this.converter});
 
-  final String simbolo;
-  final double conversor;
+  final String symbol;
+  final double converter;
 
   @override
-  int compareTo(Coin other) => simbolo.compareTo(other.simbolo);
+  int compareTo(Coin other) => symbol.compareTo(other.symbol);
 }
 
 Coin devolverTipoMoneda(String? simbolo) {

@@ -1,6 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+class PositionButtonBack extends StatelessWidget {
+  const PositionButtonBack({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: size.height * 0.02,
+        left: size.width * 0.01,
+        child: SafeArea(
+            child: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.orange,
+            size: size.width * 0.12,
+          ),
+        )));
+  }
+}
+
 class ButtonBack extends StatelessWidget {
   const ButtonBack({super.key});
 
@@ -28,14 +53,15 @@ class ButtonBack extends StatelessWidget {
 
 class Background extends StatelessWidget {
   final String asset;
-  Alignment begin;
-  Alignment end;
-
-  Background(
+  final Alignment begin;
+  final Alignment end;
+  final Color colorIsFiltered;
+  const Background(
       {super.key,
       required this.asset,
       this.begin = Alignment.bottomRight,
-      this.end = Alignment.centerRight});
+      this.end = Alignment.centerRight,
+      this.colorIsFiltered = Colors.black38});
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +77,8 @@ class Background extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage(asset),
                     fit: BoxFit.cover,
-                    colorFilter: const ColorFilter.mode(
-                        Colors.black38, BlendMode.darken)))));
+                    colorFilter:
+                        ColorFilter.mode(colorIsFiltered, BlendMode.darken)))));
   }
 }
 

@@ -14,6 +14,7 @@ import 'package:tfgsaladillo/screen/view/letter.dart';
 import 'package:tfgsaladillo/screen/view/login.dart';
 import 'package:tfgsaladillo/screen/view/mapView.dart';
 
+import '../../utils/Constant.dart';
 import '../widget/homeWidget.dart';
 import 'settingView.dart';
 import 'specialView.dart';
@@ -52,7 +53,7 @@ class _HomePage extends State<HomePage> {
   final List<CoolDropdownItem<String>> lenguageDropdownItems = [];
 
   // Imagen para el mapa
-  final ImageProvider imagenBannerAjustes =
+  final ImageProvider imageBannerSettings =
       const AssetImage("assets/images/bannersuper.webp");
 
   // Datos para realizar la moneda
@@ -63,8 +64,8 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     position = widget.initialPosition;
-    List<String> banderas = CrearListaBanderas();
-    preSelectecLenguage = widget.lenguage.positionIdioma;
+    List<String> flags = CrearListaBanderas();
+    preSelectecLenguage = widget.lenguage.positionLanguage;
     for (var i = 0; i < lenguage.length; i++) {
       lenguageDropdownItems.add(
         CoolDropdownItem<String>(
@@ -72,7 +73,7 @@ class _HomePage extends State<HomePage> {
             icon: SizedBox(
               height: 25,
               width: 25,
-              child: SvgPicture.asset(banderas[i]),
+              child: SvgPicture.asset(flags[i]),
             ),
             value: '$i'),
       );
@@ -83,9 +84,9 @@ class _HomePage extends State<HomePage> {
             label: monedas[i].name.toLowerCase().replaceFirst(
                 monedas[i].name.toLowerCase().substring(0, 1),
                 monedas[i].name.substring(0, 1).toUpperCase()),
-            value: monedas[i].simbolo,
+            value: monedas[i].symbol,
             icon: Text(
-              monedas[i].simbolo,
+              monedas[i].symbol,
               style: const TextStyle(color: Colors.black),
             )),
       );
@@ -113,7 +114,7 @@ class _HomePage extends State<HomePage> {
 
   void disconnected() {
     setState(() {
-      widget.prefs.remove("Gmail");
+      widget.prefs.remove(Constant.SharedPreferences_MAIL);
       widget.person = null;
       position = 2;
     });
@@ -121,7 +122,7 @@ class _HomePage extends State<HomePage> {
 
   void changeCoin(String valor) {
     setState(() {
-      widget.prefs.setString("SimboloMoneda", valor);
+      widget.prefs.setString(Constant.SharedPreferences_COIN, valor);
       widget.coin = devolverTipoMoneda(valor);
     });
   }
@@ -134,8 +135,9 @@ class _HomePage extends State<HomePage> {
 
   void changeLanguage(String valor) {
     setState(() {
-      widget.lenguage.positionIdioma = int.parse(valor);
-      widget.prefs.setInt("Idioma", int.parse(valor));
+      widget.lenguage.positionLanguage = int.parse(valor);
+      widget.prefs
+          .setInt(Constant.SharedPreferences_LANGUAGE, int.parse(valor));
     });
   }
 
@@ -155,8 +157,8 @@ class _HomePage extends State<HomePage> {
           size: size,
           idioma: widget.lenguage,
           listaComida: widget.listFood
-              .where((element) =>
-                  widget.person!.listFood!.contains(element.nombre))
+              .where(
+                  (element) => widget.person!.listFood!.contains(element.name))
               .toList(),
           monedaEnUso: widget.coin,
           cambioIconoPrecio: changeIconPrice,
@@ -175,7 +177,7 @@ class _HomePage extends State<HomePage> {
         funCambiarIdioma: changeLanguage,
         funNavegarLogin: navigationLogin,
         size: size,
-        imagenBannerAjustes: imagenBannerAjustes,
+        imagenBannerAjustes: imageBannerSettings,
         idioma: widget.lenguage,
         person: widget.person,
         lenguageDropdownController: lenguageDropdownController,
@@ -189,13 +191,11 @@ class _HomePage extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: MyInheritedWidget(
-          listFood: widget.listFood,
-          child: AnimatedSwitcher(
-            switchInCurve: Curves.linear,
-            duration: const Duration(milliseconds: 400),
-            child: listPages[position],
-          )),
+      body: AnimatedSwitcher(
+        switchInCurve: Curves.linear,
+        duration: const Duration(milliseconds: 400),
+        child: listPages[position],
+      ),
       bottomNavigationBar: Container(
           color: Colors.orange,
           padding: EdgeInsets.symmetric(
@@ -217,40 +217,23 @@ class _HomePage extends State<HomePage> {
               GButton(
                   icon: Icons.fastfood,
                   text: widget.lenguage
-                      .datosJson[widget.lenguage.positionIdioma]["Carta"]),
+                      .dataJson[widget.lenguage.positionLanguage]["Carta"]),
               if (widget.person != null)
                 GButton(
                     icon: Icons.star,
-                    text: widget.lenguage
-                        .datosJson[widget.lenguage.positionIdioma]["Especial"]),
+                    text: widget
+                            .lenguage.dataJson[widget.lenguage.positionLanguage]
+                        ["Especial"]),
               GButton(
                   icon: Icons.map,
                   text: widget.lenguage
-                      .datosJson[widget.lenguage.positionIdioma]["Mapa"]),
+                      .dataJson[widget.lenguage.positionLanguage]["Mapa"]),
               GButton(
                   icon: Icons.settings,
                   text: widget.lenguage
-                      .datosJson[widget.lenguage.positionIdioma]["Ajustes"]),
+                      .dataJson[widget.lenguage.positionLanguage]["Ajustes"]),
             ],
           )),
     );
-  }
-}
-
-class MyInheritedWidget extends InheritedWidget {
-  MyInheritedWidget({
-    super.key,
-    required super.child,
-    required this.listFood,
-  });
-
-  List<Food> listFood;
-
-  static MyInheritedWidget of(BuildContext context) =>
-      context.findAncestorWidgetOfExactType<MyInheritedWidget>()!;
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    return false;
   }
 }

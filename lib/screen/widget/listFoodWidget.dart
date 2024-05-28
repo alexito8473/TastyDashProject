@@ -9,7 +9,7 @@ import 'package:tfgsaladillo/screen/view/pageFood.dart';
 import '../../models/Person.dart';
 
 class BannerFood extends StatelessWidget {
-  final Food comida;
+  final Food food;
   final Coin monedaEnUso;
   final Language idioma;
   final Person? person;
@@ -17,7 +17,7 @@ class BannerFood extends StatelessWidget {
 
   const BannerFood(
       {super.key,
-      required this.comida,
+      required this.food,
       required this.monedaEnUso,
       required this.idioma,
       required this.person,
@@ -36,7 +36,7 @@ class BannerFood extends StatelessWidget {
             return FadeTransition(
                 opacity: animation,
                 child: PageFood(
-                  food: comida,
+                  food: food,
                   language: idioma,
                   coin: monedaEnUso,
                   person: person,
@@ -57,7 +57,7 @@ class BannerFood extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       25.0), // Ajusta el radio de los bordes
                   child: CachedNetworkImage(
-                    imageUrl: comida.foto,
+                    imageUrl: food.pathImage,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     color: Colors.black54,
@@ -68,7 +68,7 @@ class BannerFood extends StatelessWidget {
                 children: [
                   AutoSizeText(
                     maxLines: 1,
-                    comida.nombre,
+                    food.name,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -80,18 +80,19 @@ class BannerFood extends StatelessWidget {
                       Expanded(
                           child: Center(
                         child: AutoSizeText(
-                          "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                          "${idioma.dataJson[idioma.positionLanguage]["Precio"]}: ${(food.price * monedaEnUso.converter).toStringAsFixed(2)} ${monedaEnUso.symbol}",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,
                           maxLines: 1,
                         ),
                       )),
+                      if(food.timeMinute>0)
                       Expanded(
                           child: Center(
                         child: AutoSizeText(
                           maxLines: 1,
-                          "${comida.tiempoMinuto} ${idioma.datosJson[idioma.positionIdioma]["Minuto"]}",
+                          "${food.timeMinute} ${idioma.dataJson[idioma.positionLanguage]["Minuto"]}",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,

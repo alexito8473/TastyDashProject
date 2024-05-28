@@ -41,7 +41,7 @@ class _PageFood extends State<PageFood> {
         widget.person!.listFood!.add(product);
       }
     });
-    RealTimeService.updateListFoodUser(widget.person!);
+    await RealTimeService.updateListFoodUser(widget.person!);
     widget.function(widget.person!.listFood);
   }
 
@@ -52,7 +52,7 @@ class _PageFood extends State<PageFood> {
   @override
   Widget build(BuildContext context) {
     double resultValoracion =
-        widget.food.valoracion / widget.food.numValoracion;
+        widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         extendBody: true,
@@ -75,36 +75,36 @@ class _PageFood extends State<PageFood> {
                         alignment: Alignment.topRight,
                         height: size.height * 0.34,
                         child: Hero(
-                          tag: widget.food.foto,
+                          tag: widget.food.pathImage,
                           child: CachedNetworkImage(
-                            imageUrl: widget.food.foto,
+                            imageUrl: widget.food.pathImage,
                             height: size.height * 0.654,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
                         )))),
+            PositionButtonBack(size: size),
             if (widget.person != null)
               Positioned(
-                right: 0,
+                top: size.height * 0.02,
+                right: size.height * 0.02,
                 child: SafeArea(
                     child: GestureDetector(
                   onTap: () {
                     addOrRemoveList(
-                        widget.person!.listFood!.contains(widget.food.nombre),
-                        widget.food.nombre);
+                        widget.person!.listFood!.contains(widget.food.name),
+                        widget.food.name);
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    margin: EdgeInsets.only(
-                        right: size.height * 0.02, top: size.height * 0.02),
                     width: size.height * 0.07,
                     height: size.height * 0.07,
                     child: Icon(
                       color: Colors.orange,
-                      widget.person!.listFood!.contains(widget.food.nombre)
+                      widget.person!.listFood!.contains(widget.food.name)
                           ? FontAwesomeIcons.solidHeart
                           : FontAwesomeIcons.heart,
                       size: size.height * 0.05,
@@ -142,7 +142,7 @@ class _PageFood extends State<PageFood> {
                                 top: size.height * 0.03),
                             alignment: Alignment.center,
                             child: AutoSizeText(
-                              widget.food.nombre,
+                              widget.food.name,
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 35,
@@ -163,7 +163,10 @@ class _PageFood extends State<PageFood> {
                                   size: 30,
                                 ),
                                 Text(
-                                  "${resultValoracion.isNaN ? 0.0 : resultValoracion}",
+                                  (resultValoracion.isNaN
+                                          ? 0.0
+                                          : resultValoracion)
+                                      .toStringAsFixed(2),
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 25),
                                 ),
@@ -177,7 +180,7 @@ class _PageFood extends State<PageFood> {
                     Expanded(
                         child: Center(
                       child: AutoSizeText(
-                        "${widget.language.datosJson[widget.language.positionIdioma]["Precio"]}: ${(widget.food.precio * widget.coin.conversor).toStringAsFixed(2)} ${widget.coin.simbolo}",
+                        "${widget.language.dataJson[widget.language.positionLanguage]["Precio"]}: ${(widget.food.price * widget.coin.converter).toStringAsFixed(2)} ${widget.coin.symbol}",
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
                         textAlign: TextAlign.left,
@@ -188,7 +191,7 @@ class _PageFood extends State<PageFood> {
                         child: Center(
                       child: AutoSizeText(
                         maxLines: 1,
-                        "${widget.food.tiempoMinuto} ${widget.language.datosJson[widget.language.positionIdioma]["Minuto"]}",
+                        "${widget.food.timeMinute} ${widget.language.dataJson[widget.language.positionLanguage]["Minuto"]}",
                         style:
                             const TextStyle(color: Colors.white, fontSize: 25),
                         textAlign: TextAlign.left,
@@ -203,13 +206,9 @@ class _PageFood extends State<PageFood> {
             ),
           ],
         ),
-        bottomNavigationBar: Row(
-          mainAxisAlignment: widget.person == null
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.spaceBetween,
-          children: [
-            if (widget.person != null)
-              GestureDetector(
+        floatingActionButton: widget.person == null
+            ? null
+            : GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -218,6 +217,7 @@ class _PageFood extends State<PageFood> {
                           person: widget.person!,
                           food: widget.food,
                           function: activeFood,
+                          language: widget.language,
                         ),
                       ));
                 },
@@ -233,7 +233,7 @@ class _PageFood extends State<PageFood> {
                       top: size.height * 0.02,
                       bottom: size.height * 0.02,
                       left: size.width * 0.05),
-                  width: size.width * 0.4,
+                  width: size.width * 0.3,
                   height: size.height * 0.06,
                   child: const Text(
                     "Ver reviews",
@@ -243,12 +243,8 @@ class _PageFood extends State<PageFood> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-            Padding(
-              padding: EdgeInsets.only(right: size.width * 0.05),
-              child: const ButtonBack(),
-            )
-          ],
-        ));
+              ));
   }
 }
+
+

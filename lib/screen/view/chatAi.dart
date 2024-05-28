@@ -168,6 +168,8 @@ class ViewMessage extends StatelessWidget {
             child: Text(
               message.text,
               textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 18),
+
             ),
           )
         ],

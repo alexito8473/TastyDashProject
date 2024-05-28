@@ -9,4 +9,10 @@ class Constant {
       'assets/images/bannersuper.webp';
   static const String PATH_IMAGE_SCRREN_PAGE_FOOD =
       "assets/images/fondoSuelo.webp";
+  static const String SharedPreferences_MAIL =
+      "MAIL";
+  static const String SharedPreferences_COIN =
+      "COIN";
+  static const String SharedPreferences_LANGUAGE =
+      "LANGUAGE";
 }

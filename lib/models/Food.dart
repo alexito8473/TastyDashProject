@@ -1,56 +1,59 @@
 import 'Review.dart';
 
 class Food {
-  final String nombre;
-  final String foto;
-  final int tiempoMinuto;
-  final bool isCarne;
+  final String name;
+  final String pathImage;
+  final int timeMinute;
+  final bool isMeat;
   final bool isBurguer;
-  final bool isEnsalada;
-  final bool isPostre;
-  final bool isPescado;
-  final bool isBebida;
-  final bool haveApio;
-  final bool haveMoluscos;
-  final bool haveCrustaceos;
-  final bool haveMostaza;
-  final bool haveHuevo;
-  final bool havePescado;
-  final bool haveCacahuetes;
+  final bool isSalad;
+  final bool isDessert;
+  final bool isFish;
+  final bool isDrink;
+  final bool haveCelery;
+  final bool haveMollusks;
+  final bool haveCrustaceans;
+  final bool haveMustard;
+  final bool haveEgg;
+  final bool haveFish;
+  final bool havePeanuts;
   final bool haveGluten;
-  final bool haveLeche;
-  final bool haveAzufre;
-  final List<String> ingredients;
-
-  //El precio esta en español
-  final double precio;
-  int numValoracion;
-  double valoracion;
+  final bool haveMilk;
+  final bool haveSulfur;
+  final List<dynamic> ingredients;
+  final double price;
+  int amountAssessment;
+  double assessment;
   List<Review> listReview;
 
+  @override
+  String toString() {
+    return 'Food{haveCelery: $haveCelery, haveMollusks: $haveMollusks, haveCrustaceans: $haveCrustaceans, haveMustard: $haveMustard, haveFish: $haveFish, haveMilk: $haveMilk, haveSulfur: $haveSulfur}';
+  }
+
   Food(
-      {required this.nombre,
-      required this.foto,
-      required this.isCarne,
+      {required this.name,
+      required this.pathImage,
+      required this.isMeat,
       required this.isBurguer,
-      required this.isEnsalada,
-      required this.isPostre,
-      required this.isPescado,
-      required this.isBebida,
-      required this.precio,
-      required this.tiempoMinuto,
-      required this.haveApio,
-      required this.haveMoluscos,
-      required this.haveCrustaceos,
-      required this.haveMostaza,
-      required this.haveHuevo,
-      required this.havePescado,
-      required this.haveCacahuetes,
+      required this.isSalad,
+      required this.isDessert,
+      required this.isFish,
+      required this.isDrink,
+      required this.price,
+      required this.timeMinute,
+      required this.haveCelery,
+      required this.haveMollusks,
+      required this.haveCrustaceans,
+      required this.haveMustard,
+      required this.haveEgg,
+      required this.haveFish,
+      required this.havePeanuts,
       required this.haveGluten,
-      required this.haveLeche,
-      required this.haveAzufre,
+      required this.haveMilk,
+      required this.haveSulfur,
       required this.ingredients,
-      this.valoracion = 0,
-      this.numValoracion = 0,
+      this.assessment = 0,
+      this.amountAssessment = 0,
       required this.listReview});
 }

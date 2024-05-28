@@ -20,15 +20,15 @@ class PoliticaTexto extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text1"],
+              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text1"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text2"],
+              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text2"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text3"],
+              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text3"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text4"],
+              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text4"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.datosJson[idioma.positionIdioma]["Politica_Text5"],
+              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text5"],
                   style: const TextStyle(fontSize: 18)),
             ],
           ),
@@ -102,7 +102,7 @@ class BotonTerminosDeUso extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.only(left: size.width * .05),
                         child: Text(
-                          idioma.datosJson[idioma.positionIdioma]["Politica"],
+                          idioma.dataJson[idioma.positionLanguage]["Politica"],
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ))
@@ -121,7 +121,7 @@ class BotonTerminosDeUso extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(idioma.datosJson[idioma.positionIdioma]["Politica"],
+            child: Text(idioma.dataJson[idioma.positionLanguage]["Politica"],
                 style: const TextStyle(fontSize: 21, color: Colors.black))));
   }
 }

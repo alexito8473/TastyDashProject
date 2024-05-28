@@ -122,7 +122,7 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                     fit: BoxFit.cover,
                     color: Colors.black54,
                     colorBlendMode: BlendMode.darken,
-                    imageUrl: widget.comida.foto,
+                    imageUrl: widget.comida.pathImage,
                   )),
               Center(
                   child: Column(
@@ -130,7 +130,7 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                 children: [
                   AutoSizeText(
                     maxLines: 1,
-                    widget.comida.nombre,
+                    widget.comida.name,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -138,21 +138,21 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                     textAlign: TextAlign.left,
                   ),
                   RatingBar(
-                    initialRating: widget.comida.valoracion,
+                    initialRating: widget.comida.assessment,
                     direction: Axis.horizontal,
                     itemCount: 5,
                     ignoreGestures: true,
                     itemSize: size.width * 0.07,
                     ratingWidget: RatingWidget(
                       full: const Icon(Icons.star, color: Colors.orange),
-                      half: const Icon(Icons.star, color: Colors.orange),
+                      half: const Icon(Icons.star_half, color: Colors.orange),
                       empty: const Icon(Icons.star, color: Colors.grey),
                     ),
                     onRatingUpdate: (rating) {},
                   ),
                   AutoSizeText(
                     maxLines: 1,
-                    "${widget.comida.tiempoMinuto} ${widget.idioma.datosJson[widget.idioma.positionIdioma]["Minuto"]}",
+                    "${widget.comida.timeMinute} ${widget.idioma.dataJson[widget.idioma.positionLanguage]["Minuto"]}",
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                     textAlign: TextAlign.left,
                   ),

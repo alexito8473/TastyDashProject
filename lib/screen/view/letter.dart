@@ -33,7 +33,7 @@ class _Carta extends State<Letter> {
 
   @override
   void initState() {
-    currentImage = widget.listFood[0].foto;
+    currentImage = widget.listFood[0].pathImage;
     super.initState();
   }
 
@@ -116,7 +116,7 @@ class _Carta extends State<Letter> {
                                     onPageChanged: (index, reason) =>
                                         setState(() {
                                           currentImage =
-                                              widget.listFood[index].foto;
+                                              widget.listFood[index].pathImage;
                                         }),
                                     scrollDirection: Axis.horizontal),
                                 items: widget.listFood.map((i) {
@@ -160,8 +160,8 @@ class _Carta extends State<Letter> {
                                         .where((element) => element.isBurguer)
                                         .toList(),
                                     "assets/images/hamburguesasBanner.webp",
-                                    widget.language.datosJson[widget.language
-                                        .positionIdioma]["HoverHambur"])
+                                    widget.language.dataJson[widget.language
+                                        .positionLanguage]["HoverHambur"])
                               },
                               idioma: widget.language,
                               svgpPath: 'assets/Icons/Burguer.svg',
@@ -173,11 +173,11 @@ class _Carta extends State<Letter> {
                               function: () => {
                                 navigationList(
                                     widget.listFood
-                                        .where((element) => element.isEnsalada)
+                                        .where((element) => element.isSalad)
                                         .toList(),
                                     "assets/images/ensaladaBanner.webp",
-                                    widget.language.datosJson[widget
-                                        .language.positionIdioma]["HoverEnsa"])
+                                    widget.language.dataJson[widget
+                                        .language.positionLanguage]["HoverEnsa"])
                               },
                               idioma: widget.language,
                               svgpPath: 'assets/Icons/Salad.svg',
@@ -189,11 +189,11 @@ class _Carta extends State<Letter> {
                               function: () => {
                                 navigationList(
                                     widget.listFood
-                                        .where((element) => element.isPescado)
+                                        .where((element) => element.isFish)
                                         .toList(),
                                     "assets/images/bannerPescado.webp",
-                                    widget.language.datosJson[widget
-                                        .language.positionIdioma]["HoverPesca"])
+                                    widget.language.dataJson[widget
+                                        .language.positionLanguage]["HoverPesca"])
                               },
                               idioma: widget.language,
                               svgpPath: 'assets/Icons/Fish.svg',
@@ -210,11 +210,11 @@ class _Carta extends State<Letter> {
                                 function: () => {
                                   navigationList(
                                       widget.listFood
-                                          .where((element) => element.isCarne)
+                                          .where((element) => element.isMeat)
                                           .toList(),
                                       "assets/images/bannerCarne.webp",
-                                      widget.language.datosJson[widget.language
-                                          .positionIdioma]["HoverCarne"])
+                                      widget.language.dataJson[widget.language
+                                          .positionLanguage]["HoverCarne"])
                                 },
                                 idioma: widget.language,
                                 svgpPath: 'assets/Icons/Meat.svg',
@@ -226,11 +226,11 @@ class _Carta extends State<Letter> {
                                 function: () => {
                                   navigationList(
                                       widget.listFood
-                                          .where((element) => element.isBebida)
+                                          .where((element) => element.isDrink)
                                           .toList(),
                                       "assets/images/bannerBebida.webp",
-                                      widget.language.datosJson[widget.language
-                                          .positionIdioma]["HoverBebida"])
+                                      widget.language.dataJson[widget.language
+                                          .positionLanguage]["HoverBebida"])
                                 },
                                 idioma: widget.language,
                                 svgpPath: 'assets/Icons/Drink.svg',
@@ -242,11 +242,11 @@ class _Carta extends State<Letter> {
                                 function: () => {
                                   navigationList(
                                       widget.listFood
-                                          .where((element) => element.isPostre)
+                                          .where((element) => element.isDessert)
                                           .toList(),
                                       "assets/images/bannerPostre.webp",
-                                      widget.language.datosJson[widget
-                                          .language.positionIdioma]["Postre"])
+                                      widget.language.dataJson[widget
+                                          .language.positionLanguage]["Postre"])
                                 },
                                 idioma: widget.language,
                                 svgpPath: 'assets/Icons/Postre.svg',
@@ -312,7 +312,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                         10.0), // Ajusta el radio de los bordes
                     child: CachedNetworkImage(
-                      imageUrl: comida.foto,
+                      imageUrl: comida.pathImage,
                       height: size.height * 0.16,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -326,7 +326,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: AutoSizeText(
-                            comida.nombre,
+                            comida.name,
                             maxLines: 1,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -338,7 +338,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: AutoSizeText(
-                            "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                            "${idioma.dataJson[idioma.positionLanguage]["Precio"]}: ${(comida.price * monedaEnUso.converter).toStringAsFixed(2)} ${monedaEnUso.symbol}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,

@@ -61,12 +61,12 @@ class _SettingView extends State<SettingView> {
       child: ListView(children: [
         TitlePageSetting(
             size: widget.size,
-            title: widget.idioma.datosJson[widget.idioma.positionIdioma]
+            title: widget.idioma.dataJson[widget.idioma.positionLanguage]
                 ["MiCuenta"]),
         if (widget.person != null)
           InformationUser(
             size: widget.size,
-            title: widget.idioma.datosJson[widget.idioma.positionIdioma]
+            title: widget.idioma.dataJson[widget.idioma.positionLanguage]
                 ["Nombre"],
             subtitle: widget.person!.name,
           ),
@@ -79,12 +79,12 @@ class _SettingView extends State<SettingView> {
             ? ContaninerButtonFunction(
                 size: widget.size,
                 functionCall: widget.funDesbloquearte,
-                titulo: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                titulo: widget.idioma.dataJson[widget.idioma.positionLanguage]
                     ["Cerrar_sesion"])
             : ContaninerButtonFunction(
                 size: widget.size,
                 functionCall: widget.funNavegarLogin,
-                titulo: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                titulo: widget.idioma.dataJson[widget.idioma.positionLanguage]
                     ["Iniciar_sesion"]),
         Container(
           height: widget.size.height * 0.9,
@@ -93,19 +93,19 @@ class _SettingView extends State<SettingView> {
             children: [
               TitlePageSetting(
                   size: widget.size,
-                  title: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                  title: widget.idioma.dataJson[widget.idioma.positionLanguage]
                       ["Ajustes"]),
               CambioCoolDropdown(
                   size: widget.size,
-                  type: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                  type: widget.idioma.dataJson[widget.idioma.positionLanguage]
                       ["Idioma"],
                   dropdownController: widget.lenguageDropdownController,
-                  position: widget.idioma.positionIdioma,
+                  position: widget.idioma.positionLanguage,
                   function: widget.funCambiarIdioma,
                   dropdownItems: widget.lenguageDropdownItems),
               CambioCoolDropdown(
                   size: widget.size,
-                  type: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                  type: widget.idioma.dataJson[widget.idioma.positionLanguage]
                       ["Moneda"],
                   dropdownController: widget.monedaDropdownController,
                   position: widget.monedas.indexOf(widget.monedEnUso),
@@ -115,6 +115,7 @@ class _SettingView extends State<SettingView> {
                 idioma: widget.idioma,
                 size: widget.size,
               ),
+              if(widget.person!=null)
               ButtonTastyGpt(size: widget.size),
             ],
           ),

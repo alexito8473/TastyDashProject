@@ -54,7 +54,7 @@ class _ListFood extends State<ListFood> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -99,6 +99,9 @@ class _ListFood extends State<ListFood> {
                   maxLines: 1,
                 ),
               )),
+          PositionButtonBack(
+            size: size,
+          ),
           Container(
             margin: EdgeInsets.only(
                 top: size.height * 0.25, bottom: size.height * 0.01),
@@ -119,7 +122,7 @@ class _ListFood extends State<ListFood> {
                         alignment: Alignment.bottomCenter,
                         transform: Matrix4.identity()..scale(opacity, opacity),
                         child: BannerFood(
-                          comida: widget.listFood[index],
+                          food: widget.listFood[index],
                           monedaEnUso: widget.coin,
                           idioma: widget.language,
                           person: widget.person,
@@ -130,7 +133,6 @@ class _ListFood extends State<ListFood> {
           ),
         ],
       ),
-      floatingActionButton: const ButtonBack(),
     );
   }
 }

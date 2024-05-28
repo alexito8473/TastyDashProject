@@ -96,7 +96,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.transparent,
                       image: DecorationImage(
-                          image: AssetImage(comida.foto),
+                          image: AssetImage(comida.pathImage),
                           fit: BoxFit.cover,
                           alignment: Alignment.center,
                           isAntiAlias: true)),
@@ -110,7 +110,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: AutoSizeText(
-                            comida.nombre,
+                            comida.name,
                             maxLines: 1,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class ComidaViewCarrusel extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: AutoSizeText(
-                            "${idioma.datosJson[idioma.positionIdioma]["Precio"]}: ${(comida.precio * monedaEnUso.conversor).toStringAsFixed(2)} ${monedaEnUso.simbolo}",
+                            "${idioma.dataJson[idioma.positionLanguage]["Precio"]}: ${(comida.price * monedaEnUso.converter).toStringAsFixed(2)} ${monedaEnUso.symbol}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,

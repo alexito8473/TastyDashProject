@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/Food.dart';
@@ -22,7 +23,8 @@ class LoadImageInCache {
   static Future<void> loadImagesListFood(
       BuildContext context, List<Food> listFood) async {
     for (int i = 0; i < listFood.length; i++) {
-      await precacheImage(AssetImage(listFood[i].foto), context);
+      await precacheImage(
+          CachedNetworkImageProvider(listFood[i].pathImage), context);
     }
   }
 }

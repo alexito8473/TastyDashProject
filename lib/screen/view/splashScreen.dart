@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -5,10 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/models/Review.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
 
 import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
+import '../../utils/Constant.dart';
 import '../../utils/LoadImagesFoodCache.dart';
 import '../../utils/Readjson.dart';
 import '../widget/genericWidget.dart';
@@ -25,18 +29,18 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    List<Food> listFood = createListFood();
     Person? person;
     BitmapDescriptor icon;
     String? gmail;
     Future.delayed(const Duration(milliseconds: 0), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       List dataJson = await readJson();
-      LoadImageInCache.loadImagesApplication(context);
-      LoadImageInCache.loadImagesListFood(context, listFood);
-      if ((gmail = prefs.getString("Gmail")) == null) {
+      List<Food> listFood = await RealTimeService.extractFoodList();
+      await LoadImageInCache.loadImagesApplication(context);
+      await LoadImageInCache.loadImagesListFood(context,listFood);
+      if ((gmail = prefs.getString(Constant.SharedPreferences_MAIL)) == null) {
         person = null;
-        prefs.remove("Gmail");
+        prefs.remove(Constant.SharedPreferences_MAIL);
       } else {
         person = await RealTimeService.getUserData(
             gmail!, FirebaseDatabase.instance.ref());
@@ -48,25 +52,27 @@ class _SplashScreen extends State<SplashScreen> {
           MaterialPageRoute(
               builder: (context) => HomePage(
                     person: person,
-                    lenguage: selectLanguage(prefs.getInt("Idioma"), dataJson),
+                    lenguage: selectLanguage(
+                        prefs.getInt(Constant.SharedPreferences_LANGUAGE),
+                        dataJson),
                     prefs: prefs,
                     icon: icon,
-                    coin: devolverTipoMoneda(prefs.getString("SimboloMoneda")),
+                    coin: devolverTipoMoneda(
+                        prefs.getString(Constant.SharedPreferences_COIN)),
                     initialPosition: 0,
-                    listFood: createListFood(),
+                    listFood: listFood,
                   )),
           (route) => false);
     });
   }
-
   Language selectLanguage(int? position, List dataJson) {
     if (position == null) {
-      return Language(datosJson: dataJson, positionIdioma: 0);
+      return Language(dataJson: dataJson, positionLanguage: 0);
     } else {
       if (position >= 0 && position <= 1) {
-        return Language(datosJson: dataJson, positionIdioma: position);
+        return Language(dataJson: dataJson, positionLanguage: position);
       } else {
-        return Language(datosJson: dataJson, positionIdioma: 0);
+        return Language(dataJson: dataJson, positionLanguage: 0);
       }
     }
   }
@@ -75,7 +81,7 @@ class _SplashScreen extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        Background(asset: "assets/images/screen.webp"),
+        const Background(asset: "assets/images/screen.webp"),
         const Center(
             child: Padding(
           padding: EdgeInsets.only(bottom: 20),

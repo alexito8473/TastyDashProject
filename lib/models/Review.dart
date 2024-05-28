@@ -1,12 +1,12 @@
 class Review {
-  String autor;
-  DateTime publicacion;
-  double valoracion;
+  String author;
+  DateTime publication;
+  double rating;
   String content;
 
   Review(
-      {required this.autor,
-      required this.publicacion,
-      required this.valoracion,
+      {required this.author,
+      required this.publication,
+      required this.rating,
       required this.content});
 }

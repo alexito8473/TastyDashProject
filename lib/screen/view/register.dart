@@ -72,7 +72,7 @@ class _Registrarse extends State<Registrarse> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Background(asset: "assets/images/register.webp"),
+        const Background(asset: "assets/images/register.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(
@@ -81,7 +81,7 @@ class _Registrarse extends State<Registrarse> {
                   padding: EdgeInsets.only(top: size.height * 0.1),
                   child: Titular(
                       title:
-                          widget.idioma.datosJson[widget.idioma.positionIdioma]
+                          widget.idioma.dataJson[widget.idioma.positionLanguage]
                               ["Registrarse"])),
               Container(
                   margin: EdgeInsets.only(
@@ -89,7 +89,7 @@ class _Registrarse extends State<Registrarse> {
                       left: size.width * 0.1,
                       right: size.width * 0.1),
                   child: TextFieldMio(
-                    hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
                         ["Nombre"],
                     sizeContext: size,
                     textType: TextInputType.name,
@@ -114,7 +114,7 @@ class _Registrarse extends State<Registrarse> {
                   child: TextFieldMio(
                     controller: _passwordController,
                     sizeContext: size,
-                    hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
                         ["Contraseña"],
                     icono: Icons.lock,
                     textType: TextInputType.name,
@@ -133,7 +133,7 @@ class _Registrarse extends State<Registrarse> {
                   foregroundColor: Colors.black,
                   onPressed: () => register(),
                   child: Text(
-                    widget.idioma.datosJson[widget.idioma.positionIdioma]
+                    widget.idioma.dataJson[widget.idioma.positionLanguage]
                         ["Registrarse"],
                     style: const TextStyle(fontSize: 20),
                   ),

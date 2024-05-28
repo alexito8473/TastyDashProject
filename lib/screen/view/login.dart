@@ -31,6 +31,25 @@ class _Login extends State<Login> {
   final TextEditingController _gmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late Person person;
+  void navigationRegister() {
+    Navigator.of(context).push(PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 1100),
+      reverseTransitionDuration: const Duration(milliseconds: 700),
+      barrierColor: Colors.black,
+      opaque: true,
+      barrierDismissible: true,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: Registrarse(
+            idioma: widget.idioma,
+            prefs: widget.prefs,
+            listaComida: widget.listaComida,
+          ),
+        );
+      },
+    ));
+  }
 
   void login() async {
     setState(() {
@@ -70,7 +89,7 @@ class _Login extends State<Login> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Background(asset: "assets/images/start.webp"),
+        const Background(asset: "assets/images/start.webp"),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: ListView(
@@ -95,7 +114,7 @@ class _Login extends State<Login> {
                   child: TextFieldMio(
                     controller: _passwordController,
                     sizeContext: size,
-                    hint: widget.idioma.datosJson[widget.idioma.positionIdioma]
+                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
                         ["Contraseña"],
                     icono: Icons.lock,
                     textType: TextInputType.name,
@@ -118,33 +137,14 @@ class _Login extends State<Login> {
                           color: Colors.black,
                         )
                       : Text(
-                          widget.idioma.datosJson[widget.idioma.positionIdioma]
+                          widget.idioma.dataJson[widget.idioma.positionLanguage]
                               ["Iniciar_sesion"],
                           style: const TextStyle(fontSize: 20),
                         ),
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(PageRouteBuilder(
-                    transitionDuration: const Duration(milliseconds: 1100),
-                    reverseTransitionDuration:
-                        const Duration(milliseconds: 700),
-                    barrierColor: Colors.black,
-                    opaque: true,
-                    barrierDismissible: true,
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: Registrarse(
-                          idioma: widget.idioma,
-                          prefs: widget.prefs,
-                          listaComida: widget.listaComida,
-                        ),
-                      );
-                    },
-                  ));
-                },
+                onTap: () => navigationRegister(),
                 child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(bottom: 5),
@@ -157,7 +157,7 @@ class _Login extends State<Login> {
                           bottom: BorderSide(color: Colors.white, width: 2)),
                     ),
                     child: Text(
-                      widget.idioma.datosJson[widget.idioma.positionIdioma]
+                      widget.idioma.dataJson[widget.idioma.positionLanguage]
                           ["Crear_una_cuenta"],
                       style: const TextStyle(
                           fontStyle: FontStyle.normal,

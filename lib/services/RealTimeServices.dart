@@ -1,7 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/Food.dart';
 import '../models/Person.dart';
+import '../models/Review.dart';
+import '../utils/Constant.dart';
 import 'AuthServices.dart';
 
 class RealTimeService {
@@ -11,18 +14,17 @@ class RealTimeService {
     DatabaseReference date = FirebaseDatabase.instance.ref();
     if (await AuthService.sigInAuth(email, password)) {
       person = await getUserData(email, date);
-      await pref.setString("Gmail", person.gmail);
+      await pref.setString(Constant.SharedPreferences_MAIL, person.gmail);
     }
     return person;
   }
 
   static Future<void> updateListFoodUser(Person person) async {
-    Person? person;
     DatabaseReference date = FirebaseDatabase.instance.ref();
     await date
         .child(
-            "Person/${person!.gmail.trim().split("@")[0].toLowerCase()}/listaComida")
-        .set(person!.listFood!);
+            "Person/${person.gmail.trim().split("@")[0].toLowerCase()}/listaComida")
+        .set(person.listFood!);
   }
 
   static Future<Person?> setUserData(String name, String email, String password,
@@ -38,7 +40,7 @@ class RealTimeService {
         "listaComida": [""]
       });
       person = Person(name: name, gmail: email, listFood: []);
-      await pref.setString("Gmail", person.gmail);
+      await pref.setString(Constant.SharedPreferences_MAIL, person.gmail);
     }
     return person;
   }
@@ -59,5 +61,57 @@ class RealTimeService {
         name: snapshot.value.toString(),
         gmail: email,
         listFood: listFoodFinal.value is List<dynamic> ? listFood : []);
+  }
+
+  static Future<List<Food>> extractFoodList() async {
+    DataSnapshot snapshot =
+        await (FirebaseDatabase.instance.ref().child("Food/")).get();
+    List<Food> listFood = [];
+    int countFood = (snapshot.value as List).length;
+    for (int i = 0; i < countFood; i++) {
+      listFood.add(Food(
+          name: snapshot.child("$i/name").value as String,
+          pathImage: snapshot.child("$i/pathImage").value as String,
+          isMeat: snapshot.child("$i/isMeat").value as bool,
+          isBurguer: snapshot.child("$i/isBurguer").value as bool,
+          isSalad: snapshot.child("$i/isSalad").value as bool,
+          isDessert: snapshot.child("$i/isDessert").value as bool,
+          isFish: snapshot.child("$i/isFish").value as bool,
+          isDrink: snapshot.child("$i/isDrink").value as bool,
+          price: double.parse(snapshot.child("$i/price").value.toString()),
+          timeMinute: snapshot.child("$i/timeMinute").value as int,
+          haveCelery: snapshot.child("$i/haveCelery").value as bool,
+          haveMollusks: snapshot.child("$i/haveMollusks").value as bool,
+          haveCrustaceans: snapshot.child("$i/haveCrustaceans").value as bool,
+          haveMustard: snapshot.child("$i/haveMustard").value as bool,
+          haveEgg: snapshot.child("$i/haveEgg").value as bool,
+          haveFish: snapshot.child("$i/haveFish").value as bool,
+          havePeanuts: snapshot.child("$i/havePeanuts").value as bool,
+          haveGluten: snapshot.child("$i/haveGluten").value as bool,
+          haveMilk: snapshot.child("$i/haveMilk").value as bool,
+          haveSulfur: snapshot.child("$i/haveSulfur").value as bool,
+          ingredients: snapshot.child("$i/ingredients").value == null
+              ? []
+              : snapshot.child("$i/ingredients").value as List<dynamic>,
+          listReview: _extractReviewList(snapshot.child("$i/listReview"))));
+    }
+    return listFood;
+  }
+
+  static List<Review> _extractReviewList(DataSnapshot dataReview) {
+    List<Review> listReview = [];
+    int cantidad = (dataReview.value as List<dynamic>).length;
+    for (int i = 0; i < cantidad; i++) {
+      listReview.add(Review(
+          author: dataReview.child("$i/author").value as String,
+          publication: DateTime.parse(
+              dataReview.child("$i/publication").value as String),
+          rating: double.parse(dataReview.child("$i/rating").value.toString()),
+          content: dataReview.child("$i/content").value == null
+              ? ""
+              : dataReview.child("$i/content").value as String));
+    }
+    listReview.removeWhere((element) => element.content == "");
+    return listReview;
   }
 }
