@@ -123,10 +123,10 @@ class _ListFood extends State<ListFood> {
                         transform: Matrix4.identity()..scale(opacity, opacity),
                         child: BannerFood(
                           food: widget.listFood[index],
-                          monedaEnUso: widget.coin,
-                          idioma: widget.language,
+                          coin: widget.coin,
+                          language: widget.language,
                           person: widget.person,
-                          anadirQuitarProducto: vacio,
+                          addOrRemoveProduct: vacio,
                         )));
               },
             ),

@@ -6,10 +6,10 @@ import 'package:tfgsaladillo/models/Language.dart';
 
 import '../../models/Review.dart';
 
-String contiene(bool isContiene, Language idioma) {
-  return isContiene
-      ? idioma.dataJson[idioma.positionLanguage]["Contiene"]
-      : idioma.dataJson[idioma.positionLanguage]["NoContiene"];
+String contain(bool isContain, Language language) {
+  return isContain
+      ? language.dataJson[language.positionLanguage]["Contiene"]
+      : language.dataJson[language.positionLanguage]["NoContiene"];
 }
 
 class AllergenRow extends StatelessWidget {
@@ -44,7 +44,7 @@ class AllergenRow extends StatelessWidget {
             width: size.width * 0.3,
             child: AutoSizeText(
               maxLines: 1,
-              contiene(have, language),
+              contain(have, language),
               style: const TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
@@ -161,10 +161,10 @@ class ExpansionIngredients extends StatelessWidget {
 }
 
 class ExpansionReview extends StatelessWidget {
-  final Food comida;
-  final Language idioma;
+  final Food food;
+  final Language language;
 
-  const ExpansionReview(this.comida, this.idioma, {super.key});
+  const ExpansionReview(this.food, this.language, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -176,8 +176,8 @@ class ExpansionReview extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 25)),
       expandedAlignment: Alignment.centerLeft,
       children: [
-        ...List.generate(comida.listReview.length,
-            (index) => ShowReview(review: comida.listReview[index]))
+        ...List.generate(food.listReview.length,
+            (index) => ShowReview(review: food.listReview[index]))
       ],
     );
   }

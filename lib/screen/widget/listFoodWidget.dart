@@ -10,22 +10,22 @@ import '../../models/Person.dart';
 
 class BannerFood extends StatelessWidget {
   final Food food;
-  final Coin monedaEnUso;
-  final Language idioma;
+  final Coin coin;
+  final Language language;
   final Person? person;
-  final Function anadirQuitarProducto;
+  final Function addOrRemoveProduct;
 
   const BannerFood(
       {super.key,
       required this.food,
-      required this.monedaEnUso,
-      required this.idioma,
+      required this.coin,
+      required this.language,
       required this.person,
-      required this.anadirQuitarProducto});
+      required this.addOrRemoveProduct});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
@@ -37,10 +37,10 @@ class BannerFood extends StatelessWidget {
                 opacity: animation,
                 child: PageFood(
                   food: food,
-                  language: idioma,
-                  coin: monedaEnUso,
+                  language: language,
+                  coin: coin,
                   person: person,
-                  function: anadirQuitarProducto,
+                  function: addOrRemoveProduct,
                 ));
           },
         ));
@@ -80,7 +80,7 @@ class BannerFood extends StatelessWidget {
                       Expanded(
                           child: Center(
                         child: AutoSizeText(
-                          "${idioma.dataJson[idioma.positionLanguage]["Precio"]}: ${(food.price * monedaEnUso.converter).toStringAsFixed(2)} ${monedaEnUso.symbol}",
+                          "${language.dataJson[language.positionLanguage]["Precio"]}: ${(food.price * coin.converter).toStringAsFixed(2)} ${coin.symbol}",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,
@@ -92,7 +92,7 @@ class BannerFood extends StatelessWidget {
                           child: Center(
                         child: AutoSizeText(
                           maxLines: 1,
-                          "${food.timeMinute} ${idioma.dataJson[idioma.positionLanguage]["Minuto"]}",
+                          "${food.timeMinute} ${language.dataJson[language.positionLanguage]["Minuto"]}",
                           style: const TextStyle(
                               color: Colors.white, fontSize: 25),
                           textAlign: TextAlign.left,

@@ -11,8 +11,10 @@ class Constant {
       "assets/images/fondoSuelo.webp";
   static const String SharedPreferences_MAIL =
       "MAIL";
-  static const String SharedPreferences_COIN =
+  static const String SHARED_PREFERENCE_COIN =
       "COIN";
-  static const String SharedPreferences_LANGUAGE =
+  static const String SHARED_PREFERENCE_LANGUAGE =
       "LANGUAGE";
+  static const String APIKEY_GEMINIS =
+      "AIzaSyA9RgM-495b9dsa4RLy2rp18aTT9tP_3TU";
 }

@@ -9,37 +9,37 @@ import '../../models/Coin.dart';
 import '../widget/settingViewWidget.dart';
 
 class SettingView extends StatefulWidget {
-  final Function funDesbloquearte;
-  final Function funCambiarMoneda;
-  final Function funCambiarIdioma;
-  final Function funNavegarLogin;
-  final DropdownController lenguageDropdownController;
-  final List<CoolDropdownItem<String>> lenguageDropdownItems;
-  final DropdownController monedaDropdownController;
-  final List<CoolDropdownItem<String>> monedaDropdownItems;
-  final List<Coin> monedas;
-  final Language idioma;
+  final Function disconnected;
+  final Function changeCoin;
+  final Function changeLanguage;
+  final Function navigationLogin;
+  final DropdownController languageDropdownController;
+  final List<CoolDropdownItem<String>> languageDropdownItems;
+  final DropdownController coinDropdownController;
+  final List<CoolDropdownItem<String>> coinDropdownItems;
+  final List<Coin> coins;
+  final Language language;
   final Size size;
-  final ImageProvider imagenBannerAjustes;
-  Coin monedEnUso;
+  final ImageProvider imageBannerSettings;
+  Coin coin;
   final Person? person;
 
   SettingView(
       {super.key,
-      required this.funDesbloquearte,
-      required this.funCambiarMoneda,
-      required this.funCambiarIdioma,
-      required this.funNavegarLogin,
+      required this.disconnected,
+      required this.changeCoin,
+      required this.changeLanguage,
+      required this.navigationLogin,
       required this.size,
-      required this.imagenBannerAjustes,
-      required this.idioma,
+      required this.imageBannerSettings,
+      required this.language,
       required this.person,
-      required this.lenguageDropdownController,
-      required this.lenguageDropdownItems,
-      required this.monedaDropdownController,
-      required this.monedaDropdownItems,
-      required this.monedas,
-      required this.monedEnUso});
+      required this.languageDropdownController,
+      required this.languageDropdownItems,
+      required this.coinDropdownController,
+      required this.coinDropdownItems,
+      required this.coins,
+      required this.coin});
 
   @override
   State<SettingView> createState() => _SettingView();
@@ -54,19 +54,19 @@ class _SettingView extends State<SettingView> {
       decoration: BoxDecoration(
           color: Colors.black,
           image: DecorationImage(
-              image: widget.imagenBannerAjustes,
+              image: widget.imageBannerSettings,
               fit: BoxFit.fill,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.6), BlendMode.darken))),
       child: ListView(children: [
         TitlePageSetting(
             size: widget.size,
-            title: widget.idioma.dataJson[widget.idioma.positionLanguage]
+            title: widget.language.dataJson[widget.language.positionLanguage]
                 ["MiCuenta"]),
         if (widget.person != null)
           InformationUser(
             size: widget.size,
-            title: widget.idioma.dataJson[widget.idioma.positionLanguage]
+            title: widget.language.dataJson[widget.language.positionLanguage]
                 ["Nombre"],
             subtitle: widget.person!.name,
           ),
@@ -76,15 +76,15 @@ class _SettingView extends State<SettingView> {
               title: "E-mail",
               subtitle: widget.person!.gmail),
         widget.person != null
-            ? ContaninerButtonFunction(
+            ? ContainerButtonFunction(
                 size: widget.size,
-                functionCall: widget.funDesbloquearte,
-                titulo: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                functionCall: widget.disconnected,
+                title: widget.language.dataJson[widget.language.positionLanguage]
                     ["Cerrar_sesion"])
-            : ContaninerButtonFunction(
+            : ContainerButtonFunction(
                 size: widget.size,
-                functionCall: widget.funNavegarLogin,
-                titulo: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                functionCall: widget.navigationLogin,
+                title: widget.language.dataJson[widget.language.positionLanguage]
                     ["Iniciar_sesion"]),
         Container(
           height: widget.size.height * 0.9,
@@ -93,30 +93,30 @@ class _SettingView extends State<SettingView> {
             children: [
               TitlePageSetting(
                   size: widget.size,
-                  title: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                  title: widget.language.dataJson[widget.language.positionLanguage]
                       ["Ajustes"]),
-              CambioCoolDropdown(
+              ChangeCoolDropdown(
                   size: widget.size,
-                  type: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                  type: widget.language.dataJson[widget.language.positionLanguage]
                       ["Idioma"],
-                  dropdownController: widget.lenguageDropdownController,
-                  position: widget.idioma.positionLanguage,
-                  function: widget.funCambiarIdioma,
-                  dropdownItems: widget.lenguageDropdownItems),
-              CambioCoolDropdown(
+                  dropdownController: widget.languageDropdownController,
+                  position: widget.language.positionLanguage,
+                  function: widget.changeLanguage,
+                  dropdownItems: widget.languageDropdownItems),
+              ChangeCoolDropdown(
                   size: widget.size,
-                  type: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                  type: widget.language.dataJson[widget.language.positionLanguage]
                       ["Moneda"],
-                  dropdownController: widget.monedaDropdownController,
-                  position: widget.monedas.indexOf(widget.monedEnUso),
-                  function: widget.funCambiarMoneda,
-                  dropdownItems: widget.monedaDropdownItems),
-              BotonTerminosDeUso(
-                idioma: widget.idioma,
+                  dropdownController: widget.coinDropdownController,
+                  position: widget.coins.indexOf(widget.coin),
+                  function: widget.changeCoin,
+                  dropdownItems: widget.coinDropdownItems),
+              ButtonTermOfUse(
+                language: widget.language,
                 size: widget.size,
               ),
               if(widget.person!=null)
-              ButtonTastyGpt(size: widget.size),
+              ButtonTastyGpt(size: widget.size, language: widget.language,),
             ],
           ),
         )

@@ -1,9 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../models/Language.dart';
@@ -14,7 +11,7 @@ class AddReview extends StatefulWidget {
   final Person person;
   final String heroTag;
   final Language language;
-  final Function(Person person, double rating, String content) addReview;
+  final Function addReview;
   const AddReview(
       {super.key,
       required this.person,
@@ -22,10 +19,10 @@ class AddReview extends StatefulWidget {
       required this.language,
       required this.addReview});
   @override
-  State<StatefulWidget> createState() => _AddReview();
+  State<StatefulWidget> createState() => _AddReviewState();
 }
 
-class _AddReview extends State<AddReview> {
+class _AddReviewState extends State<AddReview> {
   final TextEditingController _controller = TextEditingController();
   double assessment = 0;
   void checkReview() async {
@@ -41,14 +38,16 @@ class _AddReview extends State<AddReview> {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           content: AwesomeSnackbarContent(
-            title: 'Advertencia',
-            message: 'Debes decirnos cual es tu opinión',
+            title: widget.language.dataJson[widget.language.positionLanguage]
+                ["WARNING"],
+            message: widget.language.dataJson[widget.language.positionLanguage]
+                ["WARNING_TEXT_1"],
             contentType: ContentType.warning,
           ),
         ));
     } else {
       if (opinion.length >= 20 && opinion.length <= 80) {
-        await widget.addReview(widget.person, assessment, opinion);
+        await widget.addReview(assessment, opinion);
         Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
@@ -61,9 +60,10 @@ class _AddReview extends State<AddReview> {
             behavior: SnackBarBehavior.fixed,
             backgroundColor: Colors.transparent,
             content: AwesomeSnackbarContent(
-              title: 'Advertencia',
-              message:
-                  'Debes introducir entre 20 y 80 caracteres en tu opinión',
+              title: widget.language.dataJson[widget.language.positionLanguage]
+                  ["WARNING"],
+              message: widget.language
+                  .dataJson[widget.language.positionLanguage]["WARNING_TEXT_2"],
               contentType: ContentType.warning,
             ),
           ));
@@ -112,9 +112,10 @@ class _AddReview extends State<AddReview> {
                     margin: EdgeInsets.symmetric(vertical: size.height * 0.03),
                     alignment: Alignment.center,
                     width: size.width,
-                    child: const Text(
-                      "¿Cuantas estrellas se merece nuestro plato?",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    child: Text(
+                      widget.language.dataJson[widget.language.positionLanguage]
+                          ["TITLE_ADD_REVIEW"],
+                      style: const TextStyle(color: Colors.white, fontSize: 30),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -139,9 +140,10 @@ class _AddReview extends State<AddReview> {
                     margin: EdgeInsets.symmetric(vertical: size.height * 0.03),
                     alignment: Alignment.center,
                     width: size.width,
-                    child: const Text(
-                      "¡Danos tu opinión!",
-                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    child: Text(
+                      widget.language.dataJson[widget.language.positionLanguage]
+                          ["SUBTITLE_ADD_REVIEW"],
+                      style: const TextStyle(color: Colors.white, fontSize: 30),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -182,7 +184,7 @@ class _AddReview extends State<AddReview> {
                       child: Text(
                         widget.language
                                 .dataJson[widget.language.positionLanguage]
-                            ["Iniciar_sesion"],
+                            ["TEXT_BUTTON_ADD_REVIEW"],
                         style: const TextStyle(fontSize: 20),
                       ),
                     ),

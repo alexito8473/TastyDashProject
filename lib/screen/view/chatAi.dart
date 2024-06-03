@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Message.dart';
+import 'package:tfgsaladillo/services/GeminisServices.dart';
 
 class ChatAi extends StatefulWidget {
-  const ChatAi({super.key});
+  final Language language;
+  const ChatAi({super.key, required this.language});
 
   @override
   State<StatefulWidget> createState() => _ChatAi();
@@ -11,23 +13,37 @@ class ChatAi extends StatefulWidget {
 
 class _ChatAi extends State<ChatAi> {
   final TextEditingController _controller = TextEditingController();
-  static const String apiKey = "AIzaSyA9RgM-495b9dsa4RLy2rp18aTT9tP_3TU";
-  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-  late final geminisChat;
+  final GeminisServices gemini = GeminisServices();
   List<Message> listMessage = [];
 
-  @override
-  void initState() {
-    geminisChat = model.startChat(history: [
-      Content.text(
-          'Eres un asistente chat bot de una aplicación movil del empresa "Tasty Dash", te vas a llamar TastyGPT, te dare un contexto  "La aplicación está destinada para una cadena de restaurantes, la aplicación tiene funcionalidades como tener un mapa de todas las ubicaciones de los restaurantes que están repartidos por toda España y en Gibraltar. Tiene 2 idiomas español y ingles. No tiene la opción de resarvar mesas, ni tampoco llevar a domicilio Sus platos son BurguerMax, BurguerUltra, Burguer Buey, Burguer Complete,The Ultimate Beef Burger,Harmony Burger,Veggie Delight,Breaded pepper,Shrimp Scampi,Vegetable cream,Vegetable taco,Scnizel, Iberic secret, Ragout, Meat balls, Fillet, Fried shrimp, Tilapia, Octo-Bite, Besugo, Octo-Grilled, Octo-chips, Coca cola,Coca cola zero, Fanta, Te"')
-    ]);
-    super.initState();
+  void communication() async {
+    String? response;
+    var text = _controller.text;
+    _controller.clear();
+    if (text.isNotEmpty) {
+      setState(() {
+        listMessage.insert(
+            0,
+            Message(
+                text: text,
+                person: widget.language
+                    .dataJson[widget.language.positionLanguage]["PERSON"]));
+      });
+      response = (await gemini.sendMessage(text)).text;
+      setState(() {
+        listMessage.insert(
+            0,
+            Message(
+                text: response ?? widget.language
+                    .dataJson[widget.language.positionLanguage]["GEMINI_ERROR"],
+                person: "TastyDash"));
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Stack(
       children: [
         ShaderMask(
@@ -89,29 +105,12 @@ class _ChatAi extends State<ChatAi> {
                               contentPadding: EdgeInsets.only(
                                   bottom: size.height * 0.01,
                                   left: size.width * 0.01),
-                              hintText: "Envia un mensaje"),
+                              hintText: widget.language
+                                  .dataJson[widget.language.positionLanguage]["GEMINI_TEXT_HINT"]),
                         ),
                       ),
                       IconButton(
-                          onPressed: () async {
-                            var texto = _controller.text;
-                            _controller.clear();
-                            if (texto.isNotEmpty) {
-                              setState(() {
-                                listMessage.insert(
-                                    0, Message(text: texto, person: "person"));
-                              });
-                              var response = await geminisChat
-                                  .sendMessage(Content.text(texto));
-                              setState(() {
-                                listMessage.insert(
-                                    0,
-                                    Message(
-                                        text: response.text,
-                                        person: "TastyDash"));
-                              });
-                            }
-                          },
+                          onPressed: () => communication(),
                           icon: const Icon(
                             Icons.send,
                             size: 35,
@@ -168,8 +167,7 @@ class ViewMessage extends StatelessWidget {
             child: Text(
               message.text,
               textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 18),
-
+              style: const TextStyle(fontSize: 18),
             ),
           )
         ],

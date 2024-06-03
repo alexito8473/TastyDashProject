@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 
 import '../../models/Coin.dart';
@@ -8,21 +10,21 @@ import '../../models/Person.dart';
 import '../widget/specialViewWidget.dart';
 
 class SpecialView extends StatefulWidget {
-  final Language idioma;
+  final Language language;
   final Size size;
-  final List<Food> listaComida;
-  final Coin monedaEnUso;
+  final List<Food> listFood;
+  final Coin coin;
   final Function function;
-  bool cambioIconoPrecio;
+  bool changeIconPrice;
   Person person;
 
   SpecialView(
       {super.key,
       required this.size,
-      required this.idioma,
-      required this.listaComida,
-      required this.monedaEnUso,
-      required this.cambioIconoPrecio,
+      required this.language,
+      required this.listFood,
+      required this.coin,
+      required this.changeIconPrice,
       required this.function,
       required this.person});
 
@@ -32,35 +34,35 @@ class SpecialView extends StatefulWidget {
 
 class _EspecialView extends State<SpecialView> {
   late int cant = 0;
-  late List<Food> listaBurguer = [];
-  late List<Food> listaEnsalada = [];
-  late List<Food> listaPescado = [];
-  late List<Food> listaCarne = [];
-  late List<Food> listaBebida = [];
-  late List<Food> listaPostre = [];
+  late List<Food> listBurguer = [];
+  late List<Food> listSalad = [];
+  late List<Food> listFish = [];
+  late List<Food> listMeat = [];
+  late List<Food> listDrink = [];
+  late List<Food> listDessert = [];
 
   @override
   void initState() {
     super.initState();
-    listaBurguer.addAll(
-        widget.listaComida.where((element) => element.isBurguer).toList());
-    listaEnsalada.addAll(
-        widget.listaComida.where((element) => element.isSalad).toList());
-    listaPescado.addAll(
-        widget.listaComida.where((element) => element.isFish).toList());
-    listaCarne.addAll(
-        widget.listaComida.where((element) => element.isMeat).toList());
-    listaBebida.addAll(
-        widget.listaComida.where((element) => element.isDrink).toList());
-    listaPostre.addAll(
-        widget.listaComida.where((element) => element.isDessert).toList());
-    checkList(listaBurguer);
-    checkList(listaEnsalada);
-    checkList(listaPescado);
-    checkList(listaCarne);
-    checkList(listaBebida);
-    checkList(listaPostre);
-    orderAllList(!widget.cambioIconoPrecio);
+    listBurguer.addAll(
+        widget.listFood.where((element) => element.isBurguer).toList());
+    listSalad.addAll(
+        widget.listFood.where((element) => element.isSalad).toList());
+    listFish
+        .addAll(widget.listFood.where((element) => element.isFish).toList());
+    listMeat
+        .addAll(widget.listFood.where((element) => element.isMeat).toList());
+    listDrink.addAll(
+        widget.listFood.where((element) => element.isDrink).toList());
+    listDessert.addAll(
+        widget.listFood.where((element) => element.isDessert).toList());
+    checkList(listBurguer);
+    checkList(listSalad);
+    checkList(listFish);
+    checkList(listMeat);
+    checkList(listDrink);
+    checkList(listDessert);
+    orderAllList(!widget.changeIconPrice);
   }
 
   void checkList(List<Food> lista) {
@@ -75,12 +77,12 @@ class _EspecialView extends State<SpecialView> {
 
   void orderAllList(bool control) {
     setState(() {
-      orderList(listaBurguer, control);
-      orderList(listaEnsalada, control);
-      orderList(listaPescado, control);
-      orderList(listaCarne, control);
-      orderList(listaBebida, control);
-      orderList(listaPostre, control);
+      orderList(listBurguer, control);
+      orderList(listSalad, control);
+      orderList(listFish, control);
+      orderList(listMeat, control);
+      orderList(listDrink, control);
+      orderList(listDessert, control);
     });
   }
 
@@ -99,13 +101,13 @@ class _EspecialView extends State<SpecialView> {
   void resetBurger(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaBurguer.isEmpty;
-      listaBurguer.clear();
-      listaBurguer.addAll(widget.listaComida
+      control = listBurguer.isEmpty;
+      listBurguer.clear();
+      listBurguer.addAll(widget.listFood
           .where((element) =>
               element.isBurguer && listNameFood.contains(element.name))
           .toList());
-      if (listaBurguer.isEmpty) {
+      if (listBurguer.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -120,13 +122,13 @@ class _EspecialView extends State<SpecialView> {
   void resetSalad(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaEnsalada.isEmpty;
-      listaEnsalada.clear();
-      listaEnsalada.addAll(widget.listaComida
+      control = listSalad.isEmpty;
+      listSalad.clear();
+      listSalad.addAll(widget.listFood
           .where((element) =>
               element.isSalad && listNameFood.contains(element.name))
           .toList());
-      if (listaEnsalada.isEmpty) {
+      if (listSalad.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -141,13 +143,13 @@ class _EspecialView extends State<SpecialView> {
   void resetFish(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaPescado.isEmpty;
-      listaPescado.clear();
-      listaPescado.addAll(widget.listaComida
+      control = listFish.isEmpty;
+      listFish.clear();
+      listFish.addAll(widget.listFood
           .where((element) =>
               element.isFish && listNameFood.contains(element.name))
           .toList());
-      if (listaPescado.isEmpty) {
+      if (listFish.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -162,13 +164,13 @@ class _EspecialView extends State<SpecialView> {
   void resetMeat(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaCarne.isEmpty;
-      listaCarne.clear();
-      listaCarne.addAll(widget.listaComida
+      control = listMeat.isEmpty;
+      listMeat.clear();
+      listMeat.addAll(widget.listFood
           .where((element) =>
               element.isMeat && listNameFood.contains(element.name))
           .toList());
-      if (listaCarne.isEmpty) {
+      if (listMeat.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -183,13 +185,13 @@ class _EspecialView extends State<SpecialView> {
   void resetDrink(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaBebida.isEmpty;
-      listaBebida.clear();
-      listaBebida.addAll(widget.listaComida
+      control = listDrink.isEmpty;
+      listDrink.clear();
+      listDrink.addAll(widget.listFood
           .where((element) =>
               element.isDrink && listNameFood.contains(element.name))
           .toList());
-      if (listaBebida.isEmpty) {
+      if (listDrink.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -204,13 +206,13 @@ class _EspecialView extends State<SpecialView> {
   void resetDessert(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listaPostre.isEmpty;
-      listaPostre.clear();
-      listaPostre.addAll(widget.listaComida
+      control = listDessert.isEmpty;
+      listDessert.clear();
+      listDessert.addAll(widget.listFood
           .where((element) =>
               element.isDessert && listNameFood.contains(element.name))
           .toList());
-      if (listaPostre.isEmpty) {
+      if (listDessert.isEmpty) {
         if (!control) {
           cant = cant - 1;
         }
@@ -234,7 +236,7 @@ class _EspecialView extends State<SpecialView> {
               width: widget.size.width,
               alignment: Alignment.center,
               child: Text(
-                widget.idioma.dataJson[widget.idioma.positionLanguage]
+                widget.language.dataJson[widget.language.positionLanguage]
                     ["Especial"],
                 style: const TextStyle(
                     letterSpacing: 2,
@@ -252,42 +254,42 @@ class _EspecialView extends State<SpecialView> {
                   indicatorWeight: 6,
                   dividerColor: Colors.orange,
                   tabs: [
-                    if (listaBurguer.isNotEmpty)
+                    if (listBurguer.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Burguer.svg",
                           width: 35,
                         ),
                       ),
-                    if (listaEnsalada.isNotEmpty)
+                    if (listSalad.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Salad.svg",
                           width: 35,
                         ),
                       ),
-                    if (listaPescado.isNotEmpty)
+                    if (listFish.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Fish.svg",
                           width: 35,
                         ),
                       ),
-                    if (listaCarne.isNotEmpty)
+                    if (listMeat.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Meat.svg",
                           width: 35,
                         ),
                       ),
-                    if (listaBebida.isNotEmpty)
+                    if (listDrink.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Drink.svg",
                           width: 35,
                         ),
                       ),
-                    if (listaPostre.isNotEmpty)
+                    if (listDessert.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Postre.svg",
@@ -305,68 +307,81 @@ class _EspecialView extends State<SpecialView> {
                               Colors.black.withOpacity(0.8), BlendMode.darken),
                           image: const AssetImage(
                               "assets/images/fondoEspecial.webp"))),
-                  child: TabBarView(children: [
-                    if (listaBurguer.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaBurguer,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetBurger,
-                        updateState: updateState,
-                      ),
-                    if (listaEnsalada.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaEnsalada,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetSalad,
-                        updateState: updateState,
-                      ),
-                    if (listaPescado.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaPescado,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetFish,
-                        updateState: updateState,
-                      ),
-                    if (listaCarne.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaCarne,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetMeat,
-                        updateState: updateState,
-                      ),
-                    if (listaBebida.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaBebida,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetDrink,
-                        updateState: updateState,
-                      ),
-                    if (listaPostre.isNotEmpty)
-                      ShowList(
-                        size: widget.size,
-                        listaComida: listaPostre,
-                        monedaEnUso: widget.monedaEnUso,
-                        idioma: widget.idioma,
-                        person: widget.person,
-                        anadirQuitarProducto: resetDessert,
-                        updateState: updateState,
-                      ),
-                  ])),
+                  child: cant == 0
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              "Elige tu producto favorito",
+                              style:
+                                  const TextStyle(color: Colors.white, fontSize: 30),
+                            ),
+                            Lottie.asset('assets/json/add.json')
+                          ],
+                        )
+                      : TabBarView(children: [
+                          if (listBurguer.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listBurguer,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetBurger,
+                              updateState: updateState,
+                            ),
+                          if (listSalad.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listSalad,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetSalad,
+                              updateState: updateState,
+                            ),
+                          if (listFish.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listFish,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetFish,
+                              updateState: updateState,
+                            ),
+                          if (listMeat.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listMeat,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetMeat,
+                              updateState: updateState,
+                            ),
+                          if (listDrink.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listDrink,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetDrink,
+                              updateState: updateState,
+                            ),
+                          if (listDessert.isNotEmpty)
+                            ShowList(
+                              size: widget.size,
+                              listFood: listDessert,
+                              coin: widget.coin,
+                              language: widget.language,
+                              person: widget.person,
+                              addOrRemoveList: resetDessert,
+                              updateState: updateState,
+                            ),
+                        ])),
             )
           ],
         ),
@@ -374,12 +389,12 @@ class _EspecialView extends State<SpecialView> {
             backgroundColor: Colors.orange,
             onPressed: () {
               widget.function();
-              orderAllList(widget.cambioIconoPrecio);
+              orderAllList(widget.changeIconPrice);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                widget.cambioIconoPrecio
+                widget.changeIconPrice
                     ? const Icon(
                         Icons.arrow_upward,
                         color: Colors.black,
@@ -389,7 +404,7 @@ class _EspecialView extends State<SpecialView> {
                         color: Colors.black,
                       ),
                 Text(
-                  widget.monedaEnUso.symbol,
+                  widget.coin.symbol,
                   style: TextStyle(
                       fontSize: widget.size.width * 0.06, color: Colors.black),
                 ),

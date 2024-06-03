@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:tfgsaladillo/services/RealTimeServices.dart';
 
 import '../../models/Food.dart';
 import '../../models/Language.dart';
@@ -43,56 +41,57 @@ class _PageReview extends State<PageReview> {
   }
 
   void recountRating(List<dynamic> listReview) {
-      countMaxReview = 0;
-      if (countMaxReview <
-          (countReviewFiveStar = listReview
-              .where((element) => element.rating == 5)
-              .length)) {
-        countMaxReview = countReviewFiveStar;
-      }
-      if (countMaxReview <
-          (countReviewFourStar = listReview
-              .where((element) => element.rating < 5 && element.rating >= 4)
-              .length)) {
-        countMaxReview = countReviewFourStar;
-      }
-      if (countMaxReview <
-          (countReviewThreeStar = listReview
-              .where((element) => element.rating < 4 && element.rating >= 3)
-              .length)) {
-        countMaxReview = countReviewThreeStar;
-      }
-      if (countMaxReview <
-          (countReviewTwoStar = listReview
-              .where((element) => element.rating < 3 && element.rating >= 2)
-              .length)) {
-        countMaxReview = countReviewTwoStar;
-      }
-      if (countMaxReview <
-          (countReviewOneStar = listReview
-              .where((element) => element.rating < 2 && element.rating >= 1)
-              .length)) {
-        countMaxReview = countReviewOneStar;
-      }
-      if (countMaxReview <
-          (countReviewZeroStar = listReview
-              .where((element) => element.rating < 1 && element.rating >= 0)
-              .length)) {
-        countMaxReview = countReviewZeroStar;
-      }
+    countMaxReview = 0;
+    if (countMaxReview <
+        (countReviewFiveStar =
+            listReview.where((element) => element.rating == 5).length)) {
+      countMaxReview = countReviewFiveStar;
+    }
+    if (countMaxReview <
+        (countReviewFourStar = listReview
+            .where((element) => element.rating < 5 && element.rating >= 4)
+            .length)) {
+      countMaxReview = countReviewFourStar;
+    }
+    if (countMaxReview <
+        (countReviewThreeStar = listReview
+            .where((element) => element.rating < 4 && element.rating >= 3)
+            .length)) {
+      countMaxReview = countReviewThreeStar;
+    }
+    if (countMaxReview <
+        (countReviewTwoStar = listReview
+            .where((element) => element.rating < 3 && element.rating >= 2)
+            .length)) {
+      countMaxReview = countReviewTwoStar;
+    }
+    if (countMaxReview <
+        (countReviewOneStar = listReview
+            .where((element) => element.rating < 2 && element.rating >= 1)
+            .length)) {
+      countMaxReview = countReviewOneStar;
+    }
+    if (countMaxReview <
+        (countReviewZeroStar = listReview
+            .where((element) => element.rating < 1 && element.rating >= 0)
+            .length)) {
+      countMaxReview = countReviewZeroStar;
+    }
   }
 
-  Future<void> addReview(Person person, double rating, String content) async {
+  void addReview(double rating, String content) async {
+    Review nowReview = Review(
+        author: widget.person.name,
+        publication: DateTime.now(),
+        rating: rating,
+        content: content);
     setState(() {
-      widget.food.listReview.add(Review(
-          author: widget.person.name,
-          publication: DateTime.now(),
-          rating: rating,
-          content: content));
+      widget.food.listReview.add(nowReview);
       widget.food.assessment += rating;
       widget.food.amountAssessment += 1;
       recountRating(widget.food.listReview);
     });
+    await RealTimeService.addReview(widget.food, nowReview);
     widget.function();
   }
 
@@ -105,8 +104,7 @@ class _PageReview extends State<PageReview> {
             person: widget.person,
             heroTag: widget.food.pathImage,
             language: widget.language,
-            addReview: (Person person, double rating, String content) async =>
-                await addReview(person, rating, content),
+            addReview: addReview,
           ),
         );
       },
@@ -115,139 +113,133 @@ class _PageReview extends State<PageReview> {
 
   @override
   Widget build(BuildContext context) {
-    double totalValoration = widget.food.assessment / widget.food.amountAssessment;
+    double totalAssessment =
+        widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.sizeOf(context);
-    return Stack(children: [
-      Hero(
-          tag: widget.food.pathImage,
-          child: CachedNetworkImage(
-            colorBlendMode: BlendMode.darken,
-            color: Colors.black87,
-            imageUrl: widget.food.pathImage,
-            height: size.height,
-            width: size.width,
-            fit: BoxFit.cover,
-          )),
-      Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text(
-              "Reviews",
-              style: TextStyle(fontSize: 35),
-            ),
-            actions: [
-              Padding(
-                  padding: EdgeInsets.only(right: size.width * 0.01),
-                  child: IconButton(
-                    onPressed: () => navigateAddReview(),
-                    icon: const Icon(Icons.add),
-                    color: Colors.black,
-                    iconSize: 30,
-                  ))
-            ],
-            backgroundColor: Colors.orange,
+    return Scaffold(
+        backgroundColor: Colors.grey.shade300,
+        appBar: AppBar(
+          surfaceTintColor: Colors.grey.shade200,
+          centerTitle: true,
+          title: const Text(
+            "Reviews",
+            style: TextStyle(fontSize: 35),
           ),
-          body: Column(children: [
-            Container(
-              margin: EdgeInsets.only(top: size.height * 0.01),
-              width: size.width * 0.9,
-              height: size.height * 0.2,
-              child: Row(
-                children: [
-                  SizedBox(
-                      width: size.width * 0.4,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          AutoSizeText(
-                            (totalValoration.isNaN ? 0.0 : totalValoration)
-                                .toStringAsFixed(2),
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 50),
-                          ),
-                          RatingBar(
-                            initialRating:
-                                totalValoration.isNaN ? 0.0 : totalValoration,
-                            direction: Axis.horizontal,
-                            itemCount: 5,
-                            allowHalfRating: true,
-                            itemSize: size.width * 0.07,
-                            ratingWidget: RatingWidget(
-                              full:
-                                  const Icon(Icons.star, color: Colors.orange),
-                              half: const Icon(Icons.star_half,
-                                  color: Colors.orange),
-                              empty: const Icon(Icons.star, color: Colors.grey),
-                            ),
-                            onRatingUpdate: (rating) {},
-                          ),
-                          AutoSizeText(
-                            "${widget.food.listReview.length} review",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      )),
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ProgressRating(
-                        size: size,
-                        numberRating: 5,
-                        valueRating: countReviewFiveStar / countMaxReview,
-                      ),
-                      ProgressRating(
-                        size: size,
-                        numberRating: 4,
-                        valueRating: countReviewFourStar / countMaxReview,
-                      ),
-                      ProgressRating(
-                        size: size,
-                        numberRating: 3,
-                        valueRating: countReviewThreeStar / countMaxReview,
-                      ),
-                      ProgressRating(
-                        size: size,
-                        numberRating: 2,
-                        valueRating: countReviewTwoStar / countMaxReview,
-                      ),
-                      ProgressRating(
-                        size: size,
-                        numberRating: 1,
-                        valueRating: countReviewOneStar / countMaxReview,
-                      ),
-                      ProgressRating(
-                        size: size,
-                        numberRating: 0,
-                        valueRating: countReviewZeroStar / countMaxReview,
-                      )
-                    ],
-                  ))
-                ],
-              ),
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: size.width * 0.01),
+                child: IconButton(
+                  onPressed: () => navigateAddReview(),
+                  icon: const Icon(Icons.add),
+                  color: Colors.black,
+                  iconSize: 30,
+                ))
+          ],
+          backgroundColor: Colors.orange,
+        ),
+        body: Column(children: [
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20)
             ),
-            SizedBox(
-                width: size.width,
-                height: size.height * 0.6,
-                child: ListView.separated(
-                    separatorBuilder: (context, index) {
-                      return Container(
-                        height: size.height * 0.002,
-                        color: Colors.grey,
-                      );
-                    },
-                    itemCount: widget.food.listReview.length,
-                    itemBuilder: (context, index) {
-                      return ReviewUser(
-                        size: size,
-                        review: widget.food.listReview[index],
-                      );
-                    }))
-          ]))
-    ]);
+            margin: EdgeInsets.only(top: size.height * 0.01),
+            width: size.width * 0.9,
+            height: size.height * 0.2,
+            child: Row(
+              children: [
+                SizedBox(
+                    width: size.width * 0.4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          (totalAssessment.isNaN ? 0.0 : totalAssessment)
+                              .toStringAsFixed(2),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 50),
+                        ),
+                        RatingBar(
+                          initialRating:
+                              totalAssessment.isNaN ? 0.0 : totalAssessment,
+                          direction: Axis.horizontal,
+                          itemCount: 5,
+                          allowHalfRating: true,
+                          itemSize: size.width * 0.07,
+                          ratingWidget: RatingWidget(
+                            full: const Icon(Icons.star, color: Colors.orange),
+                            half: const Icon(Icons.star_half,
+                                color: Colors.orange),
+                            empty: const Icon(Icons.star_border_outlined, color: Colors.orange),
+                          ),
+                          onRatingUpdate: (rating) {},
+                        ),
+                        AutoSizeText(
+                          "${widget.food.listReview.length} review",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 20),
+                        ),
+                      ],
+                    )),
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ProgressRating(
+                      size: size,
+                      numberRating: 5,
+                      valueRating: countReviewFiveStar / countMaxReview,
+                    ),
+                    ProgressRating(
+                      size: size,
+                      numberRating: 4,
+                      valueRating: countReviewFourStar / countMaxReview,
+                    ),
+                    ProgressRating(
+                      size: size,
+                      numberRating: 3,
+                      valueRating: countReviewThreeStar / countMaxReview,
+                    ),
+                    ProgressRating(
+                      size: size,
+                      numberRating: 2,
+                      valueRating: countReviewTwoStar / countMaxReview,
+                    ),
+                    ProgressRating(
+                      size: size,
+                      numberRating: 1,
+                      valueRating: countReviewOneStar / countMaxReview,
+                    ),
+                    ProgressRating(
+                      size: size,
+                      numberRating: 0,
+                      valueRating: countReviewZeroStar / countMaxReview,
+                    )
+                  ],
+                ))
+              ],
+            ),
+          ),
+          Container(
+              width: size.width,
+              height: size.height * 0.6,
+              padding: EdgeInsets.symmetric(horizontal: size.width*0.05),
+              child: ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return Container(
+                      height: size.height * 0.002,
+                      color: Colors.grey,
+                    );
+                  },
+                  itemCount: widget.food.listReview.length,
+                  itemBuilder: (context, index) {
+                    return ReviewUser(
+                      size: size,
+                      review: widget.food.listReview[index],
+                    );
+                  }))
+        ]));
   }
 }
 
@@ -271,7 +263,7 @@ class ReviewUser extends StatelessWidget {
         children: [
           Text(
             review.author,
-            style: const TextStyle(color: Colors.white, fontSize: 25),
+            style: const TextStyle(color: Colors.black, fontSize: 25),
             maxLines: 1,
           ),
           Row(
@@ -284,8 +276,8 @@ class ReviewUser extends StatelessWidget {
                 itemSize: size.width * 0.06,
                 ratingWidget: RatingWidget(
                   full: const Icon(Icons.star, color: Colors.orange),
-                  half: const Icon(Icons.star, color: Colors.orange),
-                  empty: const Icon(Icons.star, color: Colors.grey),
+                  half: const Icon(Icons.star_half, color: Colors.orange),
+                  empty: const Icon(Icons.star_border_outlined, color: Colors.orange),
                 ),
                 onRatingUpdate: (rating) {},
               ),
@@ -293,14 +285,14 @@ class ReviewUser extends StatelessWidget {
                 DateFormat("   dd MMM yyyy")
                     .format(review.publication)
                     .toString(),
-                style: const TextStyle(fontSize: 18, color: Colors.white),
+                style: const TextStyle(fontSize: 18, color: Colors.black),
               )
             ],
           ),
           AutoSizeText(
             maxLines: 2,
             review.content,
-            style: const TextStyle(color: Colors.white, fontSize: 26),
+            style: const TextStyle(color: Colors.black, fontSize: 26),
           )
         ],
       ),
@@ -329,7 +321,7 @@ class ProgressRating extends StatelessWidget {
                   children: [
                     AutoSizeText(
                       numberRating.toString(),
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                      style: const TextStyle(color: Colors.black, fontSize: 20),
                     ),
                     Icon(
                       Icons.star,
@@ -340,6 +332,7 @@ class ProgressRating extends StatelessWidget {
                 )),
             Expanded(
                 child: LinearProgressIndicator(
+                  backgroundColor: Colors.grey.shade100,
               color: Colors.orange,
               value: valueRating.isNaN
                   ? 0.0

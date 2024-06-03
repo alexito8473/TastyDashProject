@@ -6,7 +6,6 @@ class PositionButtonBack extends StatelessWidget {
     super.key,
     required this.size,
   });
-
   final Size size;
 
   @override
@@ -15,14 +14,18 @@ class PositionButtonBack extends StatelessWidget {
         top: size.height * 0.02,
         left: size.width * 0.01,
         child: SafeArea(
-            child: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.orange,
-            size: size.width * 0.12,
-          ),
-        )));
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(160)),
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.orange,
+                    size: size.width * 0.12,
+                  ),
+                ))));
   }
 }
 
@@ -86,7 +89,7 @@ class TextFieldMio extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
   final Size sizeContext;
-  final IconData icono;
+  final IconData icon;
   final TextInputType textType;
   final TextInputAction action;
   final bool obscureText;
@@ -96,16 +99,16 @@ class TextFieldMio extends StatefulWidget {
       required this.hint,
       required this.controller,
       required this.sizeContext,
-      required this.icono,
+      required this.icon,
       required this.textType,
       required this.action,
       required this.obscureText});
 
   @override
-  State<StatefulWidget> createState() => _TextFielMio();
+  State<StatefulWidget> createState() => _TextFieldMio();
 }
 
-class _TextFielMio extends State<TextFieldMio> {
+class _TextFieldMio extends State<TextFieldMio> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -123,7 +126,7 @@ class _TextFielMio extends State<TextFieldMio> {
             prefixIcon: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Icon(
-                  widget.icono,
+                  widget.icon,
                   size: 30,
                   color: Colors.black,
                 )),

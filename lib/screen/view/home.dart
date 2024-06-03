@@ -21,7 +21,7 @@ import 'specialView.dart';
 
 class HomePage extends StatefulWidget {
   Person? person;
-  final Language lenguage;
+  final Language language;
   final BitmapDescriptor icon;
   final SharedPreferences prefs;
   final int initialPosition;
@@ -31,7 +31,7 @@ class HomePage extends StatefulWidget {
   HomePage(
       {super.key,
       required this.person,
-      required this.lenguage,
+      required this.language,
       required this.prefs,
       required this.icon,
       required this.coin,
@@ -47,29 +47,29 @@ class _HomePage extends State<HomePage> {
   bool changeIconPrice = true;
 
   // Datos para realizar el lenguaje
-  late int preSelectecLenguage;
-  final lenguageDropdownController = DropdownController();
-  final List<String> lenguage = CrearListaPaises();
-  final List<CoolDropdownItem<String>> lenguageDropdownItems = [];
+  late int preSelectedLanguage;
+  final languageDropdownController = DropdownController();
+  final List<String> language = CrearListaPaises();
+  final List<CoolDropdownItem<String>> languageDropdownItems = [];
 
   // Imagen para el mapa
   final ImageProvider imageBannerSettings =
       const AssetImage("assets/images/bannersuper.webp");
 
   // Datos para realizar la moneda
-  final monedaDropdownController = DropdownController();
-  final List<Coin> monedas = Coin.values;
+  final coinDropdownController = DropdownController();
+  final List<Coin> coins = Coin.values;
   final List<CoolDropdownItem<String>> monedaDropdownItems = [];
 
   @override
   void initState() {
     position = widget.initialPosition;
     List<String> flags = CrearListaBanderas();
-    preSelectecLenguage = widget.lenguage.positionLanguage;
-    for (var i = 0; i < lenguage.length; i++) {
-      lenguageDropdownItems.add(
+    preSelectedLanguage = widget.language.positionLanguage;
+    for (var i = 0; i < language.length; i++) {
+      languageDropdownItems.add(
         CoolDropdownItem<String>(
-            label: lenguage[i],
+            label: language[i],
             icon: SizedBox(
               height: 25,
               width: 25,
@@ -78,15 +78,15 @@ class _HomePage extends State<HomePage> {
             value: '$i'),
       );
     }
-    for (var i = 0; i < monedas.length; i++) {
+    for (var i = 0; i < coins.length; i++) {
       monedaDropdownItems.add(
         CoolDropdownItem<String>(
-            label: monedas[i].name.toLowerCase().replaceFirst(
-                monedas[i].name.toLowerCase().substring(0, 1),
-                monedas[i].name.substring(0, 1).toUpperCase()),
-            value: monedas[i].symbol,
+            label: coins[i].name.toLowerCase().replaceFirst(
+                coins[i].name.toLowerCase().substring(0, 1),
+                coins[i].name.substring(0, 1).toUpperCase()),
+            value: coins[i].symbol,
             icon: Text(
-              monedas[i].symbol,
+              coins[i].symbol,
               style: const TextStyle(color: Colors.black),
             )),
       );
@@ -103,9 +103,9 @@ class _HomePage extends State<HomePage> {
         return FadeTransition(
           opacity: animation,
           child: Login(
-            idioma: widget.lenguage,
+            language: widget.language,
             prefs: widget.prefs,
-            listaComida: widget.listFood,
+            listFood: widget.listFood,
           ),
         );
       },
@@ -122,7 +122,7 @@ class _HomePage extends State<HomePage> {
 
   void changeCoin(String valor) {
     setState(() {
-      widget.prefs.setString(Constant.SharedPreferences_COIN, valor);
+      widget.prefs.setString(Constant.SHARED_PREFERENCE_COIN, valor);
       widget.coin = devolverTipoMoneda(valor);
     });
   }
@@ -135,9 +135,9 @@ class _HomePage extends State<HomePage> {
 
   void changeLanguage(String valor) {
     setState(() {
-      widget.lenguage.positionLanguage = int.parse(valor);
+      widget.language.positionLanguage = int.parse(valor);
       widget.prefs
-          .setInt(Constant.SharedPreferences_LANGUAGE, int.parse(valor));
+          .setInt(Constant.SHARED_PREFERENCE_LANGUAGE, int.parse(valor));
     });
   }
 
@@ -148,20 +148,20 @@ class _HomePage extends State<HomePage> {
     List<Widget> listPages = [
       Letter(
         listFood: widget.listFood,
-        language: widget.lenguage,
+        language: widget.language,
         coin: widget.coin,
         person: widget.person,
       ),
       if (widget.person != null)
         SpecialView(
           size: size,
-          idioma: widget.lenguage,
-          listaComida: widget.listFood
+          language: widget.language,
+          listFood: widget.listFood
               .where(
                   (element) => widget.person!.listFood!.contains(element.name))
               .toList(),
-          monedaEnUso: widget.coin,
-          cambioIconoPrecio: changeIconPrice,
+          coin: widget.coin,
+          changeIconPrice: changeIconPrice,
           function: changePrice,
           person: widget.person!,
         ),
@@ -172,20 +172,20 @@ class _HomePage extends State<HomePage> {
         child: MapViewFood(icon: widget.icon),
       ),
       SettingView(
-        funDesbloquearte: disconnected,
-        funCambiarMoneda: changeCoin,
-        funCambiarIdioma: changeLanguage,
-        funNavegarLogin: navigationLogin,
+        disconnected: disconnected,
+        changeCoin: changeCoin,
+        changeLanguage: changeLanguage,
+        navigationLogin: navigationLogin,
         size: size,
-        imagenBannerAjustes: imageBannerSettings,
-        idioma: widget.lenguage,
+        imageBannerSettings: imageBannerSettings,
+        language: widget.language,
         person: widget.person,
-        lenguageDropdownController: lenguageDropdownController,
-        lenguageDropdownItems: lenguageDropdownItems,
-        monedaDropdownController: monedaDropdownController,
-        monedaDropdownItems: monedaDropdownItems,
-        monedas: monedas,
-        monedEnUso: widget.coin,
+        languageDropdownController: languageDropdownController,
+        languageDropdownItems: languageDropdownItems,
+        coinDropdownController: coinDropdownController,
+        coinDropdownItems: monedaDropdownItems,
+        coins: coins,
+        coin: widget.coin,
       )
     ];
 
@@ -216,22 +216,22 @@ class _HomePage extends State<HomePage> {
             tabs: [
               GButton(
                   icon: Icons.fastfood,
-                  text: widget.lenguage
-                      .dataJson[widget.lenguage.positionLanguage]["Carta"]),
+                  text: widget.language
+                      .dataJson[widget.language.positionLanguage]["Carta"]),
               if (widget.person != null)
                 GButton(
                     icon: Icons.star,
                     text: widget
-                            .lenguage.dataJson[widget.lenguage.positionLanguage]
+                            .language.dataJson[widget.language.positionLanguage]
                         ["Especial"]),
               GButton(
                   icon: Icons.map,
-                  text: widget.lenguage
-                      .dataJson[widget.lenguage.positionLanguage]["Mapa"]),
+                  text: widget.language
+                      .dataJson[widget.language.positionLanguage]["Mapa"]),
               GButton(
                   icon: Icons.settings,
-                  text: widget.lenguage
-                      .dataJson[widget.lenguage.positionLanguage]["Ajustes"]),
+                  text: widget.language
+                      .dataJson[widget.language.positionLanguage]["Ajustes"]),
             ],
           )),
     );

@@ -66,52 +66,88 @@ class RealTimeService {
   static Future<List<Food>> extractFoodList() async {
     DataSnapshot snapshot =
         await (FirebaseDatabase.instance.ref().child("Food/")).get();
+
     List<Food> listFood = [];
     int countFood = (snapshot.value as List).length;
     for (int i = 0; i < countFood; i++) {
       listFood.add(Food(
-          name: snapshot.child("$i/name").value as String,
-          pathImage: snapshot.child("$i/pathImage").value as String,
-          isMeat: snapshot.child("$i/isMeat").value as bool,
-          isBurguer: snapshot.child("$i/isBurguer").value as bool,
-          isSalad: snapshot.child("$i/isSalad").value as bool,
-          isDessert: snapshot.child("$i/isDessert").value as bool,
-          isFish: snapshot.child("$i/isFish").value as bool,
-          isDrink: snapshot.child("$i/isDrink").value as bool,
-          price: double.parse(snapshot.child("$i/price").value.toString()),
-          timeMinute: snapshot.child("$i/timeMinute").value as int,
-          haveCelery: snapshot.child("$i/haveCelery").value as bool,
-          haveMollusks: snapshot.child("$i/haveMollusks").value as bool,
-          haveCrustaceans: snapshot.child("$i/haveCrustaceans").value as bool,
-          haveMustard: snapshot.child("$i/haveMustard").value as bool,
-          haveEgg: snapshot.child("$i/haveEgg").value as bool,
-          haveFish: snapshot.child("$i/haveFish").value as bool,
-          havePeanuts: snapshot.child("$i/havePeanuts").value as bool,
-          haveGluten: snapshot.child("$i/haveGluten").value as bool,
-          haveMilk: snapshot.child("$i/haveMilk").value as bool,
-          haveSulfur: snapshot.child("$i/haveSulfur").value as bool,
-          ingredients: snapshot.child("$i/ingredients").value == null
-              ? []
-              : snapshot.child("$i/ingredients").value as List<dynamic>,
-          listReview: _extractReviewList(snapshot.child("$i/listReview"))));
+        id: i,
+        name: snapshot.child("$i/name").value as String,
+        pathImage: snapshot.child("$i/pathImage").value as String,
+        isMeat: snapshot.child("$i/isMeat").value as bool,
+        isBurguer: snapshot.child("$i/isBurguer").value as bool,
+        isSalad: snapshot.child("$i/isSalad").value as bool,
+        isDessert: snapshot.child("$i/isDessert").value as bool,
+        isFish: snapshot.child("$i/isFish").value as bool,
+        isDrink: snapshot.child("$i/isDrink").value as bool,
+        price: double.parse(snapshot.child("$i/price").value.toString()),
+        timeMinute: snapshot.child("$i/timeMinute").value as int,
+        haveCelery: snapshot.child("$i/haveCelery").value as bool,
+        haveMollusks: snapshot.child("$i/haveMollusks").value as bool,
+        haveCrustaceans: snapshot.child("$i/haveCrustaceans").value as bool,
+        haveMustard: snapshot.child("$i/haveMustard").value as bool,
+        haveEgg: snapshot.child("$i/haveEgg").value as bool,
+        haveFish: snapshot.child("$i/haveFish").value as bool,
+        havePeanuts: snapshot.child("$i/havePeanuts").value as bool,
+        haveGluten: snapshot.child("$i/haveGluten").value as bool,
+        haveMilk: snapshot.child("$i/haveMilk").value as bool,
+        haveSulfur: snapshot.child("$i/haveSulfur").value as bool,
+        assessment:
+            double.parse(snapshot.child("$i/assessment").value.toString()),
+        amountAssessment:
+            int.parse(snapshot.child("$i/amountAssessment").value.toString()),
+        ingredients: snapshot.child("$i/ingredients").value == null
+            ? []
+            : snapshot.child("$i/ingredients").value as List<dynamic>,
+        listReview: _extractReviewList(snapshot.child("$i/listReview")),
+      ));
     }
+    print(listFood);
     return listFood;
   }
 
   static List<Review> _extractReviewList(DataSnapshot dataReview) {
     List<Review> listReview = [];
-    int cantidad = (dataReview.value as List<dynamic>).length;
-    for (int i = 0; i < cantidad; i++) {
+    int cant = (dataReview.value as List<dynamic>).length;
+    for (int i = 0; i < cant; i++) {
       listReview.add(Review(
           author: dataReview.child("$i/author").value as String,
           publication: DateTime.parse(
               dataReview.child("$i/publication").value as String),
           rating: double.parse(dataReview.child("$i/rating").value.toString()),
-          content: dataReview.child("$i/content").value == null
-              ? ""
-              : dataReview.child("$i/content").value as String));
+          content: dataReview.child("$i/context").value as String));
     }
     listReview.removeWhere((element) => element.content == "");
     return listReview;
+  }
+
+  static Future<List<Review>> getLastReviewList(Food food) async {
+    return _extractReviewList(await (FirebaseDatabase.instance
+            .ref()
+            .child("Food/${food.id}/listReview"))
+        .get());
+  }
+
+  static Future<void> addReview(Food food, Review review) async {
+    DatabaseReference date =
+        FirebaseDatabase.instance.ref().child("Food/${food.id}/");
+    await date
+        .child("listReview/${food.listReview.length-1}/author")
+        .set(review.author);
+    await date
+        .child("listReview/${food.listReview.length-1}/context")
+        .set(review.content);
+    await date
+        .child("listReview/${food.listReview.length-1}/rating")
+        .set(review.rating);
+    await date
+        .child("listReview/${food.listReview.length}/publication")
+        .set(review.publication.toIso8601String());
+    await date.child("assessment").set(
+        double.parse((await date.child("assessment").get()).value.toString()) +
+            review.rating);
+    await date.child("amountAssessment").set(int.parse(
+            (await date.child("amountAssessment").get()).value.toString()) +
+        1);
   }
 }

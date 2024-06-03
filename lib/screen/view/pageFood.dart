@@ -51,7 +51,7 @@ class _PageFood extends State<PageFood> {
 
   @override
   Widget build(BuildContext context) {
-    double resultValoracion =
+    double resultAssessment =
         widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -163,9 +163,9 @@ class _PageFood extends State<PageFood> {
                                   size: 30,
                                 ),
                                 Text(
-                                  (resultValoracion.isNaN
+                                  (resultAssessment.isNaN
                                           ? 0.0
-                                          : resultValoracion)
+                                          : resultAssessment)
                                       .toStringAsFixed(2),
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 25),
@@ -246,5 +246,3 @@ class _PageFood extends State<PageFood> {
               ));
   }
 }
-
-

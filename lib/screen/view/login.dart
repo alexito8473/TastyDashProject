@@ -12,23 +12,23 @@ import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
 
 class Login extends StatefulWidget {
-  final Language idioma;
+  final Language language;
   final SharedPreferences prefs;
-  final List<Food> listaComida;
+  final List<Food> listFood;
 
   const Login(
       {super.key,
-      required this.idioma,
+      required this.language,
       required this.prefs,
-      required this.listaComida});
+      required this.listFood});
 
   @override
-  State<Login> createState() => _Login();
+  State<Login> createState() => _LoginState();
 }
 
-class _Login extends State<Login> {
-  bool carga = false;
-  final TextEditingController _gmailController = TextEditingController();
+class _LoginState extends State<Login> {
+  bool load = false;
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late Person person;
   void navigationRegister() {
@@ -41,10 +41,10 @@ class _Login extends State<Login> {
       pageBuilder: (context, animation, secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
-          child: Registrarse(
-            idioma: widget.idioma,
+          child: Register(
+            language: widget.language,
             prefs: widget.prefs,
-            listaComida: widget.listaComida,
+            listFood: widget.listFood,
           ),
         );
       },
@@ -53,11 +53,11 @@ class _Login extends State<Login> {
 
   void login() async {
     setState(() {
-      carga = true;
+      load = true;
     });
     BitmapDescriptor icon;
     Person? person = await RealTimeService.checkAndGetUserData(
-        _gmailController.text, _passwordController.text, widget.prefs);
+        _emailController.text, _passwordController.text, widget.prefs);
     if (person != null) {
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
@@ -66,20 +66,20 @@ class _Login extends State<Login> {
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
-                  lenguage: widget.idioma,
+                  language: widget.language,
                   prefs: widget.prefs,
                   icon: icon,
                   coin: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
                   initialPosition: 3,
-                  listFood: widget.listaComida,
+                  listFood: widget.listFood,
                 )),
         (route) => false,
       );
     } else {
       messageToCustomer(context, "Gmail y/o contraseña no son correctos", 15);
       setState(() {
-        carga = false;
+        load = false;
       });
     }
   }
@@ -101,10 +101,10 @@ class _Login extends State<Login> {
               Container(
                   margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
                   child: TextFieldMio(
-                    controller: _gmailController,
+                    controller: _emailController,
                     sizeContext: size,
                     hint: "Email",
-                    icono: Icons.email,
+                    icon: Icons.email,
                     textType: TextInputType.emailAddress,
                     action: TextInputAction.next,
                     obscureText: false,
@@ -114,9 +114,9 @@ class _Login extends State<Login> {
                   child: TextFieldMio(
                     controller: _passwordController,
                     sizeContext: size,
-                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                    hint: widget.language.dataJson[widget.language.positionLanguage]
                         ["Contraseña"],
-                    icono: Icons.lock,
+                    icon: Icons.lock,
                     textType: TextInputType.name,
                     action: TextInputAction.none,
                     obscureText: true,
@@ -132,12 +132,12 @@ class _Login extends State<Login> {
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.black,
                   onPressed: () => login(),
-                  child: carga
+                  child: load
                       ? const CircularProgressIndicator(
                           color: Colors.black,
                         )
                       : Text(
-                          widget.idioma.dataJson[widget.idioma.positionLanguage]
+                          widget.language.dataJson[widget.language.positionLanguage]
                               ["Iniciar_sesion"],
                           style: const TextStyle(fontSize: 20),
                         ),
@@ -157,7 +157,7 @@ class _Login extends State<Login> {
                           bottom: BorderSide(color: Colors.white, width: 2)),
                     ),
                     child: Text(
-                      widget.idioma.dataJson[widget.idioma.positionLanguage]
+                      widget.language.dataJson[widget.language.positionLanguage]
                           ["Crear_una_cuenta"],
                       style: const TextStyle(
                           fontStyle: FontStyle.normal,

@@ -1,6 +1,7 @@
 import 'Review.dart';
 
 class Food {
+  final int id;
   final String name;
   final String pathImage;
   final int timeMinute;
@@ -26,13 +27,9 @@ class Food {
   double assessment;
   List<Review> listReview;
 
-  @override
-  String toString() {
-    return 'Food{haveCelery: $haveCelery, haveMollusks: $haveMollusks, haveCrustaceans: $haveCrustaceans, haveMustard: $haveMustard, haveFish: $haveFish, haveMilk: $haveMilk, haveSulfur: $haveSulfur}';
-  }
-
   Food(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.pathImage,
       required this.isMeat,
       required this.isBurguer,

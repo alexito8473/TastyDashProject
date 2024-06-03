@@ -10,24 +10,24 @@ import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
 import '../widget/genericWidget.dart';
 
-class Registrarse extends StatefulWidget {
-  final Language idioma;
+class Register extends StatefulWidget {
+  final Language language;
   final SharedPreferences prefs;
-  final List<Food> listaComida;
+  final List<Food> listFood;
 
-  const Registrarse(
+  const Register(
       {super.key,
-      required this.idioma,
+      required this.language,
       required this.prefs,
-      required this.listaComida});
+      required this.listFood});
 
   @override
-  State<StatefulWidget> createState() => _Registrarse();
+  State<StatefulWidget> createState() => _RegisterState();
 }
 
-class _Registrarse extends State<Registrarse> {
+class _RegisterState extends State<Register> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _gmailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late Person person;
 
@@ -35,7 +35,7 @@ class _Registrarse extends State<Registrarse> {
 
   @override
   void dispose() {
-    _gmailController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -43,7 +43,7 @@ class _Registrarse extends State<Registrarse> {
   void register() async {
     BitmapDescriptor icon;
     Person? person = await RealTimeService.setUserData(_nameController.text,
-        _gmailController.text, _passwordController.text, widget.prefs);
+        _emailController.text, _passwordController.text, widget.prefs);
     if (person != null) {
       icon = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(), "assets/images/ic_map.webp");
@@ -52,13 +52,13 @@ class _Registrarse extends State<Registrarse> {
         MaterialPageRoute(
             builder: (context) => HomePage(
                   person: person,
-                  lenguage: widget.idioma,
+                  language: widget.language,
                   prefs: widget.prefs,
                   icon: icon,
                   coin: devolverTipoMoneda(
                       widget.prefs.getString("SimboloMoneda")),
                   initialPosition: 3,
-                  listFood: widget.listaComida,
+                  listFood: widget.listFood,
                 )),
         (route) => false,
       );
@@ -81,7 +81,7 @@ class _Registrarse extends State<Registrarse> {
                   padding: EdgeInsets.only(top: size.height * 0.1),
                   child: Titular(
                       title:
-                          widget.idioma.dataJson[widget.idioma.positionLanguage]
+                          widget.language.dataJson[widget.language.positionLanguage]
                               ["Registrarse"])),
               Container(
                   margin: EdgeInsets.only(
@@ -89,11 +89,11 @@ class _Registrarse extends State<Registrarse> {
                       left: size.width * 0.1,
                       right: size.width * 0.1),
                   child: TextFieldMio(
-                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                    hint: widget.language.dataJson[widget.language.positionLanguage]
                         ["Nombre"],
                     sizeContext: size,
                     textType: TextInputType.name,
-                    icono: Icons.person,
+                    icon: Icons.person,
                     controller: _nameController,
                     action: TextInputAction.next,
                     obscureText: false,
@@ -104,8 +104,8 @@ class _Registrarse extends State<Registrarse> {
                     hint: "Email",
                     sizeContext: size,
                     textType: TextInputType.emailAddress,
-                    icono: Icons.email,
-                    controller: _gmailController,
+                    icon: Icons.email,
+                    controller: _emailController,
                     action: TextInputAction.next,
                     obscureText: false,
                   )),
@@ -114,9 +114,9 @@ class _Registrarse extends State<Registrarse> {
                   child: TextFieldMio(
                     controller: _passwordController,
                     sizeContext: size,
-                    hint: widget.idioma.dataJson[widget.idioma.positionLanguage]
+                    hint: widget.language.dataJson[widget.language.positionLanguage]
                         ["Contraseña"],
-                    icono: Icons.lock,
+                    icon: Icons.lock,
                     textType: TextInputType.name,
                     action: TextInputAction.none,
                     obscureText: true,
@@ -133,7 +133,7 @@ class _Registrarse extends State<Registrarse> {
                   foregroundColor: Colors.black,
                   onPressed: () => register(),
                   child: Text(
-                    widget.idioma.dataJson[widget.idioma.positionLanguage]
+                    widget.language.dataJson[widget.language.positionLanguage]
                         ["Registrarse"],
                     style: const TextStyle(fontSize: 20),
                   ),

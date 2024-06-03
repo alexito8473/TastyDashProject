@@ -11,28 +11,28 @@ import '../view/pageFood.dart';
 
 class ShowList extends StatefulWidget {
   final Size size;
-  final List<Food> listaComida;
-  final Coin monedaEnUso;
-  final Language idioma;
+  final List<Food> listFood;
+  final Coin coin;
+  final Language language;
   final Person person;
-  final Function anadirQuitarProducto;
+  final Function addOrRemoveList;
   final Function updateState;
 
   const ShowList(
       {super.key,
       required this.size,
-      required this.listaComida,
-      required this.monedaEnUso,
-      required this.idioma,
+      required this.listFood,
+      required this.coin,
+      required this.language,
       required this.person,
-      required this.anadirQuitarProducto,
+      required this.addOrRemoveList,
       required this.updateState});
 
   @override
-  State<StatefulWidget> createState() => _ShowList();
+  State<StatefulWidget> createState() => _ShowListState();
 }
 
-class _ShowList extends State<ShowList> {
+class _ShowListState extends State<ShowList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,15 +40,15 @@ class _ShowList extends State<ShowList> {
       margin: EdgeInsets.only(
           top: widget.size.height * 0.01, bottom: widget.size.height * 0.01),
       child: GridView.builder(
-        itemCount: widget.listaComida.length,
+        itemCount: widget.listFood.length,
         itemBuilder: (context, index) {
           return BannerFoodGrid(
-            comida: widget.listaComida[index],
-            monedaEnUso: widget.monedaEnUso,
-            idioma: widget.idioma,
+            food: widget.listFood[index],
+            coin: widget.coin,
+            language: widget.language,
             person: widget.person,
-            anadirQuitarProducto: widget.anadirQuitarProducto,
-            listComida: widget.listaComida,
+            addOrRemoveList: widget.addOrRemoveList,
+            listFood: widget.listFood,
             updateState: widget.updateState,
           );
         },
@@ -61,31 +61,33 @@ class _ShowList extends State<ShowList> {
 }
 
 class BannerFoodGrid extends StatefulWidget {
-  final Food comida;
-  final Coin monedaEnUso;
-  final Language idioma;
+  final Food food;
+  final Coin coin;
+  final Language language;
   final Person person;
-  final List<Food> listComida;
-  final Function anadirQuitarProducto;
+  final List<Food> listFood;
+  final Function addOrRemoveList;
   final Function updateState;
 
   const BannerFoodGrid(
       {super.key,
-      required this.comida,
-      required this.monedaEnUso,
-      required this.idioma,
+      required this.food,
+      required this.coin,
+      required this.language,
       required this.person,
-      required this.anadirQuitarProducto,
-      required this.listComida,
+      required this.addOrRemoveList,
+      required this.listFood,
       required this.updateState});
 
   @override
-  State<StatefulWidget> createState() => _BannerComidaGrid();
+  State<StatefulWidget> createState() => _BannerFoodGridState();
 }
 
-class _BannerComidaGrid extends State<BannerFoodGrid> {
+class _BannerFoodGridState extends State<BannerFoodGrid> {
   @override
   Widget build(BuildContext context) {
+    double resultAssessment =
+        widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async {
@@ -97,11 +99,11 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
             return FadeTransition(
                 opacity: animation,
                 child: PageFood(
-                  food: widget.comida,
-                  language: widget.idioma,
-                  coin: widget.monedaEnUso,
+                  food: widget.food,
+                  language: widget.language,
+                  coin: widget.coin,
                   person: widget.person,
-                  function: widget.anadirQuitarProducto,
+                  function: widget.addOrRemoveList,
                 ));
           },
         ));
@@ -122,7 +124,7 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                     fit: BoxFit.cover,
                     color: Colors.black54,
                     colorBlendMode: BlendMode.darken,
-                    imageUrl: widget.comida.pathImage,
+                    imageUrl: widget.food.pathImage,
                   )),
               Center(
                   child: Column(
@@ -130,7 +132,7 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                 children: [
                   AutoSizeText(
                     maxLines: 1,
-                    widget.comida.name,
+                    widget.food.name,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -138,7 +140,7 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                     textAlign: TextAlign.left,
                   ),
                   RatingBar(
-                    initialRating: widget.comida.assessment,
+                    initialRating: resultAssessment,
                     direction: Axis.horizontal,
                     itemCount: 5,
                     ignoreGestures: true,
@@ -146,13 +148,13 @@ class _BannerComidaGrid extends State<BannerFoodGrid> {
                     ratingWidget: RatingWidget(
                       full: const Icon(Icons.star, color: Colors.orange),
                       half: const Icon(Icons.star_half, color: Colors.orange),
-                      empty: const Icon(Icons.star, color: Colors.grey),
+                      empty: const Icon(Icons.star_outline, color: Colors.grey),
                     ),
                     onRatingUpdate: (rating) {},
                   ),
                   AutoSizeText(
                     maxLines: 1,
-                    "${widget.comida.timeMinute} ${widget.idioma.dataJson[widget.idioma.positionLanguage]["Minuto"]}",
+                    "${widget.food.timeMinute} ${widget.language.dataJson[widget.language.positionLanguage]["Minuto"]}",
                     style: const TextStyle(color: Colors.white, fontSize: 25),
                     textAlign: TextAlign.left,
                   ),

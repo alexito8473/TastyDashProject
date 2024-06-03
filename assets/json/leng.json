@@ -77,8 +77,23 @@
     "BESUGO" : "Besugo",
     "VANILLA" : "Vainilla",
     "MILK" : "Leche",
-    "PISTACHIOS" : "Pistacho"
+    "PISTACHIOS" : "Pistacho",
+    "TITLE_ADD_REVIEW" : "¿Cuantas estrellas se merece nuestro plato?",
+    "SUBTITLE_ADD_REVIEW" : "¡Danos tu opinión!",
+    "HINTED_ADD_REVIEW" : "Yo creo que....",
+    "TEXT_BUTTON_ADD_REVIEW" : "Añade una review",
+    "WARNING" : "Advertencia",
+    "WARNING_TEXT_1" : "Debes decirnos cual es tu opinión",
+    "WARNING_TEXT_2" : "Debes introducir entre 20 y 80 caracteres en tu opinión",
+    "PERSON" : "Usuario",
+    "GEMINI_ERROR" : "Error al realizar la petición",
+    "GEMINI_TEXT_HINT" : "Envia un mensaje",
+    "ERROR_VIEW_TITLE" : "¡Algo salio mal!",
+    "ERROR_VIEW_SUBTITLE" : "Algo no ha funcionado correctamente, aseguarate de tener la última versión o estar conectado a internet.",
+    "ERROR_VIEW_BUTTON" : "Volver a intentarlo"
+
   },
+
   {
     "Carta": "Menu",
     "Mapa": "Map",
@@ -157,6 +172,19 @@
     "BESUGO" : "Besugo",
     "VANILLA" : "Vanilla",
     "MILK" : "Milk",
-    "PISTACHIOS" : "Pistachios"
+    "PISTACHIOS" : "Pistachios",
+    "WARNING" : "Warning",
+    "TITLE_ADD_REVIEW" : "How many stars does our dish deserve?",
+    "SUBTITLE_ADD_REVIEW" : "Write your review!",
+    "HINTED_ADD_REVIEW" : "I think that....",
+    "TEXT_BUTTON_ADD_REVIEW" : "Add a review",
+    "WARNING_TEXT_1" : "You must tell us what your opinion is",
+    "WARNING_TEXT_2" : "You must enter between 20 and 80 characters in your opinion",
+    "PERSON" : "Person",
+    "GEMINI_ERROR" : "Error when making the request",
+    "GEMINI_TEXT_HINT" : "Send message",
+    "ERROR_VIEW_TITLE" : "Something went wrong!",
+    "ERROR_VIEW_SUBTITLE" : "Something has not worked correctly, make sure you have the latest version or are connected to the internet."
+    ,"ERROR_VIEW_BUTTON" : "Try again"
   }
 ]

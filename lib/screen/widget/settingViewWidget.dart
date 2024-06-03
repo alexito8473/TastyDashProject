@@ -6,29 +6,29 @@ import 'package:tfgsaladillo/models/Language.dart';
 
 import '../view/chatAi.dart';
 
-class PoliticaTexto extends StatelessWidget {
-  final Language idioma;
+class PoliticalText extends StatelessWidget {
+  final Language language;
 
-  const PoliticaTexto({super.key, required this.idioma});
+  const PoliticalText({super.key, required this.language});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return SizedBox(
         width: size.width * .8,
         height: size.height * .7,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text1"],
+              Text(language.dataJson[language.positionLanguage]["Politica_Text1"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text2"],
+              Text(language.dataJson[language.positionLanguage]["Politica_Text2"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text3"],
+              Text(language.dataJson[language.positionLanguage]["Politica_Text3"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text4"],
+              Text(language.dataJson[language.positionLanguage]["Politica_Text4"],
                   style: const TextStyle(fontSize: 18)),
-              Text(idioma.dataJson[idioma.positionLanguage]["Politica_Text5"],
+              Text(language.dataJson[language.positionLanguage]["Politica_Text5"],
                   style: const TextStyle(fontSize: 18)),
             ],
           ),
@@ -38,8 +38,8 @@ class PoliticaTexto extends StatelessWidget {
 
 class ButtonTastyGpt extends StatelessWidget {
   final Size size;
-
-  const ButtonTastyGpt({super.key, required this.size});
+  final Language language;
+  const ButtonTastyGpt({super.key, required this.size, required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class ButtonTastyGpt extends StatelessWidget {
             pageBuilder: (context, animation, secondaryAnimation) {
               return FadeTransition(
                 opacity: animation,
-                child: const ChatAi(),
+                child:  ChatAi(language: language,)
               );
             },
           ));
@@ -71,12 +71,12 @@ class ButtonTastyGpt extends StatelessWidget {
   }
 }
 
-class BotonTerminosDeUso extends StatelessWidget {
-  final Language idioma;
+class ButtonTermOfUse extends StatelessWidget {
+  final Language language;
   final Size size;
 
-  const BotonTerminosDeUso(
-      {super.key, required this.idioma, required this.size});
+  const ButtonTermOfUse(
+      {super.key, required this.language, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class BotonTerminosDeUso extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.only(left: size.width * .05),
                         child: Text(
-                          idioma.dataJson[idioma.positionLanguage]["Politica"],
+                          language.dataJson[language.positionLanguage]["Politica"],
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ))
@@ -110,7 +110,7 @@ class BotonTerminosDeUso extends StatelessWidget {
                   shadowColor: Colors.white,
                   surfaceTintColor: Colors.white,
                   backgroundColor: Colors.white,
-                  content: PoliticaTexto(idioma: idioma)));
+                  content: PoliticalText(language: language)));
         },
         child: Container(
             width: size.width * 0.7,
@@ -121,7 +121,7 @@ class BotonTerminosDeUso extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(idioma.dataJson[idioma.positionLanguage]["Politica"],
+            child: Text(language.dataJson[language.positionLanguage]["Politica"],
                 style: const TextStyle(fontSize: 21, color: Colors.black))));
   }
 }
@@ -155,7 +155,7 @@ class InformationUser extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  InformationUser(
+  const InformationUser(
       {super.key,
       required this.size,
       required this.title,
@@ -181,16 +181,16 @@ class InformationUser extends StatelessWidget {
   }
 }
 
-class ContaninerButtonFunction extends StatelessWidget {
+class ContainerButtonFunction extends StatelessWidget {
   final Size size;
   final Function functionCall;
-  final String titulo;
+  final String title;
 
-  const ContaninerButtonFunction(
+  const ContainerButtonFunction(
       {super.key,
       required this.size,
       required this.functionCall,
-      required this.titulo});
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +207,7 @@ class ContaninerButtonFunction extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: AutoSizeText(
-            titulo,
+            title,
             style: const TextStyle(color: Colors.black, fontSize: 20),
             maxLines: 1,
           )),
@@ -215,7 +215,7 @@ class ContaninerButtonFunction extends StatelessWidget {
   }
 }
 
-class CambioCoolDropdown extends StatelessWidget {
+class ChangeCoolDropdown extends StatelessWidget {
   final Size size;
   final String type;
   final DropdownController dropdownController;
@@ -223,7 +223,7 @@ class CambioCoolDropdown extends StatelessWidget {
   int position;
   final List<CoolDropdownItem<String>> dropdownItems;
 
-  CambioCoolDropdown(
+  ChangeCoolDropdown(
       {super.key,
       required this.size,
       required this.type,
