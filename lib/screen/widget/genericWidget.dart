@@ -11,21 +11,26 @@ class PositionButtonBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: size.height * 0.02,
-        left: size.width * 0.01,
+        top: size.height * 0.01,
+        left: size.width * 0.04,
         child: SafeArea(
-            child: Container(
+            child: GestureDetector(
+              onTap: () =>Navigator.pop(context),
+              child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(160)),
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.orange,
-                    size: size.width * 0.12,
-                  ),
-                ))));
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                width: size.height * 0.07,
+                height: size.height * 0.07,
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.orange,
+                  size: size.height * 0.05,
+                ),
+              ),
+            )
+        ));
   }
 }
 

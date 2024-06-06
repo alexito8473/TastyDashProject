@@ -15,7 +15,6 @@ import 'package:tfgsaladillo/screen/view/login.dart';
 import 'package:tfgsaladillo/screen/view/mapView.dart';
 
 import '../../utils/Constant.dart';
-import '../widget/homeWidget.dart';
 import 'settingView.dart';
 import 'specialView.dart';
 
@@ -49,7 +48,7 @@ class _HomePage extends State<HomePage> {
   // Datos para realizar el lenguaje
   late int preSelectedLanguage;
   final languageDropdownController = DropdownController();
-  final List<String> language = CrearListaPaises();
+  final List<String> language = ["Español", "English"];
   final List<CoolDropdownItem<String>> languageDropdownItems = [];
 
   // Imagen para el mapa
@@ -64,7 +63,7 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     position = widget.initialPosition;
-    List<String> flags = CrearListaBanderas();
+    List<String> flags = ["assets/Icons/Spain.svg", "assets/Icons/England.svg"];;
     preSelectedLanguage = widget.language.positionLanguage;
     for (var i = 0; i < language.length; i++) {
       languageDropdownItems.add(
@@ -143,7 +142,6 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool controlSizeGnav = widget.person != null;
     Size size = MediaQuery.sizeOf(context);
     List<Widget> listPages = [
       Letter(
@@ -188,7 +186,6 @@ class _HomePage extends State<HomePage> {
         coin: widget.coin,
       )
     ];
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AnimatedSwitcher(
@@ -201,7 +198,7 @@ class _HomePage extends State<HomePage> {
           padding: EdgeInsets.symmetric(
               vertical: size.height * 0.01,
               horizontal:
-                  controlSizeGnav ? size.width * 0.05 : size.width * 0.1),
+                  (widget.person != null) ? size.width * 0.05 : size.width * 0.1),
           child: GNav(
             selectedIndex: position,
             tabBackgroundColor: Colors.white.withOpacity(0.8),

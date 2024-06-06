@@ -29,10 +29,10 @@ class PageFood extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _PageFood();
+  State<StatefulWidget> createState() => _PageFoodState();
 }
 
-class _PageFood extends State<PageFood> {
+class _PageFoodState extends State<PageFood> {
   void addOrRemoveList(bool have, String product) async {
     setState(() {
       if (have) {
@@ -74,20 +74,18 @@ class _PageFood extends State<PageFood> {
                         width: size.width,
                         alignment: Alignment.topRight,
                         height: size.height * 0.34,
-                        child: Hero(
-                          tag: widget.food.pathImage,
-                          child: CachedNetworkImage(
+                        child:  CachedNetworkImage(
                             imageUrl: widget.food.pathImage,
                             height: size.height * 0.654,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
-                        )))),
+                        ))),
             PositionButtonBack(size: size),
             if (widget.person != null)
               Positioned(
-                top: size.height * 0.02,
-                right: size.height * 0.02,
+                top: size.height * 0.01,
+                right: size.width * 0.04,
                 child: SafeArea(
                     child: GestureDetector(
                   onTap: () {
@@ -212,14 +210,15 @@ class _PageFood extends State<PageFood> {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => PageReview(
+                      PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+                        return FadeTransition(opacity: animation,
+                        child: PageReview(
                           person: widget.person!,
                           food: widget.food,
                           function: activeFood,
                           language: widget.language,
-                        ),
-                      ));
+                        ),);
+                      }));
                 },
                 child: Container(
                   alignment: Alignment.center,

@@ -1,5 +1,4 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -82,6 +81,8 @@ class _AddReviewState extends State<AddReview> {
         ),
         Scaffold(
           appBar: AppBar(
+            centerTitle: true,
+            title: Text(widget.language.dataJson[widget.language.positionLanguage]["ADD_REVIEW"],style: const TextStyle(fontSize: 30),),
             backgroundColor: Colors.orange,
           ),
           backgroundColor: Colors.transparent,
@@ -92,22 +93,6 @@ class _AddReviewState extends State<AddReview> {
               child: SingleChildScrollView(
                   child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: size.height * 0.05),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: Hero(
-                          tag: widget.heroTag,
-                          child: CachedNetworkImage(
-                            colorBlendMode: BlendMode.darken,
-                            color: Colors.black26,
-                            imageUrl: widget.heroTag,
-                            height: size.height * 0.2,
-                            width: size.height * 0.2,
-                            fit: BoxFit.cover,
-                          )),
-                    ),
-                  ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: size.height * 0.03),
                     alignment: Alignment.center,
@@ -124,7 +109,7 @@ class _AddReviewState extends State<AddReview> {
                     direction: Axis.horizontal,
                     itemCount: 5,
                     allowHalfRating: true,
-                    itemSize: size.width * 0.14,
+                    itemSize: size.height * 0.05,
                     ratingWidget: RatingWidget(
                       full: const Icon(Icons.star, color: Colors.orange),
                       half: const Icon(Icons.star_half, color: Colors.orange),
@@ -149,7 +134,6 @@ class _AddReviewState extends State<AddReview> {
                   ),
                   Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: size.height * 0.01,
                           horizontal: size.width * 0.03),
                       alignment: Alignment.center,
                       width: size.width * 0.8,

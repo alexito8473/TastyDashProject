@@ -23,10 +23,10 @@ class Letter extends StatefulWidget {
       required this.person});
 
   @override
-  State<Letter> createState() => _Carta();
+  State<Letter> createState() => _LetterState();
 }
 
-class _Carta extends State<Letter> {
+class _LetterState extends State<Letter> {
   late String currentImage;
 
   @override
@@ -164,7 +164,6 @@ class _Carta extends State<Letter> {
                               language: widget.language,
                               pathSvg: 'assets/Icons/Burguer.svg',
                               color: Colors.orange.shade300,
-                              typeFood: 'HoverHambur',
                               size: size,
                             ),
                             ButtonNavigation(
@@ -180,7 +179,6 @@ class _Carta extends State<Letter> {
                               language: widget.language,
                               pathSvg: 'assets/Icons/Salad.svg',
                               color: Colors.green.shade300,
-                              typeFood: 'HoverEnsa',
                               size: size,
                             ),
                             ButtonNavigation(
@@ -196,7 +194,6 @@ class _Carta extends State<Letter> {
                               language: widget.language,
                               pathSvg: 'assets/Icons/Fish.svg',
                               color: Colors.blue.shade300,
-                              typeFood: 'HoverPesca',
                               size: size,
                             ),
                           ],
@@ -217,7 +214,6 @@ class _Carta extends State<Letter> {
                                 language: widget.language,
                                 pathSvg: 'assets/Icons/Meat.svg',
                                 color: Colors.lime.shade300,
-                                typeFood: 'HoverCarne',
                                 size: size,
                               ),
                               ButtonNavigation(
@@ -233,7 +229,6 @@ class _Carta extends State<Letter> {
                                 language: widget.language,
                                 pathSvg: 'assets/Icons/Drink.svg',
                                 color: Colors.red,
-                                typeFood: 'HoverBebida',
                                 size: size,
                               ),
                               ButtonNavigation(
@@ -249,7 +244,6 @@ class _Carta extends State<Letter> {
                                 language: widget.language,
                                 pathSvg: 'assets/Icons/Postre.svg',
                                 color: Colors.yellow.shade300,
-                                typeFood: 'Postre',
                                 size: size,
                               )
                             ])

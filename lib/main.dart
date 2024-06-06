@@ -1,12 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tfgsaladillo/screen/view/splashScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Settings.init();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
         apiKey: "AIzaSyDAoR85r-jMI2Hq9FPQ-12h8SWG3JhVFic",

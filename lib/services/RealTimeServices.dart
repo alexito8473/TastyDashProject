@@ -131,18 +131,15 @@ class RealTimeService {
   static Future<void> addReview(Food food, Review review) async {
     DatabaseReference date =
         FirebaseDatabase.instance.ref().child("Food/${food.id}/");
+    print(review.author);
     await date
-        .child("listReview/${food.listReview.length-1}/author")
-        .set(review.author);
-    await date
-        .child("listReview/${food.listReview.length-1}/context")
-        .set(review.content);
-    await date
-        .child("listReview/${food.listReview.length-1}/rating")
-        .set(review.rating);
-    await date
-        .child("listReview/${food.listReview.length}/publication")
-        .set(review.publication.toIso8601String());
+        .child("listReview/${food.listReview.length-1}/")
+        .set({
+      "author":review.author,
+      "context":review.content,
+      "rating":review.rating,
+      "publication":review.publication.toIso8601String()
+    });
     await date.child("assessment").set(
         double.parse((await date.child("assessment").get()).value.toString()) +
             review.rating);

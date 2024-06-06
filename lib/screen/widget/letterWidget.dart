@@ -13,7 +13,6 @@ class ButtonNavigation extends StatelessWidget {
   final Language language;
   final String pathSvg;
   final Color color;
-  final String typeFood;
   final Size size;
 
   const ButtonNavigation(
@@ -22,7 +21,6 @@ class ButtonNavigation extends StatelessWidget {
       required this.language,
       required this.pathSvg,
       required this.color,
-      required this.typeFood,
       required this.size});
 
   @override
@@ -42,6 +40,7 @@ class ButtonNavigation extends StatelessWidget {
             )));
   }
 }
+
 class FoodViewCarousel extends StatelessWidget {
   final Food food;
   final Coin coin;
@@ -51,36 +50,37 @@ class FoodViewCarousel extends StatelessWidget {
 
   const FoodViewCarousel(
       {super.key,
-        required this.food,
-        required this.coin,
-        required this.language,
-        required this.person,
-        required this.size});
+      required this.food,
+      required this.coin,
+      required this.language,
+      required this.person,
+      required this.size});
 
-  void vacio(List list) {}
+  void miVoid(List list) {}
+  void navigationToPageFood(BuildContext context) {
+    Navigator.of(context).push(PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 600),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      barrierColor: Colors.black54,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: PageFood(
+            food: food,
+            language: language,
+            coin: coin,
+            person: person,
+            function: miVoid,
+          ),
+        );
+      },
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => {
-          Navigator.of(context).push(PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 600),
-            reverseTransitionDuration: const Duration(milliseconds: 300),
-            barrierColor: Colors.black54,
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return FadeTransition(
-                opacity: animation,
-                child: PageFood(
-                  food: food,
-                  language: language,
-                  coin: coin,
-                  person: person,
-                  function: vacio,
-                ),
-              );
-            },
-          ))
-        },
+        onTap: () => navigationToPageFood(context),
         child: Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -89,48 +89,47 @@ class FoodViewCarousel extends StatelessWidget {
             ),
             child: SingleChildScrollView(
                 child: Column(
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            10.0), // Ajusta el radio de los bordes
-                        child: CachedNetworkImage(
-                          imageUrl: food.pathImage,
-                          height: size.height * 0.16,
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: CachedNetworkImage(
+                      imageUrl: food.pathImage,
+                      height: size.height * 0.16,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )),
+                SizedBox(
+                    width: double.infinity,
+                    height: size.height * 0.15,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
                           width: double.infinity,
-                          fit: BoxFit.cover,
-                        )),
-                    SizedBox(
-                        width: double.infinity,
-                        height: size.height * 0.15,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                food.name,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 30),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: AutoSizeText(
-                                "${language.dataJson[language.positionLanguage]["Precio"]}: ${(food.price * coin.converter).toStringAsFixed(2)} ${coin.symbol}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 25),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ))
-                  ],
-                ))));
+                          child: AutoSizeText(
+                            food.name,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 30),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: AutoSizeText(
+                            "${language.dataJson[language.positionLanguage]["Precio"]}: ${(food.price * coin.converter).toStringAsFixed(2)} ${coin.symbol}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 25),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
+            ))));
   }
 }

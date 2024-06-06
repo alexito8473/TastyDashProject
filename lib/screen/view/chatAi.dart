@@ -8,10 +8,10 @@ class ChatAi extends StatefulWidget {
   const ChatAi({super.key, required this.language});
 
   @override
-  State<StatefulWidget> createState() => _ChatAi();
+  State<StatefulWidget> createState() => _ChatAiState();
 }
 
-class _ChatAi extends State<ChatAi> {
+class _ChatAiState extends State<ChatAi> {
   final TextEditingController _controller = TextEditingController();
   final GeminisServices gemini = GeminisServices();
   List<Message> listMessage = [];

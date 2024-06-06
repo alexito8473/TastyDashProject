@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,8 @@ import '../../models/Food.dart';
 import '../../models/Language.dart';
 import '../../models/Person.dart';
 import '../../models/Review.dart';
+import '../widget/genericWidget.dart';
+import '../widget/viewReviewWidget.dart';
 import 'addReview.dart';
 
 class PageReview extends StatefulWidget {
@@ -23,10 +27,12 @@ class PageReview extends StatefulWidget {
       required this.language});
 
   @override
-  State<StatefulWidget> createState() => _PageReview();
+  State<StatefulWidget> createState() => _PageReviewState();
 }
 
-class _PageReview extends State<PageReview> {
+class _PageReviewState extends State<PageReview> {
+  final TextEditingController _controller = TextEditingController();
+  double assessment = 0;
   int countMaxReview = 0;
   int countReviewFiveStar = 0;
   int countReviewFourStar = 0;
@@ -95,6 +101,7 @@ class _PageReview extends State<PageReview> {
     widget.function();
   }
 
+
   void navigateAddReview() {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
@@ -117,13 +124,13 @@ class _PageReview extends State<PageReview> {
         widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          surfaceTintColor: Colors.grey.shade200,
           centerTitle: true,
-          title: const Text(
-            "Reviews",
-            style: TextStyle(fontSize: 35),
+          title: Text(
+            widget.language.dataJson[widget.language.positionLanguage]
+                ["REVIEW"],
+            style: const TextStyle(fontSize: 35),
           ),
           actions: [
             Padding(
@@ -141,11 +148,9 @@ class _PageReview extends State<PageReview> {
           Container(
             decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(20)
-            ),
+                borderRadius: BorderRadius.circular(20)),
             margin: EdgeInsets.only(top: size.height * 0.01),
             width: size.width * 0.9,
-            height: size.height * 0.2,
             child: Row(
               children: [
                 SizedBox(
@@ -171,12 +176,14 @@ class _PageReview extends State<PageReview> {
                             full: const Icon(Icons.star, color: Colors.orange),
                             half: const Icon(Icons.star_half,
                                 color: Colors.orange),
-                            empty: const Icon(Icons.star_border_outlined, color: Colors.orange),
+                            empty: const Icon(Icons.star_border_outlined,
+                                color: Colors.orange),
                           ),
                           onRatingUpdate: (rating) {},
                         ),
                         AutoSizeText(
-                          "${widget.food.listReview.length} review",
+                          "${widget.food.listReview.length} ${widget.language.dataJson[widget.language.positionLanguage]
+                          ["REVIEW"]}",
                           style: const TextStyle(
                               color: Colors.black, fontSize: 20),
                         ),
@@ -223,8 +230,8 @@ class _PageReview extends State<PageReview> {
           ),
           Container(
               width: size.width,
-              height: size.height * 0.6,
-              padding: EdgeInsets.symmetric(horizontal: size.width*0.05),
+              height: size.height * 0.68,
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
               child: ListView.separated(
                   separatorBuilder: (context, index) {
                     return Container(
@@ -240,107 +247,5 @@ class _PageReview extends State<PageReview> {
                     );
                   }))
         ]));
-  }
-}
-
-class ReviewUser extends StatelessWidget {
-  final Size size;
-  final Review review;
-  const ReviewUser({super.key, required this.size, required this.review});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size.width,
-      height: size.height * 0.18,
-      padding: EdgeInsets.symmetric(
-        vertical: size.width * 0.03,
-        horizontal: size.width * 0.03,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            review.author,
-            style: const TextStyle(color: Colors.black, fontSize: 25),
-            maxLines: 1,
-          ),
-          Row(
-            children: [
-              RatingBar(
-                initialRating: review.rating,
-                direction: Axis.horizontal,
-                itemCount: 5,
-                ignoreGestures: true,
-                itemSize: size.width * 0.06,
-                ratingWidget: RatingWidget(
-                  full: const Icon(Icons.star, color: Colors.orange),
-                  half: const Icon(Icons.star_half, color: Colors.orange),
-                  empty: const Icon(Icons.star_border_outlined, color: Colors.orange),
-                ),
-                onRatingUpdate: (rating) {},
-              ),
-              Text(
-                DateFormat("   dd MMM yyyy")
-                    .format(review.publication)
-                    .toString(),
-                style: const TextStyle(fontSize: 18, color: Colors.black),
-              )
-            ],
-          ),
-          AutoSizeText(
-            maxLines: 2,
-            review.content,
-            style: const TextStyle(color: Colors.black, fontSize: 26),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class ProgressRating extends StatelessWidget {
-  final double valueRating;
-  final int numberRating;
-  final Size size;
-  const ProgressRating(
-      {super.key,
-      required this.size,
-      required this.valueRating,
-      required this.numberRating});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Row(
-          children: [
-            SizedBox(
-                width: size.width * 0.11,
-                child: Row(
-                  children: [
-                    AutoSizeText(
-                      numberRating.toString(),
-                      style: const TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                    Icon(
-                      Icons.star,
-                      color: Colors.orange,
-                      size: size.width * 0.06,
-                    )
-                  ],
-                )),
-            Expanded(
-                child: LinearProgressIndicator(
-                  backgroundColor: Colors.grey.shade100,
-              color: Colors.orange,
-              value: valueRating.isNaN
-                  ? 0.0
-                  : valueRating.isInfinite
-                      ? 0.0
-                      : valueRating,
-            ))
-          ],
-        ));
   }
 }

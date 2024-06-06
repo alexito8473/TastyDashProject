@@ -90,7 +90,9 @@
     "GEMINI_TEXT_HINT" : "Envia un mensaje",
     "ERROR_VIEW_TITLE" : "¡Algo salio mal!",
     "ERROR_VIEW_SUBTITLE" : "Algo no ha funcionado correctamente, aseguarate de tener la última versión o estar conectado a internet.",
-    "ERROR_VIEW_BUTTON" : "Volver a intentarlo"
+    "ERROR_VIEW_BUTTON" : "Volver a intentarlo",
+    "REVIEW": "Valoraciones",
+    "ADD_REVIEW": "Añadir una valoración"
 
   },
 
@@ -184,7 +186,9 @@
     "GEMINI_ERROR" : "Error when making the request",
     "GEMINI_TEXT_HINT" : "Send message",
     "ERROR_VIEW_TITLE" : "Something went wrong!",
-    "ERROR_VIEW_SUBTITLE" : "Something has not worked correctly, make sure you have the latest version or are connected to the internet."
-    ,"ERROR_VIEW_BUTTON" : "Try again"
+    "ERROR_VIEW_SUBTITLE" : "Something has not worked correctly, make sure you have the latest version or are connected to the internet.",
+    "ERROR_VIEW_BUTTON" : "Try again",
+    "REVIEW": "Reviews",
+    "ADD_REVIEW": "Add review"
   }
 ]

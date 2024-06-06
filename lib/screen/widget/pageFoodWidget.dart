@@ -6,12 +6,6 @@ import 'package:tfgsaladillo/models/Language.dart';
 
 import '../../models/Review.dart';
 
-String contain(bool isContain, Language language) {
-  return isContain
-      ? language.dataJson[language.positionLanguage]["Contiene"]
-      : language.dataJson[language.positionLanguage]["NoContiene"];
-}
-
 class AllergenRow extends StatelessWidget {
   final String type;
   final bool have;
@@ -24,7 +18,11 @@ class AllergenRow extends StatelessWidget {
       required this.have,
       required this.language,
       required this.size});
-
+  String contain(bool isContain, Language language) {
+    return isContain
+        ? language.dataJson[language.positionLanguage]["Contiene"]
+        : language.dataJson[language.positionLanguage]["NoContiene"];
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(

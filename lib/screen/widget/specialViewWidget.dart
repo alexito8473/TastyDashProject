@@ -84,31 +84,33 @@ class BannerFoodGrid extends StatefulWidget {
 }
 
 class _BannerFoodGridState extends State<BannerFoodGrid> {
+  Future<void> navigationToPageFood() async {
+    await Navigator.of(context).push(PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 600),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      barrierColor: Colors.black54,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return FadeTransition(
+            opacity: animation,
+            child: PageFood(
+              food: widget.food,
+              language: widget.language,
+              coin: widget.coin,
+              person: widget.person,
+              function: widget.addOrRemoveList,
+            ));
+      },
+    ));
+    widget.updateState();
+  }
   @override
   Widget build(BuildContext context) {
     double resultAssessment =
         widget.food.assessment / widget.food.amountAssessment;
+    print(resultAssessment);
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () async {
-        await Navigator.of(context).push(PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 600),
-          reverseTransitionDuration: const Duration(milliseconds: 300),
-          barrierColor: Colors.black54,
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return FadeTransition(
-                opacity: animation,
-                child: PageFood(
-                  food: widget.food,
-                  language: widget.language,
-                  coin: widget.coin,
-                  person: widget.person,
-                  function: widget.addOrRemoveList,
-                ));
-          },
-        ));
-        widget.updateState();
-      },
+      onTap: () async =>await navigationToPageFood(),
       child: Container(
           margin: EdgeInsets.symmetric(
               horizontal: size.width * 0.05, vertical: size.height * 0.01),
@@ -140,15 +142,16 @@ class _BannerFoodGridState extends State<BannerFoodGrid> {
                     textAlign: TextAlign.left,
                   ),
                   RatingBar(
-                    initialRating: resultAssessment,
+                    initialRating: resultAssessment.isNaN?0.0:resultAssessment,
                     direction: Axis.horizontal,
                     itemCount: 5,
                     ignoreGestures: true,
+                    allowHalfRating: true,
                     itemSize: size.width * 0.07,
                     ratingWidget: RatingWidget(
                       full: const Icon(Icons.star, color: Colors.orange),
                       half: const Icon(Icons.star_half, color: Colors.orange),
-                      empty: const Icon(Icons.star_outline, color: Colors.grey),
+                      empty: const Icon(Icons.star_outline, color: Colors.orange),
                     ),
                     onRatingUpdate: (rating) {},
                   ),
