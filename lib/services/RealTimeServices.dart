@@ -102,7 +102,6 @@ class RealTimeService {
         listReview: _extractReviewList(snapshot.child("$i/listReview")),
       ));
     }
-    print(listFood);
     return listFood;
   }
 
@@ -131,7 +130,6 @@ class RealTimeService {
   static Future<void> addReview(Food food, Review review) async {
     DatabaseReference date =
         FirebaseDatabase.instance.ref().child("Food/${food.id}/");
-    print(review.author);
     await date
         .child("listReview/${food.listReview.length-1}/")
         .set({

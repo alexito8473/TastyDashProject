@@ -1,16 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:tfgsaladillo/services/RealTimeServices.dart';
 
 import '../../models/Food.dart';
 import '../../models/Language.dart';
 import '../../models/Person.dart';
 import '../../models/Review.dart';
-import '../widget/genericWidget.dart';
 import '../widget/viewReviewWidget.dart';
 import 'addReview.dart';
 
@@ -31,7 +27,7 @@ class PageReview extends StatefulWidget {
 }
 
 class _PageReviewState extends State<PageReview> {
-  final TextEditingController _controller = TextEditingController();
+  List<Review> listReviewSorted= [];
   double assessment = 0;
   int countMaxReview = 0;
   int countReviewFiveStar = 0;
@@ -43,6 +39,8 @@ class _PageReviewState extends State<PageReview> {
   @override
   void initState() {
     recountRating(widget.food.listReview);
+    listReviewSorted.addAll(widget.food.listReview);
+    listReviewSorted.sort((a, b) => b.publication.compareTo(a.publication));
     super.initState();
   }
 
@@ -96,12 +94,13 @@ class _PageReviewState extends State<PageReview> {
       widget.food.assessment += rating;
       widget.food.amountAssessment += 1;
       recountRating(widget.food.listReview);
+      listReviewSorted.insert(0,nowReview);
     });
     await RealTimeService.addReview(widget.food, nowReview);
     widget.function();
   }
 
-
+ // Navigate with animation to AddReview
   void navigateAddReview() {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
@@ -228,24 +227,26 @@ class _PageReviewState extends State<PageReview> {
               ],
             ),
           ),
+          Expanded(
+          child:
           Container(
               width: size.width,
-              height: size.height * 0.68,
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
               child: ListView.separated(
+                reverse: false,
                   separatorBuilder: (context, index) {
                     return Container(
                       height: size.height * 0.002,
                       color: Colors.grey,
                     );
                   },
-                  itemCount: widget.food.listReview.length,
+                  itemCount: listReviewSorted.length,
                   itemBuilder: (context, index) {
                     return ReviewUser(
                       size: size,
-                      review: widget.food.listReview[index],
+                      review: listReviewSorted[index],
                     );
-                  }))
+                  })))
         ]));
   }
 }

@@ -86,15 +86,12 @@ class _SettingView extends State<SettingView> {
                 functionCall: widget.navigationLogin,
                 title: widget.language.dataJson[widget.language.positionLanguage]
                     ["Iniciar_sesion"]),
-        Container(
-          height: widget.size.height * 0.9,
-          margin: EdgeInsets.only(top: widget.size.height * 0.02),
-          child: Column(
-            children: [
+
               TitlePageSetting(
                   size: widget.size,
                   title: widget.language.dataJson[widget.language.positionLanguage]
                       ["Ajustes"]),
+              // Change language
               ChangeCoolDropdown(
                   size: widget.size,
                   type: widget.language.dataJson[widget.language.positionLanguage]
@@ -103,6 +100,7 @@ class _SettingView extends State<SettingView> {
                   position: widget.language.positionLanguage,
                   function: widget.changeLanguage,
                   dropdownItems: widget.languageDropdownItems),
+              // Change coin
               ChangeCoolDropdown(
                   size: widget.size,
                   type: widget.language.dataJson[widget.language.positionLanguage]
@@ -117,9 +115,7 @@ class _SettingView extends State<SettingView> {
               ),
               if(widget.person!=null)
               ButtonTastyGpt(size: widget.size, language: widget.language,),
-            ],
-          ),
-        )
+
       ]),
     );
   }

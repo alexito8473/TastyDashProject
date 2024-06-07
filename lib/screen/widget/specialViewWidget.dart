@@ -107,7 +107,6 @@ class _BannerFoodGridState extends State<BannerFoodGrid> {
   Widget build(BuildContext context) {
     double resultAssessment =
         widget.food.assessment / widget.food.amountAssessment;
-    print(resultAssessment);
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async =>await navigationToPageFood(),

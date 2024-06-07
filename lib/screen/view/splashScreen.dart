@@ -29,10 +29,9 @@ class _SplashScreen extends State<SplashScreen> {
     super.initState();
     Person? person;
     BitmapDescriptor icon;
-
     String? email;
     final Connectivity connectivity = Connectivity();
-    Future.delayed(const Duration(milliseconds: 0), () async {
+    Future.delayed(const Duration(milliseconds: 10), () async {
       Language? language;
       try {
         final SharedPreferences prefs = await SharedPreferences.getInstance();

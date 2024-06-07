@@ -92,7 +92,18 @@
     "ERROR_VIEW_SUBTITLE" : "Algo no ha funcionado correctamente, aseguarate de tener la última versión o estar conectado a internet.",
     "ERROR_VIEW_BUTTON" : "Volver a intentarlo",
     "REVIEW": "Valoraciones",
-    "ADD_REVIEW": "Añadir una valoración"
+    "ADD_REVIEW": "Añadir una valoración",
+    "WARNING_LOGIN_REGISTER_TEXT_1" : "Introduce un email y una contraseña",
+    "WARNING_LOGIN_REGISTER_TEXT_2" : "Introduce una contraseña",
+    "WARNING_LOGIN_REGISTER_TEXT_3" : "Introduce tu email",
+    "WARNING_LOGIN_REGISTER_TEXT_4" : "Introduce un email válido",
+    "WARNING_LOGIN_REGISTER_TEXT_5" : "Email o contraseña incorrectos",
+    "WARNING_LOGIN_REGISTER_TEXT_6" : "El gmail ya esta en uso",
+    "WARNING_LOGIN_REGISTER_TEXT_7" : "Introduce un email, una contraseña y un nombre",
+    "WARNING_LOGIN_REGISTER_TEXT_8" : "Introduce una contraseña y un nombre",
+    "WARNING_LOGIN_REGISTER_TEXT_10" : "Introduce un nombre",
+    "WARNING_LOGIN_REGISTER_TEXT_11" : "Introduce una contaseña",
+    "WARNING_LOGIN_REGISTER_TEXT_12" : "Introduce un email"
 
   },
 
@@ -189,6 +200,18 @@
     "ERROR_VIEW_SUBTITLE" : "Something has not worked correctly, make sure you have the latest version or are connected to the internet.",
     "ERROR_VIEW_BUTTON" : "Try again",
     "REVIEW": "Reviews",
-    "ADD_REVIEW": "Add review"
+    "ADD_REVIEW": "Add review",
+    "WARNING_LOGIN_REGISTER_TEXT_1" : "Enter an email and password",
+    "WARNING_LOGIN_REGISTER_TEXT_2" : "Enter a password",
+    "WARNING_LOGIN_REGISTER_TEXT_3" : "Enter your email",
+    "WARNING_LOGIN_REGISTER_TEXT_4" : "Enter a valid email",
+    "WARNING_LOGIN_REGISTER_TEXT_5" : "Incorrect email or password",
+    "WARNING_LOGIN_REGISTER_TEXT_6" : "Email is already in use",
+    "WARNING_LOGIN_REGISTER_TEXT_7" : "Enter an email, password and name",
+    "WARNING_LOGIN_REGISTER_TEXT_8" : "Enter a password and name",
+    "WARNING_LOGIN_REGISTER_TEXT_10" : "Enter a name",
+    "WARNING_LOGIN_REGISTER_TEXT_11" : "Enter a password",
+    "WARNING_LOGIN_REGISTER_TEXT_12" : "Enter an email"
+
   }
 ]

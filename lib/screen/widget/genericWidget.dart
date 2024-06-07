@@ -15,22 +15,21 @@ class PositionButtonBack extends StatelessWidget {
         left: size.width * 0.04,
         child: SafeArea(
             child: GestureDetector(
-              onTap: () =>Navigator.pop(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                width: size.height * 0.07,
-                height: size.height * 0.07,
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.orange,
-                  size: size.height * 0.05,
-                ),
-              ),
-            )
-        ));
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            width: size.height * 0.07,
+            height: size.height * 0.07,
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.orange,
+              size: size.height * 0.05,
+            ),
+          ),
+        )));
   }
 }
 
@@ -46,7 +45,7 @@ class ButtonBack extends StatelessWidget {
           height: size.width * 0.14,
           width: size.width * 0.14,
           margin: EdgeInsets.only(
-              right: size.height * 0.01, bottom: size.height * 0.01),
+              left: size.width * 0.05, top: size.height * 0.02),
           decoration: const BoxDecoration(
             color: Colors.orange,
             borderRadius: BorderRadius.all(Radius.circular(14)),

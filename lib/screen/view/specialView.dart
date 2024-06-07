@@ -385,7 +385,7 @@ class _EspecialView extends State<SpecialView> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton:cant==0?null:  FloatingActionButton(
             backgroundColor: Colors.orange,
             onPressed: () {
               widget.function();

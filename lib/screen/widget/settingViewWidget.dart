@@ -115,7 +115,7 @@ class ButtonTermOfUse extends StatelessWidget {
         child: Container(
             width: size.width * 0.7,
             height: size.height * 0.06,
-            margin: EdgeInsets.only(bottom: size.height * 0.015),
+            margin: EdgeInsets.only(bottom: size.height * 0.015,left: size.width * 0.15 ,right:  size.width * 0.15),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -237,7 +237,7 @@ class ChangeCoolDropdown extends StatelessWidget {
     return Container(
       width: size.width * 0.7,
       height: size.height * 0.06,
-      margin: EdgeInsets.only(bottom: size.height * 0.015),
+      margin: EdgeInsets.only(bottom: size.height * 0.015,left: size.width * 0.15 ,right:  size.width * 0.15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
