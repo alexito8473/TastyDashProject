@@ -1,13 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:tfgsaladillo/services/RealTimeServices.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/models/Review.dart';
 
-import '../../models/Food.dart';
-import '../../models/Language.dart';
-import '../../models/Person.dart';
-import '../../models/Review.dart';
-import '../widget/viewReviewWidget.dart';
+import 'package:tfgsaladillo/services/RealTimeServices.dart';
+import 'package:tfgsaladillo/screen/widget/viewReviewWidget.dart';
 import 'addReview.dart';
 
 class PageReview extends StatefulWidget {
@@ -23,67 +23,66 @@ class PageReview extends StatefulWidget {
       required this.language});
 
   @override
-  State<StatefulWidget> createState() => _PageReviewState();
+  State<PageReview> createState() => _PageReviewState();
 }
 
 class _PageReviewState extends State<PageReview> {
-  List<Review> listReviewSorted= [];
-  double assessment = 0;
-  int countMaxReview = 0;
-  int countReviewFiveStar = 0;
-  int countReviewFourStar = 0;
-  int countReviewThreeStar = 0;
-  int countReviewTwoStar = 0;
-  int countReviewOneStar = 0;
-  int countReviewZeroStar = 0;
+  List<Review> _listReviewSorted= [];
+  int _countMaxReview = 0;
+  int _countReviewFiveStar = 0;
+  int _countReviewFourStar = 0;
+  int _countReviewThreeStar = 0;
+  int _countReviewTwoStar = 0;
+  int _countReviewOneStar = 0;
+  int _countReviewZeroStar = 0;
   @override
   void initState() {
-    recountRating(widget.food.listReview);
-    listReviewSorted.addAll(widget.food.listReview);
-    listReviewSorted.sort((a, b) => b.publication.compareTo(a.publication));
+    _recountRating(widget.food.listReview);
+    _listReviewSorted.addAll(widget.food.listReview);
+    _listReviewSorted.sort((a, b) => b.publication.compareTo(a.publication));
     super.initState();
   }
 
-  void recountRating(List<dynamic> listReview) {
-    countMaxReview = 0;
-    if (countMaxReview <
-        (countReviewFiveStar =
+  void _recountRating(List<dynamic> listReview) {
+    _countMaxReview = 0;
+    if (_countMaxReview <
+        (_countReviewFiveStar =
             listReview.where((element) => element.rating == 5).length)) {
-      countMaxReview = countReviewFiveStar;
+      _countMaxReview = _countReviewFiveStar;
     }
-    if (countMaxReview <
-        (countReviewFourStar = listReview
+    if (_countMaxReview <
+        (_countReviewFourStar = listReview
             .where((element) => element.rating < 5 && element.rating >= 4)
             .length)) {
-      countMaxReview = countReviewFourStar;
+      _countMaxReview = _countReviewFourStar;
     }
-    if (countMaxReview <
-        (countReviewThreeStar = listReview
+    if (_countMaxReview <
+        (_countReviewThreeStar = listReview
             .where((element) => element.rating < 4 && element.rating >= 3)
             .length)) {
-      countMaxReview = countReviewThreeStar;
+      _countMaxReview = _countReviewThreeStar;
     }
-    if (countMaxReview <
-        (countReviewTwoStar = listReview
+    if (_countMaxReview <
+        (_countReviewTwoStar = listReview
             .where((element) => element.rating < 3 && element.rating >= 2)
             .length)) {
-      countMaxReview = countReviewTwoStar;
+      _countMaxReview = _countReviewTwoStar;
     }
-    if (countMaxReview <
-        (countReviewOneStar = listReview
+    if (_countMaxReview <
+        (_countReviewOneStar = listReview
             .where((element) => element.rating < 2 && element.rating >= 1)
             .length)) {
-      countMaxReview = countReviewOneStar;
+      _countMaxReview = _countReviewOneStar;
     }
-    if (countMaxReview <
-        (countReviewZeroStar = listReview
+    if (_countMaxReview <
+        (_countReviewZeroStar = listReview
             .where((element) => element.rating < 1 && element.rating >= 0)
             .length)) {
-      countMaxReview = countReviewZeroStar;
+      _countMaxReview = _countReviewZeroStar;
     }
   }
 
-  void addReview(double rating, String content) async {
+  void _addReview(double rating, String content) async {
     Review nowReview = Review(
         author: widget.person.name,
         publication: DateTime.now(),
@@ -93,15 +92,15 @@ class _PageReviewState extends State<PageReview> {
       widget.food.listReview.add(nowReview);
       widget.food.assessment += rating;
       widget.food.amountAssessment += 1;
-      recountRating(widget.food.listReview);
-      listReviewSorted.insert(0,nowReview);
+      _recountRating(widget.food.listReview);
+      _listReviewSorted.insert(0,nowReview);
     });
     await RealTimeService.addReview(widget.food, nowReview);
     widget.function();
   }
 
  // Navigate with animation to AddReview
-  void navigateAddReview() {
+  void _navigateAddReview() {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return FadeTransition(
@@ -110,7 +109,7 @@ class _PageReviewState extends State<PageReview> {
             person: widget.person,
             heroTag: widget.food.pathImage,
             language: widget.language,
-            addReview: addReview,
+            addReview: _addReview,
           ),
         );
       },
@@ -135,7 +134,7 @@ class _PageReviewState extends State<PageReview> {
             Padding(
                 padding: EdgeInsets.only(right: size.width * 0.01),
                 child: IconButton(
-                  onPressed: () => navigateAddReview(),
+                  onPressed: () => _navigateAddReview(),
                   icon: const Icon(Icons.add),
                   color: Colors.black,
                   iconSize: 30,
@@ -195,32 +194,32 @@ class _PageReviewState extends State<PageReview> {
                     ProgressRating(
                       size: size,
                       numberRating: 5,
-                      valueRating: countReviewFiveStar / countMaxReview,
+                      valueRating: _countReviewFiveStar / _countMaxReview,
                     ),
                     ProgressRating(
                       size: size,
                       numberRating: 4,
-                      valueRating: countReviewFourStar / countMaxReview,
+                      valueRating: _countReviewFourStar / _countMaxReview,
                     ),
                     ProgressRating(
                       size: size,
                       numberRating: 3,
-                      valueRating: countReviewThreeStar / countMaxReview,
+                      valueRating: _countReviewThreeStar / _countMaxReview,
                     ),
                     ProgressRating(
                       size: size,
                       numberRating: 2,
-                      valueRating: countReviewTwoStar / countMaxReview,
+                      valueRating: _countReviewTwoStar / _countMaxReview,
                     ),
                     ProgressRating(
                       size: size,
                       numberRating: 1,
-                      valueRating: countReviewOneStar / countMaxReview,
+                      valueRating: _countReviewOneStar / _countMaxReview,
                     ),
                     ProgressRating(
                       size: size,
                       numberRating: 0,
-                      valueRating: countReviewZeroStar / countMaxReview,
+                      valueRating: _countReviewZeroStar / _countMaxReview,
                     )
                   ],
                 ))
@@ -240,11 +239,11 @@ class _PageReviewState extends State<PageReview> {
                       color: Colors.grey,
                     );
                   },
-                  itemCount: listReviewSorted.length,
+                  itemCount: _listReviewSorted.length,
                   itemBuilder: (context, index) {
                     return ReviewUser(
                       size: size,
-                      review: listReviewSorted[index],
+                      review: _listReviewSorted[index],
                     );
                   })))
         ]));

@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-import 'package:tfgsaladillo/screen/view/listFood.dart';
-
-import '../../models/Person.dart';
-import '../widget/letterWidget.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/screen/widget/letterWidget.dart';
+import 'listFood.dart';
 
 class Letter extends StatefulWidget {
   final List<Food> listFood;
@@ -27,15 +26,15 @@ class Letter extends StatefulWidget {
 }
 
 class _LetterState extends State<Letter> {
-  late String currentImage;
+  late String _currentImage;
 
   @override
   void initState() {
-    currentImage = widget.listFood[0].pathImage;
+    _currentImage = widget.listFood[0].pathImage;
     super.initState();
   }
 
-  void navigationList(
+  void _navigationList(
       List<Food> listOneFood, String imageBanner, String nameList) {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 600),
@@ -88,7 +87,7 @@ class _LetterState extends State<Letter> {
                       child: Stack(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: currentImage,
+                            imageUrl: _currentImage,
                             height: size.height * 0.6,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -113,7 +112,7 @@ class _LetterState extends State<Letter> {
                                     enlargeCenterPage: true,
                                     onPageChanged: (index, reason) =>
                                         setState(() {
-                                          currentImage =
+                                          _currentImage =
                                               widget.listFood[index].pathImage;
                                         }),
                                     scrollDirection: Axis.horizontal),
@@ -153,7 +152,7 @@ class _LetterState extends State<Letter> {
                           children: [
                             ButtonNavigation(
                               function: () => {
-                                navigationList(
+                                _navigationList(
                                     widget.listFood
                                         .where((element) => element.isBurguer)
                                         .toList(),
@@ -168,7 +167,7 @@ class _LetterState extends State<Letter> {
                             ),
                             ButtonNavigation(
                               function: () => {
-                                navigationList(
+                                _navigationList(
                                     widget.listFood
                                         .where((element) => element.isSalad)
                                         .toList(),
@@ -183,7 +182,7 @@ class _LetterState extends State<Letter> {
                             ),
                             ButtonNavigation(
                               function: () => {
-                                navigationList(
+                                _navigationList(
                                     widget.listFood
                                         .where((element) => element.isFish)
                                         .toList(),
@@ -203,7 +202,7 @@ class _LetterState extends State<Letter> {
                             children: [
                               ButtonNavigation(
                                 function: () => {
-                                  navigationList(
+                                  _navigationList(
                                       widget.listFood
                                           .where((element) => element.isMeat)
                                           .toList(),
@@ -218,7 +217,7 @@ class _LetterState extends State<Letter> {
                               ),
                               ButtonNavigation(
                                 function: () => {
-                                  navigationList(
+                                  _navigationList(
                                       widget.listFood
                                           .where((element) => element.isDrink)
                                           .toList(),
@@ -233,7 +232,7 @@ class _LetterState extends State<Letter> {
                               ),
                               ButtonNavigation(
                                 function: () => {
-                                  navigationList(
+                                  _navigationList(
                                       widget.listFood
                                           .where((element) => element.isDessert)
                                           .toList(),

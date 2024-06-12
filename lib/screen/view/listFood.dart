@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Person.dart';
 
-import '../../models/Person.dart';
-import '../widget/genericWidget.dart';
-import '../widget/listFoodWidget.dart';
+import 'package:tfgsaladillo/screen/widget/genericWidget.dart';
+import 'package:tfgsaladillo/screen/widget/listFoodWidget.dart';
 
 class ListFood extends StatefulWidget {
   final List<Food> listFood;
@@ -26,29 +26,29 @@ class ListFood extends StatefulWidget {
       required this.person});
 
   @override
-  State<StatefulWidget> createState() => _ListFood();
+  State<StatefulWidget> createState() => _ListFoodState();
 }
 
-class _ListFood extends State<ListFood> {
-  final controller = ScrollController();
+class _ListFoodState extends State<ListFood> {
+  final _controller = ScrollController();
 
   void onListenerController() {
     setState(() {});
   }
 
-  void vacio(List list) {
+  void myVoid(List list) {
     setState(() {});
   }
 
   @override
   void initState() {
-    controller.addListener(onListenerController);
+    _controller.addListener(onListenerController);
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.removeListener(onListenerController);
+    _controller.removeListener(onListenerController);
     super.dispose();
   }
 
@@ -107,11 +107,11 @@ class _ListFood extends State<ListFood> {
                 top: size.height * 0.25, bottom: size.height * 0.01),
             color: Colors.black87,
             child: ListView.builder(
-              controller: controller,
+              controller: _controller,
               itemCount: widget.listFood.length,
               itemBuilder: (context, index) {
                 final difference =
-                    controller.offset - (index * size.height * 0.169);
+                    _controller.offset - (index * size.height * 0.169);
                 final percent = 1 - (difference / (size.height * 0.15));
                 double opacity = percent;
                 if (opacity > 1.0) opacity = 1.0;
@@ -126,7 +126,7 @@ class _ListFood extends State<ListFood> {
                           coin: widget.coin,
                           language: widget.language,
                           person: widget.person,
-                          addOrRemoveProduct: vacio,
+                          addOrRemoveProduct: myVoid,
                         )));
               },
             ),

@@ -5,12 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/services/RealTimeServices.dart';
+import 'package:tfgsaladillo/screen/widget/genericWidget.dart';
+import 'package:tfgsaladillo/screen/widget/pageFoodWidget.dart';
 import 'package:tfgsaladillo/screen/view/viewReview.dart';
-
-import '../../models/Person.dart';
-import '../../services/RealTimeServices.dart';
-import '../widget/genericWidget.dart';
-import '../widget/pageFoodWidget.dart';
 
 class PageFood extends StatefulWidget {
   final Food food;
@@ -29,11 +28,11 @@ class PageFood extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _PageFoodState();
+  State<PageFood> createState() => _PageFoodState();
 }
 
 class _PageFoodState extends State<PageFood> {
-  void addOrRemoveList(bool have, String product) async {
+  void _addOrRemoveList(bool have, String product) async {
     setState(() {
       if (have) {
         widget.person!.listFood!.remove(product);
@@ -45,7 +44,7 @@ class _PageFoodState extends State<PageFood> {
     widget.function(widget.person!.listFood);
   }
 
-  void activeFood() {
+  void _activeFood() {
     setState(() {});
   }
 
@@ -53,7 +52,7 @@ class _PageFoodState extends State<PageFood> {
   Widget build(BuildContext context) {
     double resultAssessment =
         widget.food.assessment / widget.food.amountAssessment;
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Scaffold(
         extendBody: true,
         body: Stack(
@@ -89,7 +88,7 @@ class _PageFoodState extends State<PageFood> {
                 child: SafeArea(
                     child: GestureDetector(
                   onTap: () {
-                    addOrRemoveList(
+                    _addOrRemoveList(
                         widget.person!.listFood!.contains(widget.food.name),
                         widget.food.name);
                   },
@@ -196,9 +195,9 @@ class _PageFoodState extends State<PageFood> {
                       ),
                     )),
                   ]),
-                  ExpansionAllergen(widget.food, widget.language),
+                  ExpandAllergen(widget.food, widget.language, size: size,),
                   if (widget.food.ingredients.isNotEmpty)
-                    ExpansionIngredients(widget.food, widget.language),
+                    ExpandIngredients(widget.food, widget.language, size: size,),
                 ],
               )),
             ),
@@ -215,7 +214,7 @@ class _PageFoodState extends State<PageFood> {
                         child: PageReview(
                           person: widget.person!,
                           food: widget.food,
-                          function: activeFood,
+                          function: _activeFood,
                           language: widget.language,
                         ),);
                       }));

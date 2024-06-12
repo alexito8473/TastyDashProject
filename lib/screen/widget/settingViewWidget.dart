@@ -60,8 +60,8 @@ class ButtonTastyGpt extends StatelessWidget {
         child: Container(
             width: size.width * 0.7,
             height: size.height * 0.06,
+            margin: EdgeInsets.only(bottom: size.height * 0.015,left: size.width * 0.15 ,right:  size.width * 0.15),
             alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: size.height * 0.015),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -93,7 +93,7 @@ class ButtonTermOfUse extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: size.width * .1,
                         height: size.height * .05,
                         child: const Icon(Icons.keyboard_backspace),

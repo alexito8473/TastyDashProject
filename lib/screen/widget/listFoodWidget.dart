@@ -17,11 +17,11 @@ class BannerFood extends StatelessWidget {
 
   const BannerFood(
       {super.key,
-      required this.food,
-      required this.coin,
-      required this.language,
-      required this.person,
-      required this.addOrRemoveProduct});
+        required this.food,
+        required this.coin,
+        required this.language,
+        required this.person,
+        required this.addOrRemoveProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -79,25 +79,25 @@ class BannerFood extends StatelessWidget {
                     children: [
                       Expanded(
                           child: Center(
-                        child: AutoSizeText(
-                          "${language.dataJson[language.positionLanguage]["Precio"]}: ${(food.price * coin.converter).toStringAsFixed(2)} ${coin.symbol}",
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 25),
-                          textAlign: TextAlign.left,
-                          maxLines: 1,
-                        ),
-                      )),
+                            child: AutoSizeText(
+                              "${language.dataJson[language.positionLanguage]["Precio"]}: ${(food.price * coin.converter).toStringAsFixed(2)} ${coin.symbol}",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 25),
+                              textAlign: TextAlign.left,
+                              maxLines: 1,
+                            ),
+                          )),
                       if(food.timeMinute>0)
-                      Expanded(
-                          child: Center(
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          "${food.timeMinute} ${language.dataJson[language.positionLanguage]["Minuto"]}",
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 25),
-                          textAlign: TextAlign.left,
-                        ),
-                      )),
+                        Expanded(
+                            child: Center(
+                              child: AutoSizeText(
+                                maxLines: 1,
+                                "${food.timeMinute} ${language.dataJson[language.positionLanguage]["Minuto"]}",
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                                textAlign: TextAlign.left,
+                              ),
+                            )),
                     ],
                   )
                 ],

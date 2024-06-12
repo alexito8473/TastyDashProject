@@ -7,17 +7,19 @@ enum Coin implements Comparable<Coin> {
   final String symbol;
   final double converter;
 
+  static Coin returnTypeCoin(String? symbol) {
+    switch (symbol) {
+      case "£":
+        return Coin.LIBRA;
+      case "€":
+        return Coin.EURO;
+      default:
+        return Coin.EURO;
+    }
+  }
+
   @override
   int compareTo(Coin other) => symbol.compareTo(other.symbol);
 }
 
-Coin devolverTipoMoneda(String? simbolo) {
-  switch (simbolo) {
-    case "£":
-      return Coin.LIBRA;
-    case "€":
-      return Coin.EURO;
-    default:
-      return Coin.EURO;
-  }
-}
+

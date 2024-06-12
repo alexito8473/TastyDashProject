@@ -1,4 +1,6 @@
 
+import 'dart:html';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,7 @@ class ReviewUser extends StatelessWidget {
                 direction: Axis.horizontal,
                 itemCount: 5,
                 ignoreGestures: true,
+                allowHalfRating: true,
                 itemSize: size.width * 0.06,
                 ratingWidget: RatingWidget(
                   full: const Icon(Icons.star, color: Colors.orange),

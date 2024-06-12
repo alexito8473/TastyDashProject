@@ -6,7 +6,7 @@ import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
-import '../view/pageFood.dart';
+import 'package:tfgsaladillo/screen/view/pageFood.dart';
 
 class ButtonNavigation extends StatelessWidget {
   final Function function;
@@ -56,8 +56,8 @@ class FoodViewCarousel extends StatelessWidget {
       required this.person,
       required this.size});
 
-  void miVoid(List list) {}
-  void navigationToPageFood(BuildContext context) {
+  void _myVoid(List list) {}
+  void _navigationToPageFood(BuildContext context) {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -70,7 +70,7 @@ class FoodViewCarousel extends StatelessWidget {
             language: language,
             coin: coin,
             person: person,
-            function: miVoid,
+            function: _myVoid,
           ),
         );
       },
@@ -80,7 +80,7 @@ class FoodViewCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => navigationToPageFood(context),
+        onTap: () => _navigationToPageFood(context),
         child: Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

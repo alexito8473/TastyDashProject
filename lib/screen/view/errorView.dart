@@ -16,7 +16,7 @@ class _ErrorViewState extends State<ErrorView> {
   late String title;
   late String subtitle;
   late String titleButton;
-  void navigationSplashScreen() {
+  void _navigationToSplashScreen() {
     Navigator.pushAndRemoveUntil(
       context,
       PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
@@ -75,7 +75,7 @@ class _ErrorViewState extends State<ErrorView> {
           ),
         )),
         bottomNavigationBar: GestureDetector(
-          onTap: () => navigationSplashScreen(),
+          onTap: () => _navigationToSplashScreen(),
           child: Container(
             width: size.width,
             color: Colors.orange,

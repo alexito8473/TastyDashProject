@@ -10,11 +10,11 @@ import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
-import 'package:tfgsaladillo/screen/view/letter.dart';
-import 'package:tfgsaladillo/screen/view/login.dart';
-import 'package:tfgsaladillo/screen/view/mapView.dart';
 
 import '../../utils/Constant.dart';
+import 'letter.dart';
+import 'login.dart';
+import 'mapView.dart';
 import 'settingView.dart';
 import 'specialView.dart';
 
@@ -38,37 +38,35 @@ class HomePage extends StatefulWidget {
       required this.listFood});
 
   @override
-  State<StatefulWidget> createState() => _HomePage();
+  State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePage extends State<HomePage> {
-  int position = 0;
-  bool changeIconPrice = true;
+class _HomePageState extends State<HomePage> {
+  int _position = 0;
+  bool _changeIconPrice = true;
 
   // Datos para realizar el lenguaje
-  late int preSelectedLanguage;
-  final languageDropdownController = DropdownController();
-  final List<String> language = ["Español", "English"];
-  final List<CoolDropdownItem<String>> languageDropdownItems = [];
+  final _languageDropdownController = DropdownController();
+  final List<String> _languages = ["Español", "English"];
+  final List<CoolDropdownItem<String>> _languageDropdownItems = [];
 
   // Imagen para el mapa
   final ImageProvider imageBannerSettings =
       const AssetImage("assets/images/bannersuper.webp");
 
   // Datos para realizar la moneda
-  final coinDropdownController = DropdownController();
-  final List<Coin> coins = Coin.values;
-  final List<CoolDropdownItem<String>> monedaDropdownItems = [];
+  final _coinDropdownController = DropdownController();
+  final List<Coin> _coins = Coin.values;
+  final List<CoolDropdownItem<String>> _coinDropdownItems = [];
 
   @override
   void initState() {
-    position = widget.initialPosition;
+    _position = widget.initialPosition;
     List<String> flags = ["assets/Icons/Spain.svg", "assets/Icons/England.svg"];;
-    preSelectedLanguage = widget.language.positionLanguage;
-    for (var i = 0; i < language.length; i++) {
-      languageDropdownItems.add(
+    for (var i = 0; i < _languages.length; i++) {
+      _languageDropdownItems.add(
         CoolDropdownItem<String>(
-            label: language[i],
+            label: _languages[i],
             icon: SizedBox(
               height: 25,
               width: 25,
@@ -77,23 +75,22 @@ class _HomePage extends State<HomePage> {
             value: '$i'),
       );
     }
-    for (var i = 0; i < coins.length; i++) {
-      monedaDropdownItems.add(
+    for (var i = 0; i < _coins.length; i++) {
+      _coinDropdownItems.add(
         CoolDropdownItem<String>(
-            label: coins[i].name.toLowerCase().replaceFirst(
-                coins[i].name.toLowerCase().substring(0, 1),
-                coins[i].name.substring(0, 1).toUpperCase()),
-            value: coins[i].symbol,
+            label: _coins[i].name.toLowerCase().replaceFirst(
+                _coins[i].name.toLowerCase().substring(0, 1),
+                _coins[i].name.substring(0, 1).toUpperCase()),
+            value: _coins[i].symbol,
             icon: Text(
-              coins[i].symbol,
+              _coins[i].symbol,
               style: const TextStyle(color: Colors.black),
             )),
       );
     }
     super.initState();
   }
-
-  void navigationLogin() {
+  void _navigationToLogin() {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 500),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -111,28 +108,28 @@ class _HomePage extends State<HomePage> {
     ));
   }
 
-  void disconnected() {
+  void _disconnected() {
     setState(() {
-      widget.prefs.remove(Constant.SharedPreferences_MAIL);
+      widget.prefs.remove(Constant.SHARED_PREFERENCE_MAIL);
       widget.person = null;
-      position = 2;
+      _position = 2;
     });
   }
 
-  void changeCoin(String valor) {
+  void _changeCoin(String valor) {
     setState(() {
       widget.prefs.setString(Constant.SHARED_PREFERENCE_COIN, valor);
-      widget.coin = devolverTipoMoneda(valor);
+      widget.coin = Coin.returnTypeCoin(valor);
     });
   }
 
-  void changePrice() {
+  void _changePrice() {
     setState(() {
-      changeIconPrice = !changeIconPrice;
+      _changeIconPrice = !_changeIconPrice;
     });
   }
 
-  void changeLanguage(String valor) {
+  void _changeLanguage(String valor) {
     setState(() {
       widget.language.positionLanguage = int.parse(valor);
       widget.prefs
@@ -159,8 +156,8 @@ class _HomePage extends State<HomePage> {
                   (element) => widget.person!.listFood!.contains(element.name))
               .toList(),
           coin: widget.coin,
-          changeIconPrice: changeIconPrice,
-          function: changePrice,
+          changeIconPrice: _changeIconPrice,
+          function: _changePrice,
           person: widget.person!,
         ),
       Container(
@@ -170,19 +167,19 @@ class _HomePage extends State<HomePage> {
         child: MapViewFood(icon: widget.icon),
       ),
       SettingView(
-        disconnected: disconnected,
-        changeCoin: changeCoin,
-        changeLanguage: changeLanguage,
-        navigationLogin: navigationLogin,
+        disconnected: _disconnected,
+        changeCoin: _changeCoin,
+        changeLanguage: _changeLanguage,
+        navigationLogin: _navigationToLogin,
         size: size,
         imageBannerSettings: imageBannerSettings,
         language: widget.language,
         person: widget.person,
-        languageDropdownController: languageDropdownController,
-        languageDropdownItems: languageDropdownItems,
-        coinDropdownController: coinDropdownController,
-        coinDropdownItems: monedaDropdownItems,
-        coins: coins,
+        languageDropdownController: _languageDropdownController,
+        languageDropdownItems: _languageDropdownItems,
+        coinDropdownController: _coinDropdownController,
+        coinDropdownItems: _coinDropdownItems,
+        coins: _coins,
         coin: widget.coin,
       )
     ];
@@ -191,7 +188,7 @@ class _HomePage extends State<HomePage> {
       body: AnimatedSwitcher(
         switchInCurve: Curves.linear,
         duration: const Duration(milliseconds: 400),
-        child: listPages[position],
+        child: listPages[_position],
       ),
       bottomNavigationBar: Container(
           color: Colors.orange,
@@ -200,14 +197,14 @@ class _HomePage extends State<HomePage> {
               horizontal:
                   (widget.person != null) ? size.width * 0.05 : size.width * 0.1),
           child: GNav(
-            selectedIndex: position,
+            selectedIndex: _position,
             tabBackgroundColor: Colors.white.withOpacity(0.8),
             padding: EdgeInsets.symmetric(
                 vertical: size.height * 0.015, horizontal: size.width * 0.04),
             gap: size.width * 0.01,
             onTabChange: (index) {
               setState(() {
-                position = index;
+                _position = index;
               });
             },
             tabs: [

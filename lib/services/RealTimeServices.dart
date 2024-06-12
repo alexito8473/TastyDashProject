@@ -14,7 +14,7 @@ class RealTimeService {
     DatabaseReference date = FirebaseDatabase.instance.ref();
     if (await AuthService.sigInAuth(email, password)) {
       person = await getUserData(email, date);
-      await pref.setString(Constant.SharedPreferences_MAIL, person.gmail);
+      await pref.setString(Constant.SHARED_PREFERENCE_MAIL, person.gmail);
     }
     return person;
   }
@@ -40,7 +40,7 @@ class RealTimeService {
         "listaComida": [""]
       });
       person = Person(name: name, gmail: email, listFood: []);
-      await pref.setString(Constant.SharedPreferences_MAIL, person.gmail);
+      await pref.setString(Constant.SHARED_PREFERENCE_MAIL, person.gmail);
     }
     return person;
   }

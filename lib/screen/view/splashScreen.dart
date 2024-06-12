@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
@@ -12,7 +15,6 @@ import '../../models/Food.dart';
 import '../../services/RealTimeServices.dart';
 import '../../utils/Constant.dart';
 import '../../utils/LoadImagesFoodCache.dart';
-import '../../utils/Readjson.dart';
 import '../widget/genericWidget.dart';
 import 'errorView.dart';
 
@@ -24,38 +26,37 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreen extends State<SplashScreen> {
+  Person? _person;
+  late BitmapDescriptor _icon;
+  String? _email;
   @override
   void initState() {
     super.initState();
-    Person? person;
-    BitmapDescriptor icon;
-    String? email;
     final Connectivity connectivity = Connectivity();
     Future.delayed(const Duration(milliseconds: 10), () async {
       Language? language;
       try {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        List dataJson = await readJson();
-        language = selectLanguage(
+        List dataJson = await _readJson();
+        language = _selectLanguage(
             prefs.getInt(Constant.SHARED_PREFERENCE_LANGUAGE), dataJson);
         List<ConnectivityResult> connectivityResult =
             await connectivity.checkConnectivity();
         if (connectivityResult.contains(ConnectivityResult.mobile) ||
             connectivityResult.contains(ConnectivityResult.wifi) ||
             connectivityResult.contains(ConnectivityResult.ethernet)) {
-          List dataJson = await readJson();
           List<Food> listFood = await RealTimeService.extractFoodList();
           await LoadImageInCache.loadImagesApplication(context);
           await LoadImageInCache.loadImagesListFood(context, listFood);
-          if ((email = prefs.getString(Constant.SharedPreferences_MAIL)) ==
+          if ((_email = prefs.getString(Constant.SHARED_PREFERENCE_MAIL)) ==
               null) {
-            person = null;
-            prefs.remove(Constant.SharedPreferences_MAIL);
+            _person = null;
+            prefs.remove(Constant.SHARED_PREFERENCE_MAIL);
           } else {
-            person = await RealTimeService.getUserData(
-                email!, FirebaseDatabase.instance.ref());
+            _person = await RealTimeService.getUserData(
+                _email!, FirebaseDatabase.instance.ref());
           }
-          icon = await BitmapDescriptor.fromAssetImage(
+          _icon = await BitmapDescriptor.fromAssetImage(
               const ImageConfiguration(), "assets/images/ic_map.webp");
 
           await Navigator.pushAndRemoveUntil(
@@ -65,13 +66,13 @@ class _SplashScreen extends State<SplashScreen> {
               return FadeTransition(
                 opacity: animation,
                 child: HomePage(
-                  person: person,
-                  language: selectLanguage(
+                  person: _person,
+                  language: _selectLanguage(
                       prefs.getInt(Constant.SHARED_PREFERENCE_LANGUAGE),
                       dataJson),
                   prefs: prefs,
-                  icon: icon,
-                  coin: devolverTipoMoneda(
+                  icon: _icon,
+                  coin: Coin.returnTypeCoin(
                       prefs.getString(Constant.SHARED_PREFERENCE_COIN)),
                   initialPosition: 0,
                   listFood: listFood,
@@ -98,8 +99,10 @@ class _SplashScreen extends State<SplashScreen> {
       }
     });
   }
-
-  Language selectLanguage(int? position, List dataJson) {
+  Future<List> _readJson() async {
+    return jsonDecode(await rootBundle.loadString("assets/json/leng.json"));
+  }
+  Language _selectLanguage(int? position, List dataJson) {
     if (position == null) {
       return Language(dataJson: dataJson, positionLanguage: 0);
     } else {

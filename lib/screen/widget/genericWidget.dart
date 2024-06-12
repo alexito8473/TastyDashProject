@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PositionButtonBack extends StatelessWidget {
+  final Size size;
   const PositionButtonBack({
     super.key,
     required this.size,
   });
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -161,26 +161,4 @@ class Titular extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 40)));
   }
-}
-
-void messageToCustomer(BuildContext context, String mensage, double font) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    elevation: 1,
-    width: 300.0,
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    backgroundColor: Colors.white70,
-    duration: const Duration(milliseconds: 1100),
-    content: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2),
-        child: Text(
-          mensage,
-          style: TextStyle(
-              fontSize: font, fontWeight: FontWeight.bold, color: Colors.black),
-          textAlign: TextAlign.center,
-        )),
-  ));
 }

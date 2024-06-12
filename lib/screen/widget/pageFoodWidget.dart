@@ -18,11 +18,13 @@ class AllergenRow extends StatelessWidget {
       required this.have,
       required this.language,
       required this.size});
-  String contain(bool isContain, Language language) {
-    return isContain
+
+  String _contain() {
+    return have
         ? language.dataJson[language.positionLanguage]["Contiene"]
         : language.dataJson[language.positionLanguage]["NoContiene"];
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +44,7 @@ class AllergenRow extends StatelessWidget {
             width: size.width * 0.3,
             child: AutoSizeText(
               maxLines: 1,
-              contain(have, language),
+              _contain(),
               style: const TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
@@ -52,15 +54,14 @@ class AllergenRow extends StatelessWidget {
   }
 }
 
-class ExpansionAllergen extends StatelessWidget {
+class ExpandAllergen extends StatelessWidget {
   final Food food;
   final Language language;
-
-  const ExpansionAllergen(this.food, this.language, {super.key});
+  final Size size;
+  const ExpandAllergen(this.food, this.language, {super.key, required this.size});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return ExpansionTile(
       controlAffinity: ListTileControlAffinity.leading,
       iconColor: Colors.orange,
@@ -128,15 +129,14 @@ class ExpansionAllergen extends StatelessWidget {
   }
 }
 
-class ExpansionIngredients extends StatelessWidget {
+class ExpandIngredients extends StatelessWidget {
   final Food food;
   final Language language;
-
-  const ExpansionIngredients(this.food, this.language, {super.key});
+  final Size size;
+  const ExpandIngredients(this.food, this.language, {super.key, required this.size});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return ExpansionTile(
       controlAffinity: ListTileControlAffinity.leading,
       iconColor: Colors.orange,
@@ -155,127 +155,5 @@ class ExpansionIngredients extends StatelessWidget {
             ))
       ],
     );
-  }
-}
-
-class ExpansionReview extends StatelessWidget {
-  final Food food;
-  final Language language;
-
-  const ExpansionReview(this.food, this.language, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpansionTile(
-      controlAffinity: ListTileControlAffinity.leading,
-      iconColor: Colors.orange,
-      shape: const RoundedRectangleBorder(side: BorderSide.none),
-      title: const Text("Review",
-          style: TextStyle(color: Colors.white, fontSize: 25)),
-      expandedAlignment: Alignment.centerLeft,
-      children: [
-        ...List.generate(food.listReview.length,
-            (index) => ShowReview(review: food.listReview[index]))
-      ],
-    );
-  }
-}
-
-class ShowReview extends StatelessWidget {
-  final Review review;
-
-  const ShowReview({super.key, required this.review});
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return GestureDetector(
-        onTap: () {
-          showDialog(
-              barrierColor: Colors.black.withOpacity(0.7),
-              useSafeArea: true,
-              context: context,
-              builder: (context) => AlertDialog(
-                  backgroundColor: Colors.white,
-                  title: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          child: Text(
-                        "Realizado por " + review.author,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      )),
-                      Text(
-                        "Realizada a las " +
-                            DateFormat("HH:mm yyyy/MM/dd")
-                                .format(review.publication)
-                                .toString(),
-                        style: const TextStyle(fontSize: 20),
-                      )
-                    ],
-                  ),
-                  content: SizedBox(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tiene una valoración de : ${review.rating}/5.0.",
-                            style: const TextStyle(fontSize: 20),
-                            textAlign: TextAlign.left,
-                          ),
-                          Text(review.content,
-                              style: const TextStyle(fontSize: 20))
-                        ],
-                      ),
-                    ),
-                  )));
-        },
-        child: Container(
-            margin: EdgeInsets.only(
-                bottom: size.height * 0.01, left: size.width * 0.1),
-            width: size.width * 0.65,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    colors: [Colors.orange.shade800, Colors.red.shade500]),
-                borderRadius: BorderRadius.circular(8.0)),
-            child: Column(
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        review.author,
-                        style:
-                            const TextStyle(fontSize: 25, color: Colors.white),
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.orange,
-                            size: 30,
-                          ),
-                          Text(
-                            "${review.rating}",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 25),
-                          ),
-                        ],
-                      )
-                    ]),
-                Text(
-                  DateFormat("HH:mm yyyy/MM/dd")
-                      .format(review.publication)
-                      .toString(),
-                  style: const TextStyle(fontSize: 20, color: Colors.white),
-                ),
-              ],
-            )));
   }
 }

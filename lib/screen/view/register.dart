@@ -112,7 +112,7 @@ class _RegisterState extends State<Register> {
                   language: widget.language,
                   prefs: widget.prefs,
                   icon: icon,
-                  coin: devolverTipoMoneda(
+                  coin: Coin.returnTypeCoin(
                       widget.prefs.getString(Constant.SHARED_PREFERENCE_COIN)),
                   initialPosition: 3,
                   listFood: widget.listFood,
