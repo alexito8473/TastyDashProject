@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
         width: size.width,
         height: size.height,
         color: Colors.white,
-        child: MapViewFood(icon: widget.icon),
+        child: MapView(icon: widget.icon),
       ),
       SettingView(
         disconnected: _disconnected,

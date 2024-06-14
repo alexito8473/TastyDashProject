@@ -8,34 +8,43 @@ class ChatAi extends StatefulWidget {
   const ChatAi({super.key, required this.language});
 
   @override
-  State<StatefulWidget> createState() => _ChatAiState();
+  State<ChatAi> createState() => _ChatAiState();
 }
 
 class _ChatAiState extends State<ChatAi> {
   final TextEditingController _controller = TextEditingController();
-  final GeminisServices gemini = GeminisServices();
-  List<Message> listMessage = [];
+  late GeminisServices _gemini;
+  bool _change=false;
+  List<Message> _listMessage = [];
+  @override
+  void initState() {
+    _gemini = GeminisServices(widget.language);
+    super.initState();
+  }
 
-  void communication() async {
+  void _communication() async {
     String? response;
     var text = _controller.text;
     _controller.clear();
     if (text.isNotEmpty) {
+      _change=true;
       setState(() {
-        listMessage.insert(
+        _listMessage.insert(
             0,
             Message(
                 text: text,
                 person: widget.language
                     .dataJson[widget.language.positionLanguage]["PERSON"]));
       });
-      response = (await gemini.sendMessage(text)).text;
+      response = (await _gemini.sendMessage(text)).text;
       setState(() {
-        listMessage.insert(
+        _change=false;
+        _listMessage.insert(
             0,
             Message(
-                text: response ?? widget.language
-                    .dataJson[widget.language.positionLanguage]["GEMINI_ERROR"],
+                text: response ??
+                    widget.language.dataJson[widget.language.positionLanguage]
+                        ["GEMINI_ERROR"],
                 person: "TastyDash"));
       });
     }
@@ -78,10 +87,10 @@ class _ChatAiState extends State<ChatAi> {
                 Flexible(
                     child: ListView.builder(
                   reverse: true,
-                  itemCount: listMessage.length,
+                  itemCount: _listMessage.length,
                   itemBuilder: (context, index) {
                     return ViewMessage(
-                      message: listMessage[index],
+                      message: _listMessage[index],
                     );
                   },
                 )),
@@ -105,17 +114,19 @@ class _ChatAiState extends State<ChatAi> {
                               contentPadding: EdgeInsets.only(
                                   bottom: size.height * 0.01,
                                   left: size.width * 0.01),
-                              hintText: widget.language
-                                  .dataJson[widget.language.positionLanguage]["GEMINI_TEXT_HINT"]),
+                              hintText: widget.language.dataJson[widget.language
+                                  .positionLanguage]["GEMINI_TEXT_HINT"]),
                         ),
                       ),
-                      IconButton(
-                          onPressed: () => communication(),
+                      _change?  Padding(padding: EdgeInsets.only(left: size.width*0.03),child: const CircularProgressIndicator(backgroundColor: Colors.orange,color: Colors.yellow,strokeAlign:0.001,),)
+                          : IconButton(
+                          onPressed: () => _communication(),
                           icon: const Icon(
                             Icons.send,
                             size: 35,
                             color: Colors.white,
-                          ))
+                          )),
+
                     ],
                   ),
                 )

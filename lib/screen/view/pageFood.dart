@@ -231,11 +231,11 @@ class _PageFoodState extends State<PageFood> {
                       top: size.height * 0.02,
                       bottom: size.height * 0.02,
                       left: size.width * 0.05),
-                  width: size.width * 0.3,
+                  width: size.width * 0.35,
                   height: size.height * 0.06,
-                  child: const Text(
-                    "Ver reviews",
-                    style: TextStyle(
+                  child: AutoSizeText(
+                    widget.language.dataJson[widget.language.positionLanguage]["PAGE_FOOD_REVIEW"],
+                    style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),

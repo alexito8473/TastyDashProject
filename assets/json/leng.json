@@ -81,7 +81,7 @@
     "TITLE_ADD_REVIEW" : "¿Cuantas estrellas se merece nuestro plato?",
     "SUBTITLE_ADD_REVIEW" : "¡Danos tu opinión!",
     "HINTED_ADD_REVIEW" : "Yo creo que....",
-    "TEXT_BUTTON_ADD_REVIEW" : "Añade una review",
+    "TEXT_BUTTON_ADD_REVIEW" : "Añade una valoración",
     "WARNING" : "Advertencia",
     "WARNING_TEXT_1" : "Debes decirnos cual es tu opinión",
     "WARNING_TEXT_2" : "Debes introducir entre 20 y 80 caracteres en tu opinión",
@@ -93,6 +93,7 @@
     "ERROR_VIEW_BUTTON" : "Volver a intentarlo",
     "REVIEW": "Valoraciones",
     "ADD_REVIEW": "Añadir una valoración",
+    "ADD_REVIEW_HINT" : "Yo creo que...",
     "WARNING_LOGIN_REGISTER_TEXT_1" : "Introduce un email y una contraseña",
     "WARNING_LOGIN_REGISTER_TEXT_2" : "Introduce una contraseña",
     "WARNING_LOGIN_REGISTER_TEXT_3" : "Introduce tu email",
@@ -103,8 +104,10 @@
     "WARNING_LOGIN_REGISTER_TEXT_8" : "Introduce una contraseña y un nombre",
     "WARNING_LOGIN_REGISTER_TEXT_10" : "Introduce un nombre",
     "WARNING_LOGIN_REGISTER_TEXT_11" : "Introduce una contaseña",
-    "WARNING_LOGIN_REGISTER_TEXT_12" : "Introduce un email"
-
+    "WARNING_LOGIN_REGISTER_TEXT_12" : "Introduce un email",
+    "SPECIAL_VIEW_TEXT" : "Elige tu producto favorito",
+    "PAGE_FOOD_REVIEW" : "Ver valoraciones",
+    "CHAT_AI_INITIAL_TEXT" : "Eres un asistente chat bot de una aplicación movil del empresa \"Tasty Dash\", te vas a llamar TastyGPT, vas a ser unicamente para recomendar platos, también decir los ingredientes de los productos y que platos que tenemos en la carta, no puedes salir nunca del rol que tienes, siempre tendras que saludar y hablar con mucho respeto, te dare un contexto  \"La aplicación está destinada para una cadena de restaurantes, la aplicación tiene funcionalidades como tener un mapa de todas las ubicaciones de los restaurantes que están repartidos por toda España y en Gibraltar. Tiene 2 idiomas español y ingles. No tiene la opción de resarvar mesas, ni tampoco llevar a domicilio Sus platos son hamburguesas:( BurguerMax, BurguerUltra, Burguer Buey, Burguer Complete,The Ultimate Beef Burger,Harmony Burger,Veggie Delight ), Ensalada=(Breaded pepper,Shrimp Scampi,Vegetable cream,Vegetable taco) Carne=(Scnizel, Iberic secret, Ragout, Meat balls, Fillet), pescado=( Fried shrimp, Tilapia, Octo-Bite, Besugo, Octo-Grilled Octo-chips), Bebida=( Coca cola,Coca cola zero, Fanta, Te), postre=( Pistacho cake, Cupkake, Tiramisu, Raspberry Tart)).Algunos restaurantes estan situados en Los Barrios(Cadiz/España), Giblaltar, cercade Marchena(Sevilla/España),Marbella(Sevilla/España), cerca de Aracena(Huelva/España),Don Benito(Badajoz/España),Jaen(Badajoz/España), Almeria(España), Albacete(España),Madrid,Valladolid, Lugo, Zaragoza,Lerida y Barcenlona"
   },
 
   {
@@ -201,6 +204,7 @@
     "ERROR_VIEW_BUTTON" : "Try again",
     "REVIEW": "Reviews",
     "ADD_REVIEW": "Add review",
+    "ADD_REVIEW_HINT" : "I think that...",
     "WARNING_LOGIN_REGISTER_TEXT_1" : "Enter an email and password",
     "WARNING_LOGIN_REGISTER_TEXT_2" : "Enter a password",
     "WARNING_LOGIN_REGISTER_TEXT_3" : "Enter your email",
@@ -211,7 +215,9 @@
     "WARNING_LOGIN_REGISTER_TEXT_8" : "Enter a password and name",
     "WARNING_LOGIN_REGISTER_TEXT_10" : "Enter a name",
     "WARNING_LOGIN_REGISTER_TEXT_11" : "Enter a password",
-    "WARNING_LOGIN_REGISTER_TEXT_12" : "Enter an email"
-
+    "WARNING_LOGIN_REGISTER_TEXT_12" : "Enter an email",
+    "SPECIAL_VIEW_TEXT" : "Choose your favorite product",
+    "PAGE_FOOD_REVIEW" : "See reviews",
+    "CHAT_AI_INITIAL_TEXT": "You are a chat bot assistant of a mobile application from the company \"Tasty Dash\", your name will be TastyGPT, you will only be able to recommend dishes, also tell you the ingredients of the products and what dishes we have on the menu, you can never leave of the role you have, you will always have to greet and speak with great respect, I will give you a context \"The application is intended for a restaurant chain, the application has functionalities such as having a map of all the locations of the restaurants that are distributed throughout Spain and Gibraltar. It has 2 languages: Spanish and English. It does not have the option of reserving tables, nor does it have delivery. Its dishes are burgers: (BurgerMax, BurguerUltra, Burguer Buey, Burguer Complete, The Ultimate Beef Burger, Harmony Burger, Veggie). Delight ), Salad=(Breaded pepper,Shrimp Scampi,Vegetable cream,Vegetable taco) Meat=(Scnizel, Iberic secret, Ragout, Meat balls, Fillet), fish=(Fried shrimp, Tilapia, Octo-Bite, Sea bream, Octo- Grilled Octo-chips), Drink=( Coca cola, Coca cola zero, Fanta, Tea), dessert=( Pistachio cake, Cupkake, Tiramisu, Raspberry Tart))\". Some restaurants are located in Los Barrios(Cadiz/España), Giblaltar, cercade Marchena(Sevilla/España),Marbella(Sevilla/España), cerca de Aracena(Huelva/España),Don Benito(Badajoz/España),Jaen(Badajoz/España), Almeria(España), Albacete(España),Madrid,Valladolid, Lugo, Zaragoza,Lerida y Barcenlona"
   }
 ]

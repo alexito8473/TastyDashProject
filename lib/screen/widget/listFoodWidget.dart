@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Food.dart';
 import 'package:tfgsaladillo/models/Language.dart';
+import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/pageFood.dart';
 
-import '../../models/Person.dart';
 
 class BannerFood extends StatelessWidget {
   final Food food;
@@ -44,8 +44,7 @@ class BannerFood extends StatelessWidget {
                 ));
           },
         ));
-        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => PaginaComida(comida: comida),));
-      },
+        },
       child: Container(
           margin: EdgeInsets.symmetric(
               horizontal: size.width * 0.05, vertical: size.height * 0.01),
@@ -55,7 +54,7 @@ class BannerFood extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(
-                      25.0), // Ajusta el radio de los bordes
+                      25.0),
                   child: CachedNetworkImage(
                     imageUrl: food.pathImage,
                     width: double.infinity,

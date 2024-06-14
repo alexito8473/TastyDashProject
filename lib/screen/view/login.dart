@@ -9,10 +9,10 @@ import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
 import 'package:tfgsaladillo/screen/view/register.dart';
 
-import '../../models/Food.dart';
-import '../../services/RealTimeServices.dart';
-import '../../utils/Constant.dart';
-import '../widget/genericWidget.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/services/RealTimeServices.dart';
+import 'package:tfgsaladillo/utils/Constant.dart';
+import 'package:tfgsaladillo/screen/widget/genericWidget.dart';
 
 class Login extends StatefulWidget {
   final Language language;
@@ -30,11 +30,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool load = false;
+  bool _load = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late Person person;
-  void navigationRegister() {
+  void _navigationRegister() {
     Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 1100),
       reverseTransitionDuration: const Duration(milliseconds: 700),
@@ -54,24 +53,24 @@ class _LoginState extends State<Login> {
     ));
   }
 
-  void login() async {
+  void _login() async {
     BitmapDescriptor icon;
     Person? person;
     String email = _emailController.text;
     String password = _passwordController.text;
     if (email.isEmpty || password.isEmpty) {
       if (email.isEmpty && password.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_1"],
             20);
       } else if (email.isNotEmpty && password.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_2"],
             25);
       } else if (email.isEmpty && password.isNotEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_3"],
             25);
@@ -79,14 +78,14 @@ class _LoginState extends State<Login> {
       return;
     }
     if (!EmailValidator.validate(email)) {
-      messageToConsumer(
+      _messageToConsumer(
           widget.language.dataJson[widget.language.positionLanguage]
               ["WARNING_LOGIN_REGISTER_TEXT_4"],
           25);
       return;
     }
     setState(() {
-      load = true;
+      _load = true;
     });
     person = await RealTimeService.checkAndGetUserData(
         email, password, widget.prefs);
@@ -109,17 +108,17 @@ class _LoginState extends State<Login> {
         (route) => false,
       );
     } else {
-      messageToConsumer(
+      _messageToConsumer(
           widget.language.dataJson[widget.language.positionLanguage]
           ["WARNING_LOGIN_REGISTER_TEXT_5"],
           25);
       setState(() {
-        load = false;
+        _load = false;
       });
     }
   }
 
-  void messageToConsumer(String message, double fontSize) {
+  void _messageToConsumer(String message, double fontSize) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(
@@ -195,8 +194,8 @@ class _LoginState extends State<Login> {
                         heroTag: "moverFloating",
                         backgroundColor: Colors.orange,
                         foregroundColor: Colors.black,
-                        onPressed: () => login(),
-                        child: load
+                        onPressed: () => _login(),
+                        child: _load
                             ? const CircularProgressIndicator(
                                 color: Colors.black,
                               )
@@ -209,7 +208,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => navigationRegister(),
+                    onTap: () => _navigationRegister(),
                     child: Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(bottom: 5),

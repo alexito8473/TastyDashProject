@@ -4,9 +4,8 @@ import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
-
-import '../../models/Coin.dart';
-import '../widget/settingViewWidget.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/screen/widget/settingViewWidget.dart';
 
 class SettingView extends StatefulWidget {
   final Function disconnected;
@@ -42,10 +41,10 @@ class SettingView extends StatefulWidget {
       required this.coin});
 
   @override
-  State<SettingView> createState() => _SettingView();
+  State<SettingView> createState() => _SettingViewState();
 }
 
-class _SettingView extends State<SettingView> {
+class _SettingViewState extends State<SettingView> {
   @override
   Widget build(BuildContext context) {
     return Container(

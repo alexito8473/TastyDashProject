@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapViewFood extends StatefulWidget {
+class MapView extends StatefulWidget {
   final BitmapDescriptor icon;
 
-  const MapViewFood({super.key, required this.icon});
+  const MapView({super.key, required this.icon});
 
   @override
-  State<MapViewFood> createState() => _MapViewFood();
+  State<MapView> createState() => _MapViewState();
 }
 
-class _MapViewFood extends State<MapViewFood> {
+class _MapViewState extends State<MapView> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   final CameraPosition _initialCamera = const CameraPosition(

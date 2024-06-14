@@ -1,4 +1,6 @@
+// Class representing static ingredients
 class Ingredients {
+  // Definition of string constants for different ingredients
   static const String BREAD = "BREAD";
   static const String MUSTARD = "MUSTARD";
   static const String KETCHUP = "KETCHUP";

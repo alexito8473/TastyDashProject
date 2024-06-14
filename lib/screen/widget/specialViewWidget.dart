@@ -29,7 +29,7 @@ class ShowList extends StatefulWidget {
       required this.updateState});
 
   @override
-  State<StatefulWidget> createState() => _ShowListState();
+  State<ShowList> createState() => _ShowListState();
 }
 
 class _ShowListState extends State<ShowList> {
@@ -84,7 +84,7 @@ class BannerFoodGrid extends StatefulWidget {
 }
 
 class _BannerFoodGridState extends State<BannerFoodGrid> {
-  Future<void> navigationToPageFood() async {
+  Future<void> _navigationToPageFood() async {
     await Navigator.of(context).push(PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 300),
@@ -109,7 +109,7 @@ class _BannerFoodGridState extends State<BannerFoodGrid> {
         widget.food.assessment / widget.food.amountAssessment;
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () async =>await navigationToPageFood(),
+      onTap: () async =>await _navigationToPageFood(),
       child: Container(
           margin: EdgeInsets.symmetric(
               horizontal: size.width * 0.05, vertical: size.height * 0.01),

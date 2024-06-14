@@ -3,8 +3,7 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-
-import '../view/chatAi.dart';
+import 'package:tfgsaladillo/screen/view/chatAi.dart';
 
 class PoliticalText extends StatelessWidget {
   final Language language;

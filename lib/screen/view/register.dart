@@ -7,11 +7,10 @@ import 'package:tfgsaladillo/models/Coin.dart';
 import 'package:tfgsaladillo/models/Language.dart';
 import 'package:tfgsaladillo/models/Person.dart';
 import 'package:tfgsaladillo/screen/view/home.dart';
-
-import '../../models/Food.dart';
-import '../../services/RealTimeServices.dart';
-import '../../utils/Constant.dart';
-import '../widget/genericWidget.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/services/RealTimeServices.dart';
+import 'package:tfgsaladillo/utils/Constant.dart';
+import 'package:tfgsaladillo/screen/widget/genericWidget.dart';
 
 class Register extends StatefulWidget {
   final Language language;
@@ -25,17 +24,14 @@ class Register extends StatefulWidget {
       required this.listFood});
 
   @override
-  State<StatefulWidget> createState() => _RegisterState();
+  State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  bool load = false;
+  bool _load = false;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late Person person;
-
-  int value = 0;
 
   @override
   void dispose() {
@@ -44,7 +40,7 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
-  void register() async {
+  void _register() async {
     BitmapDescriptor icon;
     Person? person;
     String email = _emailController.text;
@@ -52,52 +48,52 @@ class _RegisterState extends State<Register> {
     String name = _nameController.text;
     if (email.isEmpty || password.isEmpty || name.isEmpty) {
       if (email.isEmpty && password.isEmpty && name.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_7"],
-            18);
+            15);
       } else if (email.isNotEmpty && password.isEmpty && name.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_8"],
-            18);
+            15);
       } else if (email.isEmpty && password.isNotEmpty && name.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_9"],
-            18);
+            15);
       } else if (email.isEmpty && password.isEmpty && name.isNotEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_1"],
-            18);
+            15);
       } else if (email.isNotEmpty && password.isNotEmpty && name.isEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_10"],
-            18);
+            15);
       } else if (email.isNotEmpty && password.isEmpty && name.isNotEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_11"],
-            18);
+            15);
       } else if (email.isEmpty && password.isNotEmpty && name.isNotEmpty) {
-        messageToConsumer(
+        _messageToConsumer(
             widget.language.dataJson[widget.language.positionLanguage]
                 ["WARNING_LOGIN_REGISTER_TEXT_12"],
-            18);
+            15);
       }
       return;
     }
     if (!EmailValidator.validate(email)) {
-      messageToConsumer(
+      _messageToConsumer(
           widget.language.dataJson[widget.language.positionLanguage]
               ["WARNING_LOGIN_REGISTER_TEXT_4"],
-          20);
+          12);
       return;
     }
     setState(() {
-      load = true;
+      _load = true;
     });
     person =
         await RealTimeService.setUserData(name, email, password, widget.prefs);
@@ -120,17 +116,17 @@ class _RegisterState extends State<Register> {
         (route) => false,
       );
     } else {
-      messageToConsumer(
+      _messageToConsumer(
           widget.language.dataJson[widget.language.positionLanguage]
               ["WARNING_LOGIN_REGISTER_TEXT_6"],
-          20);
+          12);
       setState(() {
-        load = false;
+        _load = false;
       });
     }
   }
 
-  void messageToConsumer(String message, double fontSize) {
+  void _messageToConsumer(String message, double fontSize) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(
@@ -220,8 +216,8 @@ class _RegisterState extends State<Register> {
                             heroTag: "moverFloating",
                             backgroundColor: Colors.orange,
                             foregroundColor: Colors.black,
-                            onPressed: () => register(),
-                            child: load
+                            onPressed: () => _register(),
+                            child: _load
                                 ? const CircularProgressIndicator(
                                     color: Colors.black,
                                   )

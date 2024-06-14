@@ -12,7 +12,7 @@ class RealTimeService {
       String email, String password, SharedPreferences pref) async {
     Person? person;
     DatabaseReference date = FirebaseDatabase.instance.ref();
-    if (await AuthService.sigInAuth(email, password)) {
+    if (await AuthService.signInAuth(email, password)) {
       person = await getUserData(email, date);
       await pref.setString(Constant.SHARED_PREFERENCE_MAIL, person.gmail);
     }

@@ -107,7 +107,6 @@ class _PageReviewState extends State<PageReview> {
           opacity: animation,
           child: AddReview(
             person: widget.person,
-            heroTag: widget.food.pathImage,
             language: widget.language,
             addReview: _addReview,
           ),

@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tfgsaladillo/models/Language.dart';
-
-import '../../models/Coin.dart';
-import '../../models/Food.dart';
-import '../../models/Person.dart';
-import '../widget/specialViewWidget.dart';
+import 'package:tfgsaladillo/models/Coin.dart';
+import 'package:tfgsaladillo/models/Food.dart';
+import 'package:tfgsaladillo/models/Person.dart';
+import 'package:tfgsaladillo/screen/widget/specialViewWidget.dart';
 
 class SpecialView extends StatefulWidget {
   final Language language;
@@ -29,196 +28,196 @@ class SpecialView extends StatefulWidget {
       required this.person});
 
   @override
-  State<SpecialView> createState() => _EspecialView();
+  State<SpecialView> createState() => _SpecialViewState();
 }
 
-class _EspecialView extends State<SpecialView> {
-  late int cant = 0;
-  late List<Food> listBurguer = [];
-  late List<Food> listSalad = [];
-  late List<Food> listFish = [];
-  late List<Food> listMeat = [];
-  late List<Food> listDrink = [];
-  late List<Food> listDessert = [];
+class _SpecialViewState extends State<SpecialView> {
+  late int _cant = 0;
+  late List<Food> _listBurguer = [];
+  late List<Food> _listSalad = [];
+  late List<Food> _listFish = [];
+  late List<Food> _listMeat = [];
+  late List<Food> _listDrink = [];
+  late List<Food> _listDessert = [];
 
   @override
   void initState() {
     super.initState();
-    listBurguer.addAll(
+    _listBurguer.addAll(
         widget.listFood.where((element) => element.isBurguer).toList());
-    listSalad.addAll(
+    _listSalad.addAll(
         widget.listFood.where((element) => element.isSalad).toList());
-    listFish
+    _listFish
         .addAll(widget.listFood.where((element) => element.isFish).toList());
-    listMeat
+    _listMeat
         .addAll(widget.listFood.where((element) => element.isMeat).toList());
-    listDrink.addAll(
+    _listDrink.addAll(
         widget.listFood.where((element) => element.isDrink).toList());
-    listDessert.addAll(
+    _listDessert.addAll(
         widget.listFood.where((element) => element.isDessert).toList());
-    checkList(listBurguer);
-    checkList(listSalad);
-    checkList(listFish);
-    checkList(listMeat);
-    checkList(listDrink);
-    checkList(listDessert);
-    orderAllList(!widget.changeIconPrice);
+    _checkList(_listBurguer);
+    _checkList(_listSalad);
+    _checkList(_listFish);
+    _checkList(_listMeat);
+    _checkList(_listDrink);
+    _checkList(_listDessert);
+    _orderAllList(!widget.changeIconPrice);
   }
 
-  void checkList(List<Food> lista) {
-    if (lista.isNotEmpty) {
-      cant = cant + 1;
+  void _checkList(List<Food> list) {
+    if (list.isNotEmpty) {
+      _cant = _cant + 1;
     }
   }
 
-  void updateState() {
+  void _updateState() {
     setState(() {});
   }
 
-  void orderAllList(bool control) {
+  void _orderAllList(bool control) {
     setState(() {
-      orderList(listBurguer, control);
-      orderList(listSalad, control);
-      orderList(listFish, control);
-      orderList(listMeat, control);
-      orderList(listDrink, control);
-      orderList(listDessert, control);
+      _orderList(_listBurguer, control);
+      _orderList(_listSalad, control);
+      _orderList(_listFish, control);
+      _orderList(_listMeat, control);
+      _orderList(_listDrink, control);
+      _orderList(_listDessert, control);
     });
   }
 
-  void orderList(List<Food> lista, bool control) {
+  void _orderList(List<Food> list, bool control) {
     if (control) {
-      lista.sort(
+      list.sort(
         (a, b) => a.price.compareTo(b.price),
       );
     } else {
-      lista.sort(
+      list.sort(
         (a, b) => b.price.compareTo(a.price),
       );
     }
   }
 
-  void resetBurger(List<dynamic> listNameFood) {
+  void _resetBurger(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listBurguer.isEmpty;
-      listBurguer.clear();
-      listBurguer.addAll(widget.listFood
+      control = _listBurguer.isEmpty;
+      _listBurguer.clear();
+      _listBurguer.addAll(widget.listFood
           .where((element) =>
               element.isBurguer && listNameFood.contains(element.name))
           .toList());
-      if (listBurguer.isEmpty) {
+      if (_listBurguer.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
   }
 
-  void resetSalad(List<dynamic> listNameFood) {
+  void _resetSalad(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listSalad.isEmpty;
-      listSalad.clear();
-      listSalad.addAll(widget.listFood
+      control = _listSalad.isEmpty;
+      _listSalad.clear();
+      _listSalad.addAll(widget.listFood
           .where((element) =>
               element.isSalad && listNameFood.contains(element.name))
           .toList());
-      if (listSalad.isEmpty) {
+      if (_listSalad.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
   }
 
-  void resetFish(List<dynamic> listNameFood) {
+  void _resetFish(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listFish.isEmpty;
-      listFish.clear();
-      listFish.addAll(widget.listFood
+      control = _listFish.isEmpty;
+      _listFish.clear();
+      _listFish.addAll(widget.listFood
           .where((element) =>
               element.isFish && listNameFood.contains(element.name))
           .toList());
-      if (listFish.isEmpty) {
+      if (_listFish.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
   }
 
-  void resetMeat(List<dynamic> listNameFood) {
+  void _resetMeat(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listMeat.isEmpty;
-      listMeat.clear();
-      listMeat.addAll(widget.listFood
+      control = _listMeat.isEmpty;
+      _listMeat.clear();
+      _listMeat.addAll(widget.listFood
           .where((element) =>
               element.isMeat && listNameFood.contains(element.name))
           .toList());
-      if (listMeat.isEmpty) {
+      if (_listMeat.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
   }
 
-  void resetDrink(List<dynamic> listNameFood) {
+  void _resetDrink(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listDrink.isEmpty;
-      listDrink.clear();
-      listDrink.addAll(widget.listFood
+      control = _listDrink.isEmpty;
+      _listDrink.clear();
+      _listDrink.addAll(widget.listFood
           .where((element) =>
               element.isDrink && listNameFood.contains(element.name))
           .toList());
-      if (listDrink.isEmpty) {
+      if (_listDrink.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
   }
 
-  void resetDessert(List<dynamic> listNameFood) {
+  void _resetDessert(List<dynamic> listNameFood) {
     bool control;
     setState(() {
-      control = listDessert.isEmpty;
-      listDessert.clear();
-      listDessert.addAll(widget.listFood
+      control = _listDessert.isEmpty;
+      _listDessert.clear();
+      _listDessert.addAll(widget.listFood
           .where((element) =>
               element.isDessert && listNameFood.contains(element.name))
           .toList());
-      if (listDessert.isEmpty) {
+      if (_listDessert.isEmpty) {
         if (!control) {
-          cant = cant - 1;
+          _cant = _cant - 1;
         }
       } else {
         if (control) {
-          cant = cant + 1;
+          _cant = _cant + 1;
         }
       }
     });
@@ -227,7 +226,7 @@ class _EspecialView extends State<SpecialView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: cant,
+      length: _cant,
       child: Scaffold(
         backgroundColor: Colors.orange,
         appBar: AppBar(
@@ -254,42 +253,42 @@ class _EspecialView extends State<SpecialView> {
                   indicatorWeight: 6,
                   dividerColor: Colors.orange,
                   tabs: [
-                    if (listBurguer.isNotEmpty)
+                    if (_listBurguer.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Burguer.svg",
                           width: 35,
                         ),
                       ),
-                    if (listSalad.isNotEmpty)
+                    if (_listSalad.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Salad.svg",
                           width: 35,
                         ),
                       ),
-                    if (listFish.isNotEmpty)
+                    if (_listFish.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Fish.svg",
                           width: 35,
                         ),
                       ),
-                    if (listMeat.isNotEmpty)
+                    if (_listMeat.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Meat.svg",
                           width: 35,
                         ),
                       ),
-                    if (listDrink.isNotEmpty)
+                    if (_listDrink.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Drink.svg",
                           width: 35,
                         ),
                       ),
-                    if (listDessert.isNotEmpty)
+                    if (_listDessert.isNotEmpty)
                       Tab(
                         icon: SvgPicture.asset(
                           "assets/Icons/Postre.svg",
@@ -307,13 +306,13 @@ class _EspecialView extends State<SpecialView> {
                               Colors.black.withOpacity(0.8), BlendMode.darken),
                           image: const AssetImage(
                               "assets/images/fondoEspecial.webp"))),
-                  child: cant == 0
+                  child: _cant == 0
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AutoSizeText(
-                              "Elige tu producto favorito",
+                              widget.language.dataJson[widget.language.positionLanguage]["SPECIAL_VIEW_TEXT"],
                               style:
                                   const TextStyle(color: Colors.white, fontSize: 30),
                             ),
@@ -321,75 +320,75 @@ class _EspecialView extends State<SpecialView> {
                           ],
                         )
                       : TabBarView(children: [
-                          if (listBurguer.isNotEmpty)
+                          if (_listBurguer.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listBurguer,
+                              listFood: _listBurguer,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetBurger,
-                              updateState: updateState,
+                              addOrRemoveList: _resetBurger,
+                              updateState: _updateState,
                             ),
-                          if (listSalad.isNotEmpty)
+                          if (_listSalad.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listSalad,
+                              listFood: _listSalad,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetSalad,
-                              updateState: updateState,
+                              addOrRemoveList: _resetSalad,
+                              updateState: _updateState,
                             ),
-                          if (listFish.isNotEmpty)
+                          if (_listFish.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listFish,
+                              listFood: _listFish,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetFish,
-                              updateState: updateState,
+                              addOrRemoveList: _resetFish,
+                              updateState: _updateState,
                             ),
-                          if (listMeat.isNotEmpty)
+                          if (_listMeat.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listMeat,
+                              listFood: _listMeat,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetMeat,
-                              updateState: updateState,
+                              addOrRemoveList: _resetMeat,
+                              updateState: _updateState,
                             ),
-                          if (listDrink.isNotEmpty)
+                          if (_listDrink.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listDrink,
+                              listFood: _listDrink,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetDrink,
-                              updateState: updateState,
+                              addOrRemoveList: _resetDrink,
+                              updateState: _updateState,
                             ),
-                          if (listDessert.isNotEmpty)
+                          if (_listDessert.isNotEmpty)
                             ShowList(
                               size: widget.size,
-                              listFood: listDessert,
+                              listFood: _listDessert,
                               coin: widget.coin,
                               language: widget.language,
                               person: widget.person,
-                              addOrRemoveList: resetDessert,
-                              updateState: updateState,
+                              addOrRemoveList: _resetDessert,
+                              updateState: _updateState,
                             ),
                         ])),
             )
           ],
         ),
-        floatingActionButton:cant==0?null:  FloatingActionButton(
+        floatingActionButton:_cant==0?null:  FloatingActionButton(
             backgroundColor: Colors.orange,
             onPressed: () {
               widget.function();
-              orderAllList(widget.changeIconPrice);
+              _orderAllList(widget.changeIconPrice);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
